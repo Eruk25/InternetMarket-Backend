@@ -39,4 +39,10 @@ public class User
         if (!string.IsNullOrWhiteSpace(password))
             Password = password;
     }
+
+    public void UpdateRole(string role)
+    {
+        if (!string.IsNullOrWhiteSpace(role))
+            Role = role;
+    }
 }
