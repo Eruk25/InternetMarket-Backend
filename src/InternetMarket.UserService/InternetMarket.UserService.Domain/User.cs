@@ -33,4 +33,10 @@ public class User
         if (!string.IsNullOrWhiteSpace(email))
             Email = email;
     }
+
+    public void UpdatePassword(string password)
+    {
+        if (!string.IsNullOrWhiteSpace(password))
+            Password = password;
+    }
 }
