@@ -1,4 +1,7 @@
-﻿namespace InternetMarket.UserService.Domain;
+﻿using System.Data;
+using System.Runtime.Serialization;
+
+namespace InternetMarket.UserService.Domain;
 
 public class User
 {
@@ -18,4 +21,12 @@ public class User
         Role = "Role";
         IsConfirmed = false;
     }
+
+    public void UpdateName(string name)
+    {
+        if (!string.IsNullOrWhiteSpace(name))
+            Name = name;
+    }
+
+
 }
