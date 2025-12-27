@@ -28,5 +28,9 @@ public class User
             Name = name;
     }
 
-
+    public void UpdateEmail(string email)
+    {
+        if (!string.IsNullOrWhiteSpace(email))
+            Email = email;
+    }
 }
