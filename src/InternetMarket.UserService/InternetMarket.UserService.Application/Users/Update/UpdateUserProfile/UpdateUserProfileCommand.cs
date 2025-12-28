@@ -6,5 +6,5 @@ using MediatR;
 
 namespace InternetMarket.UserService.Application.Users.Update.UpdateUserProfile
 {
-    public record UpdateUserProfileCommand(Guid Id, string Name, string Email) : IRequest;
+    public record UpdateUserProfileCommand(Guid Id, string? Name, string? Email) : IRequest;
 }
