@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InternetMarket.UserService.API.DTOs.Requests.Login;
 using InternetMarket.UserService.API.DTOs.Requests.Register;
 using InternetMarket.UserService.Application.Users.Register;
 using MediatR;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InternetMarket.UserService.API.Controllers
@@ -25,6 +27,13 @@ namespace InternetMarket.UserService.API.Controllers
         {
             await _mediator.Send(new RegisterUserCommand(request.Name, request.Email, request.Password));
             return Ok();
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<string>> LoginAsync([FromBody] LoginUserRequest request)
+        {
+            var token = await _mediator.Send(new LoginUserCommand(request.Email, request.Password));
+            return Ok(token);
         }
 
     }
