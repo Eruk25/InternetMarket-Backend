@@ -7,7 +7,7 @@ namespace InternetMarket.UserService.Application.Abstractions.PasswordHasher
 {
     public interface IPasswordHasher
     {
-        public string HashPassword(string Password);
-        public bool VerifyPassword(string Password, string HashedPassword);
+        public string HashPassword(string password);
+        public bool VerifyPassword(string password, string hashedPassword);
     }
 }
