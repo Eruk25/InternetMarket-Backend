@@ -6,5 +6,5 @@ using MediatR;
 
 namespace InternetMarket.UserService.API.DTOs.Requests.UpdateProfile
 {
-    public record UpdateUserProfileRequest(string Name, string Email);
+    public record UpdateUserProfileRequest(string? Name, string? Email);
 }
