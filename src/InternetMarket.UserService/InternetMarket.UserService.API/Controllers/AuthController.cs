@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.UserService.API.DTOs.Requests.Login;
 using InternetMarket.UserService.API.DTOs.Requests.Register;
+using InternetMarket.UserService.Application.Users.Login;
 using InternetMarket.UserService.Application.Users.Register;
 using MediatR;
 using Microsoft.AspNetCore.Identity.Data;
