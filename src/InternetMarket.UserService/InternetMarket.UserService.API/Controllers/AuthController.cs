@@ -21,7 +21,7 @@ namespace InternetMarket.UserService.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterAsync(RegisterUserRequest request)
+        public async Task<ActionResult> RegisterAsync([FromBody] RegisterUserRequest request)
         {
             await _mediator.Send(new RegisterUserCommand(request.Name, request.Email, request.Password));
             return Ok();
