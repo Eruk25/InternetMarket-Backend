@@ -7,4 +7,3 @@ namespace InternetMarket.UserService.Infrastructure.Implementations.JWTGenerator
 {
     public record AuthOptions(string Issuer, string Audience, string SecretKey, TimeSpan ExpireTime);
 }
-s
