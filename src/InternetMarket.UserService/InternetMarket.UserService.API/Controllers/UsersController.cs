@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.UserService.API.DTOs.Requests.UpdateProfile;
+using InternetMarket.UserService.API.Exstensions;
 using InternetMarket.UserService.Application.Users.Update.UpdateUserProfile;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -26,7 +27,7 @@ namespace InternetMarket.UserService.API.Controllers
         [Route("profile")]
         public async Task<IActionResult> UpdateUserProfileAsync([FromBody] UpdateUserProfileRequest request)
         {
-            var userId = Guid.Parse(User.Identity.Name);
+            var userId = User.GetUserId();
             await _mediator.Send(new UpdateUserProfileCommand(userId, request.Name, request.Email));
             return Ok();
         }
