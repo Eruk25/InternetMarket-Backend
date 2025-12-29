@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using InternetMarket.UserService.API.DTOs.Requests.UpdateProfile;
 using InternetMarket.UserService.Application.Users.Update.UpdateUserProfile;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InternetMarket.UserService.API.Controllers
@@ -20,7 +21,9 @@ namespace InternetMarket.UserService.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPut("profile")]
+        [HttpPut]
+        [Authorize]
+        [Route("profile")]
         public async Task<IActionResult> UpdateUserProfileAsync([FromBody] UpdateUserProfileRequest request)
         {
             var userId = Guid.Parse(User.Identity.Name);
