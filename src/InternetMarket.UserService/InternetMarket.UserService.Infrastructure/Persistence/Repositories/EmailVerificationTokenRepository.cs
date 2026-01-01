@@ -21,6 +21,7 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.Repositories
         public async Task<EmailVerificationToken?> GetByIdAsync(Guid Id)
         {
             var token = await _context.Tokens
+                .Include(t => t.User)
                 .FirstOrDefaultAsync(t => t.Id == Id);
             return token;
         }
