@@ -1,5 +1,5 @@
 using InternetMarket.UserService.Application.Abstractions.Repositories;
-using InternetMarket.UserService.Domain;
+using InternetMarket.UserService.Domain.Entities;
 using InternetMarket.UserService.Infrastructure.Persistence.DB;
 using Microsoft.EntityFrameworkCore;
 
