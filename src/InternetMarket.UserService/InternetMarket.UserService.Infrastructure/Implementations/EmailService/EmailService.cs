@@ -17,7 +17,7 @@ namespace InternetMarket.UserService.Infrastructure.Implementations.EmailService
         {
             await _fluentEmail.To(emailMetadata.ToAddress)
                 .Subject(emailMetadata.Subject)
-                .Body(emailMetadata.Body)
+                .Body(emailMetadata.Body, true)
                 .SendAsync();
         }
     }
