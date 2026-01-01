@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InternetMarket.UserService.Application.Abstractions.EmailSender;
 using InternetMarket.UserService.Application.Abstractions.PasswordHasher;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
 using InternetMarket.UserService.Application.Abstractions.TokenGenerator;
+using InternetMarket.UserService.Infrastructure.Implementations.EmailService;
 using InternetMarket.UserService.Infrastructure.Implementations.JWTGenerator;
 using InternetMarket.UserService.Infrastructure.Implementations.PasswordHasher;
 using InternetMarket.UserService.Infrastructure.Persistence.DB;
@@ -27,6 +29,7 @@ namespace InternetMarket.UserService.Infrastructure.Extensions
             services.AddScoped<ITokenGenerator, JwtGenerator>();
             services.AddScoped<Identity.PasswordHasher.PasswordHasher>();
             services.AddScoped<IEmailVerificationTokenRepository, EmailVerificationTokenRepository>();
+            services.AddScoped<IEmailService, EmailService>();
             return services;
         }
     }
