@@ -51,4 +51,9 @@ public class User
             throw new ArgumentNullException("Role cannot be null or empty", nameof(role));
         Role = role;
     }
+
+    public void UpdateConfirm(bool confirmed)
+    {
+        IsConfirmed = confirmed;
+    }
 }
