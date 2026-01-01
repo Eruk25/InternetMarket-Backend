@@ -1,4 +1,4 @@
-using InternetMarket.UserService.Domain;
+using InternetMarket.UserService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InternetMarket.UserService.Infrastructure.Persistence.DB
@@ -6,6 +6,7 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.DB
     public class UserContext(DbContextOptions<UserContext> options) : DbContext(options)
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<EmailVerificationToken> Tokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
