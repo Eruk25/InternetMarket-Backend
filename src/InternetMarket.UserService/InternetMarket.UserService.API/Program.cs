@@ -8,6 +8,8 @@ builder.Services
     .AddPresentation(builder.Configuration)
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
+builder.Services
+    .AddFluentEmail(builder.Configuration);
 var app = builder.Build();
 
 app.UseHttpsRedirection();
