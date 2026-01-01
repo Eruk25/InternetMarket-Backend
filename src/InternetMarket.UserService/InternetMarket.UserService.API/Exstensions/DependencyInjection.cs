@@ -30,7 +30,7 @@ namespace InternetMarket.UserService.API.Exstensions
                         ValidIssuer = configuration["AuthOptions:Issuer"],
                         ValidAudience = configuration["AuthOptions:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(configuration["AuthOptions"]!)),
+                            Encoding.UTF8.GetBytes(configuration["AuthOptions:SecretKey"]!)),
                         RoleClaimType = ClaimTypes.Role
                     };
                 });
