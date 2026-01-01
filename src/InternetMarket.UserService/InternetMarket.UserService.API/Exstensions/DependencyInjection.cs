@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using InternetMarket.UserService.Application.Abstractions.EmailVerificationLinkFactory;
+using InternetMarket.UserService.API.Implementations.EmailVerificationLinkFactory;
 
 namespace InternetMarket.UserService.API.Exstensions
 {
@@ -33,6 +35,7 @@ namespace InternetMarket.UserService.API.Exstensions
                     };
                 });
             services.AddAuthorization();
+            services.AddScoped<IEmailVerificationLinkFactory, EmailVerificationLinkFactory>();
             return services;
         }
     }
