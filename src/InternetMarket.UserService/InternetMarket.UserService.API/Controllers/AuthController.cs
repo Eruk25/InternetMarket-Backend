@@ -38,8 +38,7 @@ namespace InternetMarket.UserService.API.Controllers
             return Ok(token);
         }
 
-        [HttpPost]
-        [Route("{token}/verify-email")]
+        [HttpGet("verify-email")]
         public async Task<ActionResult> VerifyEmailAsync([FromQuery] Guid token)
         {
             var success = await _mediator.Send(new VerifyEmailCommand(token));
