@@ -36,6 +36,7 @@ namespace InternetMarket.UserService.API.Exstensions
                 });
             services.AddAuthorization();
             services.AddScoped<IEmailVerificationLinkFactory, EmailVerificationLinkFactory>();
+            services.AddHttpContextAccessor();
             return services;
         }
     }
