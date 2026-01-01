@@ -1,4 +1,4 @@
-using InternetMarket.UserService.Domain;
+using InternetMarket.UserService.Domain.Entities;
 
 namespace InternetMarket.UserService.Application.Abstractions.Repositories
 {
