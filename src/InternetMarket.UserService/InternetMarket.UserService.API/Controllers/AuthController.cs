@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.UserService.API.DTOs.Requests.Login;
 using InternetMarket.UserService.API.DTOs.Requests.Register;
+using InternetMarket.UserService.Application.EmailVerificationToken.VerifyEmail;
 using InternetMarket.UserService.Application.Users.Login;
 using InternetMarket.UserService.Application.Users.Register;
 using MediatR;
@@ -35,6 +36,14 @@ namespace InternetMarket.UserService.API.Controllers
         {
             var token = await _mediator.Send(new LoginUserCommand(request.Email, request.Password));
             return Ok(token);
+        }
+
+        [HttpPost]
+        [Route("{token}/verify-email")]
+        public async Task<ActionResult> VerifyEmailAsync([FromQuery] Guid token)
+        {
+            var success = await _mediator.Send(new VerifyEmailCommand(token));
+            return success ? Ok() : BadRequest();
         }
 
     }
