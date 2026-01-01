@@ -26,6 +26,7 @@ namespace InternetMarket.UserService.Infrastructure.Extensions
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<ITokenGenerator, JwtGenerator>();
             services.AddScoped<Identity.PasswordHasher.PasswordHasher>();
+            services.AddScoped<IEmailVerificationTokenRepository, EmailVerificationTokenRepository>();
             return services;
         }
     }
