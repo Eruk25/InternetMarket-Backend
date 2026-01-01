@@ -50,7 +50,7 @@ namespace InternetMarket.UserService.Application.Users.Register
             };
             await _emailVerificationTokenRepository.CreateAsync(token);
             string verificationLink = _emailVerificationLinkFactory.GenerateLink(token);
-            EmailMetadata emailMetadata = new(user.Email, "From InternetMarket", $"To verify email address <a hraf={verificationLink}>click here</a>");
+            EmailMetadata emailMetadata = new(user.Email, "From InternetMarket", $"To verify email address <a href={verificationLink}>click here</a>");
             await _emailService.SendAsync(emailMetadata);
         }
     }
