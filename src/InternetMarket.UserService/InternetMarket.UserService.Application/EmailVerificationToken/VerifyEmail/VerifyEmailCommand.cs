@@ -6,5 +6,5 @@ using MediatR;
 
 namespace InternetMarket.UserService.Application.EmailVerificationToken.VerifyEmail
 {
-    public record VerifyEmailCommand(Guid Token) : IRequest;
+    public record VerifyEmailCommand(Guid TokenId) : IRequest<bool>;
 }
