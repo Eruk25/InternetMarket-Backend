@@ -1,6 +1,0 @@
-@InternetMarket.UserService.API_HostAddress = http://localhost:5287
-
-GET {{InternetMarket.UserService.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
