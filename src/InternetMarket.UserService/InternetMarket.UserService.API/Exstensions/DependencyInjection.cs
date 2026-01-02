@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using InternetMarket.UserService.Application.Abstractions.EmailVerificationLinkFactory;
 using InternetMarket.UserService.API.Implementations.EmailVerificationLinkFactory;
+using InternetMarket.UserService.Application.Abstractions.ResetPasswordLinkFactory;
+using InternetMarket.UserService.API.Implementations.ResetPasswordLinkFactory;
 
 namespace InternetMarket.UserService.API.Exstensions
 {
@@ -36,6 +38,7 @@ namespace InternetMarket.UserService.API.Exstensions
                 });
             services.AddAuthorization();
             services.AddScoped<IEmailVerificationLinkFactory, EmailVerificationLinkFactory>();
+            services.AddScoped<IResetPasswordLinkFactory, ResetPasswordLinkFactory>();
             services.AddHttpContextAccessor();
             return services;
         }
