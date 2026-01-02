@@ -20,7 +20,7 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.Repositories
 
         public async Task<EmailVerificationToken?> GetByIdAsync(Guid Id)
         {
-            var token = await _context.Tokens
+            var token = await _context.EmailVerificationTokens
                 .Include(t => t.User)
                 .FirstOrDefaultAsync(t => t.Id == Id);
             return token;
@@ -28,13 +28,13 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.Repositories
 
         public async Task DeleteAsync(EmailVerificationToken token)
         {
-            _context.Tokens.Remove(token);
+            _context.EmailVerificationTokens.Remove(token);
             await _context.SaveChangesAsync();
         }
 
         public async Task CreateAsync(EmailVerificationToken token)
         {
-            await _context.Tokens.AddAsync(token);
+            await _context.EmailVerificationTokens.AddAsync(token);
             await _context.SaveChangesAsync();
         }
     }
