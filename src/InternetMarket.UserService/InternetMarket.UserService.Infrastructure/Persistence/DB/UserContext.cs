@@ -1,4 +1,6 @@
+using System.Net.Http.Headers;
 using InternetMarket.UserService.Domain.Entities;
+using InternetMarket.UserService.Infrastructure.Persistence.DB.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace InternetMarket.UserService.Infrastructure.Persistence.DB
@@ -11,7 +13,9 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new EmailVerificationTokenConfiguration());
+            modelBuilder.ApplyConfiguration(new ResetPasswordTokenConfiguration());
         }
     }
 }
