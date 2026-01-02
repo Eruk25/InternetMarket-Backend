@@ -25,10 +25,11 @@ namespace InternetMarket.UserService.Infrastructure.Extensions
                 opt.UseSqlServer("Server=LENOVO\\SQLEXPRESS03;Database=UserService;Trusted_Connection=True;TrustServerCertificate=True;"));
             services.Configure<AuthOptions>(configuration.GetSection("AuthOptions"));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IEmailVerificationTokenRepository, EmailVerificationTokenRepository>();
+            services.AddScoped<IResetPasswordTokenRepository, ResetPasswordTokenRepository>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<ITokenGenerator, JwtGenerator>();
             services.AddScoped<Identity.PasswordHasher.PasswordHasher>();
-            services.AddScoped<IEmailVerificationTokenRepository, EmailVerificationTokenRepository>();
             services.AddScoped<IEmailService, EmailService>();
             return services;
         }
