@@ -18,10 +18,10 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<ResetPasswordToken?> GetByIdAsync(Guid Id)
+        public async Task<ResetPasswordToken?> GetByIdAsync(Guid id)
         {
             var token = await _context.ResetPasswordTokens
-                .FirstOrDefaultAsync(t => t.Id == Id);
+                .FirstOrDefaultAsync(t => t.Id == id);
             return token;
         }
 
