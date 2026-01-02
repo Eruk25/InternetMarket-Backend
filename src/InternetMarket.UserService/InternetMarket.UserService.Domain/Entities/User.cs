@@ -32,21 +32,21 @@ public class User
 
     public void UpdateEmail(string email)
     {
-        if (!string.IsNullOrWhiteSpace(email))
+        if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentNullException("Email cannot be null or empty", nameof(email));
         Email = email;
     }
 
     public void UpdatePassword(string password)
     {
-        if (!string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(password))
             throw new ArgumentNullException("Password cannot be null or empty", nameof(password));
         Password = password;
     }
 
     public void UpdateRole(string role)
     {
-        if (!string.IsNullOrWhiteSpace(role))
+        if (string.IsNullOrWhiteSpace(role))
             throw new ArgumentNullException("Role cannot be null or empty", nameof(role));
         Role = role;
     }
