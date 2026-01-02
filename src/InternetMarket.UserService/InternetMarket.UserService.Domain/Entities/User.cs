@@ -15,7 +15,6 @@ public class User
 
     public User(string name, string email, string password, Guid cartId)
     {
-        Id = Guid.NewGuid();
         Name = name;
         Email = email;
         Password = password;
