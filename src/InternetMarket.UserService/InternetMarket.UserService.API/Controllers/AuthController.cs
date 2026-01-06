@@ -47,23 +47,5 @@ namespace InternetMarket.UserService.API.Controllers
             return success ? Ok() : BadRequest();
         }
 
-        [HttpPost]
-        [Route("forgot-password")]
-        public async Task<ActionResult> ForgotPasswordAsync([FromBody] ForgotPasswordRequest request)
-        {
-            await _mediator.Send(new ForgotPasswordCommand(request.Email));
-            return Ok();
-        }
-
-        [HttpPatch]
-        [Route("reset-password")]
-        public async Task<ActionResult> ResetPasswordAsync([FromBody] ResetPasswordRequest request)
-        {
-            await _mediator.Send(new UpdateUserPasswordCommand(
-                request.Email,
-                request.ResetCode,
-                request.NewPassword));
-            return Ok();
-        }
     }
 }
