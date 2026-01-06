@@ -21,7 +21,7 @@ namespace InternetMarket.UserService.API.Implementations.ResetPasswordLinkFactor
         {
             string? verificationLink = _linkGenerator.GetUriByAction(
                 action: "ResetPassword",
-                controller: "Auth",
+                controller: "Users",
                 values: new { token = resetPasswordToken.Id },
                 scheme: _httpContextAccessor.HttpContext!.Request.Scheme,
                 host: _httpContextAccessor.HttpContext.Request.Host);

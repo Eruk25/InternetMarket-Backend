@@ -22,7 +22,7 @@ namespace InternetMarket.UserService.API.Implementations.EmailVerificationLinkFa
         {
             string? verificationLink = _linkGenerator.GetUriByAction(
                 action: "VerifyEmail",
-                controller: "Auth",
+                controller: "Users",
                 values: new { token = emailVerificationToken.Id },
                 scheme: _httpContextAccessor.HttpContext!.Request.Scheme,
                 host: _httpContextAccessor.HttpContext.Request.Host);
