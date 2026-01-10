@@ -17,12 +17,12 @@ namespace InternetMarket.UserService.Application.Users.Register
     {
         private readonly IUserRepository _userRepository;
         private readonly IEmailVerificationTokenRepository _emailVerificationTokenRepository;
-        private readonly IEmailVerificationLinkFactory _emailVerificationLinkFactory;
+        private readonly IRegistrationEmailVerificationLinkFactory _emailVerificationLinkFactory;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IEmailService _emailService;
 
         public RegisterUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IEmailService emailService,
-            IEmailVerificationTokenRepository emailVerificationTokenRepository, IEmailVerificationLinkFactory emailVerificationLinkFactory)
+            IEmailVerificationTokenRepository emailVerificationTokenRepository, IRegistrationEmailVerificationLinkFactory emailVerificationLinkFactory)
         {
             _userRepository = userRepository;
             _emailVerificationTokenRepository = emailVerificationTokenRepository;
