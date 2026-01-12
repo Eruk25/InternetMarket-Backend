@@ -21,8 +21,10 @@ namespace InternetMarket.UserService.Infrastructure.Extensions
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            var section = configuration.GetSection("ConnectionStrings");
+            var connectionString = section["DefaultConnection"];
             services.AddDbContext<UserContext>(opt =>
-                opt.UseSqlServer("Server=LENOVO\\SQLEXPRESS03;Database=UserService;Trusted_Connection=True;TrustServerCertificate=True;"));
+                opt.UseSqlServer(connectionString));
             services.Configure<AuthOptions>(configuration.GetSection("AuthOptions"));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEmailVerificationTokenRepository, EmailVerificationTokenRepository>();
