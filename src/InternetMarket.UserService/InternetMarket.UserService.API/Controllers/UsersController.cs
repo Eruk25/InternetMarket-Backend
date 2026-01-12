@@ -8,6 +8,8 @@ using InternetMarket.UserService.API.DTOs.Requests.UpdateProfile;
 using InternetMarket.UserService.API.Exstensions;
 using InternetMarket.UserService.Application.EmailVerificationToken.EmailChange;
 using InternetMarket.UserService.Application.ResetPasswordToken;
+using InternetMarket.UserService.Application.Users.Get;
+using InternetMarket.UserService.Application.Users.GetMe;
 using InternetMarket.UserService.Application.Users.Update.UpdateUserEmail;
 using InternetMarket.UserService.Application.Users.Update.UpdateUserPassword;
 using InternetMarket.UserService.Application.Users.Update.UpdateUserProfile;
@@ -28,6 +30,16 @@ namespace InternetMarket.UserService.API.Controllers
         public UsersController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+        
+        [HttpGet]
+        [Authorize]
+        [Route("me")]
+        public async Task<IActionResult> GetUserProfileAsync()
+        {
+            var userId = User.GetUserId();
+            var profile = await _mediator.Send(new GetMyProfileQuery(userId));
+            return Ok(profile);
         }
 
         [HttpPut]
