@@ -13,5 +13,6 @@ public class CartContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CartConfiguration());
+        modelBuilder.ApplyConfiguration(new CartItemConfiguration());
     }
 }
