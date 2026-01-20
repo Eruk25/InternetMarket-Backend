@@ -10,7 +10,7 @@ namespace InternetMarket.CartService.Domain.Entities
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public IEnumerable<CartItem>? CartItems { get; set; }
+        public List<CartItem> CartItems { get; set; } = new();
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
