@@ -11,6 +11,7 @@ namespace InternetMarket.CartService.Domain.Entities
     {
         public Guid Id { get; set; }
         public Guid CartId { get; set; }
+        public Cart? Cart { get; set; }
         public Guid ProductId { get; set; }
         public decimal UntilPrice { get; set; }
         public int Quantity { get; set; }
