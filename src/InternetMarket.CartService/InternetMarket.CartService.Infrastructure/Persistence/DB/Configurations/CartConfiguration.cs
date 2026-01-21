@@ -19,7 +19,6 @@ public class CartConfiguration : IEntityTypeConfiguration<Cart>
             .OnDelete(DeleteBehavior.Cascade);
         builder.Property(c => c.CreatedAt)
             .IsRequired();
-        builder.Property(c => c.UpdatedAt)
-            .IsRequired(false);
+        builder.Property(c => c.UpdatedAt);
     }
 }
