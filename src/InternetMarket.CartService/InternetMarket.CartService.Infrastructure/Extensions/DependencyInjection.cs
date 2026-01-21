@@ -14,7 +14,7 @@ namespace InternetMarket.CartService.Infrastructure.Extensions
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionSection = configuration.GetSection("ConnectionStrings");
-            var connectionString = connectionSection["defaultConnection"];
+            var connectionString = connectionSection["DefaultConnection"];
             services.AddDbContext<CartContext>(option =>
                 option.UseSqlServer(connectionString));
 
