@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InternetMarket.CartService.Domain\InternetMarket.CartService.Domain.csproj" />
+    <ProjectReference Include="..\InternetMarket.CartService.Application\InternetMarket.CartService.Application.csproj" />
   </ItemGroup>
 
 </Project>
