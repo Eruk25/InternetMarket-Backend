@@ -10,6 +10,6 @@ namespace InternetMarket.CartService.Application.Abstractions.Repositories
     {
         public Task CreateAsync(CartItem cartItem);
         public Task UpdateAsync(CartItem cartItem);
-        public Task DeleteAsync(Guid id);
+        public Task DeleteAsync(CartItem cartItem);
     }
 }
