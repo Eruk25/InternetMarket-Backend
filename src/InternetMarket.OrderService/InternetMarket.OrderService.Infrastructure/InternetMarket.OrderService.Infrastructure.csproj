@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InternetMarket.OrderService.Domain\InternetMarket.OrderService.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
