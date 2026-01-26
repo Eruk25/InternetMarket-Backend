@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.OrderService.Domain.Entities;
+using InternetMarket.OrderService.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -17,7 +18,7 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
         }
     }
 }
