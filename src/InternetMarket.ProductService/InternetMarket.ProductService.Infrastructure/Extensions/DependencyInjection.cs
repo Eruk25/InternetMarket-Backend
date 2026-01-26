@@ -23,6 +23,7 @@ namespace InternetMarket.ProductService.Infrastructure.Extensions
                 options.UseSqlServer(connectionString));
 
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProviderRepository, ProviderRepository>();
             return services;
         }
     }
