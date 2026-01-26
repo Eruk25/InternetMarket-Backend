@@ -13,11 +13,16 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
             builder.HasKey(oi => oi.Id);
-            builder.Property(oi => oi.ProductId);
-            builder.Property(oi => oi.OrderId);
-            builder.Property(oi => oi.Quantity);
-            builder.Property(oi => oi.UntilPrice);
-            builder.Property(oi => oi.CreatedAt);
+            builder.Property(oi => oi.OrderId)
+                .IsRequired();
+            builder.Property(oi => oi.ProductId)
+                .IsRequired();
+            builder.Property(oi => oi.Quantity)
+                .IsRequired();
+            builder.Property(oi => oi.UntilPrice)
+                .IsRequired();
+            builder.Property(oi => oi.CreatedAt)
+                .IsRequired();
             builder.Property(oi => oi.UpdatedAt);
         }
     }
