@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InternetMarket.ProductService.Application.Abstractions.Repositories;
+using InternetMarket.ProductService.Infrastructure.Implementations.Repositories;
 using InternetMarket.ProductService.Infrastructure.Persistance.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
@@ -20,6 +22,7 @@ namespace InternetMarket.ProductService.Infrastructure.Extensions
             services.AddDbContext<ProductContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            services.AddScoped<IProductRepository, ProductRepository>();
             return services;
         }
     }
