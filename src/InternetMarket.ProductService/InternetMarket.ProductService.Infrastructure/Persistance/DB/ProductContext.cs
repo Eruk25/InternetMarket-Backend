@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.ProductService.Domain.Entities;
+using InternetMarket.ProductService.Infrastructure.Persistance.DB.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace InternetMarket.ProductService.Infrastructure.Persistance.DB
@@ -17,7 +18,7 @@ namespace InternetMarket.ProductService.Infrastructure.Persistance.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
         }
     }
 }
