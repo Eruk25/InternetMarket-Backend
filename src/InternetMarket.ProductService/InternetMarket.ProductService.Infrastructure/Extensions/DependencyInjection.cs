@@ -24,6 +24,7 @@ namespace InternetMarket.ProductService.Infrastructure.Extensions
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProviderRepository, ProviderRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             return services;
         }
     }
