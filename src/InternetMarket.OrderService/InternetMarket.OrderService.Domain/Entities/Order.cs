@@ -23,5 +23,7 @@ namespace InternetMarket.OrderService.Domain.Entities
             Status = "status";
             CreatedAt = DateTime.UtcNow;
         }
+
+        public Order() { }
     }
 }
