@@ -20,6 +20,7 @@ namespace InternetMarket.ProductService.Infrastructure.Persistance.DB
         {
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new ProviderConfiguration());
         }
     }
 }
