@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InternetMarket.OrderService.Application.Abstractions.Repositories;
+using InternetMarket.OrderService.Infrastructure.Implementations.Repositories;
 using InternetMarket.OrderService.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +19,8 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
             var connectionString = connectionSection["DefaultConnection"];
             services.AddDbContext<OrderContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            services.AddScoped<IOrderRepository, OrderRepository>();
             return services;
         }
     }
