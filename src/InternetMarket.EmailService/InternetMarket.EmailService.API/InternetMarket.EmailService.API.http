@@ -1,0 +1,6 @@
+@InternetMarket.EmailService.API_HostAddress = http://localhost:5192
+
+GET {{InternetMarket.EmailService.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
