@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InternetMarket.UserService.Application.Abstractions.EmailSender;
 using InternetMarket.UserService.Application.Abstractions.EmailVerificationLinkFactory;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
 using InternetMarket.UserService.Application.DTOs.EmailMetadata;
@@ -14,15 +13,13 @@ namespace InternetMarket.UserService.Application.EmailVerificationToken.EmailCha
     {
         private readonly IEmailVerificationTokenRepository _emailVerificationTokenRepository;
         private readonly IChangeEmailVerificationLinkFactory _emailVerificationLinkFactory;
-        private readonly IEmailService _emailService;
         private readonly IUserRepository _userRepository;
 
         public RequestEmailChangeCommandHandler(IEmailVerificationTokenRepository emailVerificationTokenRepository, IUserRepository userRepository,
-            IChangeEmailVerificationLinkFactory emailVerificationLinkFactory, IEmailService emailService)
+            IChangeEmailVerificationLinkFactory emailVerificationLinkFactory)
         {
             _emailVerificationTokenRepository = emailVerificationTokenRepository;
             _emailVerificationLinkFactory = emailVerificationLinkFactory;
-            _emailService = emailService;
             _userRepository = userRepository;
         }
 
@@ -45,8 +42,6 @@ namespace InternetMarket.UserService.Application.EmailVerificationToken.EmailCha
             };
             await _emailVerificationTokenRepository.CreateAsync(token);
             var verificationLink = _emailVerificationLinkFactory.GenerateLink(token);
-            var emailMetadata = new EmailMetadata(user.Email, "From InternetMarket", $"To change email <a href={verificationLink}>click here</a>");
-            await _emailService.SendAsync(emailMetadata);
         }
     }
 }
