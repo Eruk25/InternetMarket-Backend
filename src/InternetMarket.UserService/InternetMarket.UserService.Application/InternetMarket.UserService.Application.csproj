@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="9.0.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.1" />
     <PackageReference Include="MediatR" Version="14.0.0" />
   </ItemGroup>
 </Project>
