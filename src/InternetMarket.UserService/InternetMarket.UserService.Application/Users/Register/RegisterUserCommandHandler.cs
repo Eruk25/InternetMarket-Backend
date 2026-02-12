@@ -19,16 +19,14 @@ namespace InternetMarket.UserService.Application.Users.Register
         private readonly IEmailVerificationTokenRepository _emailVerificationTokenRepository;
         private readonly IRegistrationEmailVerificationLinkFactory _emailVerificationLinkFactory;
         private readonly IPasswordHasher _passwordHasher;
-        private readonly IEmailService _emailService;
 
-        public RegisterUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IEmailService emailService,
+        public RegisterUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher,
             IEmailVerificationTokenRepository emailVerificationTokenRepository, IRegistrationEmailVerificationLinkFactory emailVerificationLinkFactory)
         {
             _userRepository = userRepository;
             _emailVerificationTokenRepository = emailVerificationTokenRepository;
             _emailVerificationLinkFactory = emailVerificationLinkFactory;
             _passwordHasher = passwordHasher;
-            _emailService = emailService;
         }
 
         public async Task Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -50,8 +48,6 @@ namespace InternetMarket.UserService.Application.Users.Register
             };
             await _emailVerificationTokenRepository.CreateAsync(token);
             string verificationLink = _emailVerificationLinkFactory.GenerateLink(token);
-            EmailMetadata emailMetadata = new(user.Email, "From InternetMarket", $"To verify email address <a href={verificationLink}>click here</a>");
-            await _emailService.SendAsync(emailMetadata);
         }
     }
 }
