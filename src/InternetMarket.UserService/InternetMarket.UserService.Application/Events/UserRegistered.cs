@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.UserService.Application.Events
 {
-    public record UserRegistered(Guid Id, string Email, string Name);
+    public record UserRegistered(string Email, string Name, string VerificationLink);
 }
