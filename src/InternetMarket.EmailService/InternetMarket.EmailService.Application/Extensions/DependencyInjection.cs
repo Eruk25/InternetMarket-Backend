@@ -16,7 +16,11 @@ namespace InternetMarket.EmailService.Application.Extensions
                 x.AddConsumer<UserRegisteredConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host("rabbitmq://localhost");
+                    cfg.Host("localhost", "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
                     cfg.ConfigureEndpoints(context);
                 });
             });
