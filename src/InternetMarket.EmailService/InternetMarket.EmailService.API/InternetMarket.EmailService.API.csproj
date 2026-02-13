@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InternetMarket.EmailService.Infrastructure\InternetMarket.EmailService.Infrastructure.csproj" />
+    <ProjectReference Include="..\InternetMarket.EmailService.Application\InternetMarket.EmailService.Application.csproj" />
   </ItemGroup>
 
 </Project>
