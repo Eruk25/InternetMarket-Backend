@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.UserService.Application.Abstractions.EmailVerificationLinkFactory;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
-using InternetMarket.UserService.Application.DTOs.EmailMetadata;
 using MediatR;
 
 namespace InternetMarket.UserService.Application.EmailVerificationToken.EmailChange
