@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InternetMarket.UserService.Domain\InternetMarket.UserService.Domain.csproj" />
+    <ProjectReference Include="..\..\InternetMarket.Contracts\InternetMarket.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
