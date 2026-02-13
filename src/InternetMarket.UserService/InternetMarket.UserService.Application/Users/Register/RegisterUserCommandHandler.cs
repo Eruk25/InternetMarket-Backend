@@ -2,30 +2,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InternetMarket.Contracts.Events;
 using InternetMarket.UserService.Application.Abstractions.EmailVerificationLinkFactory;
 using InternetMarket.UserService.Application.Abstractions.PasswordHasher;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
-using InternetMarket.UserService.Application.DTOs.EmailMetadata;
 using InternetMarket.UserService.Domain;
 using InternetMarket.UserService.Domain.Entities;
+using MassTransit;
 using MediatR;
 
 namespace InternetMarket.UserService.Application.Users.Register
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand>
     {
+        private readonly IPublishEndpoint _publishEndpoint;
         private readonly IUserRepository _userRepository;
         private readonly IEmailVerificationTokenRepository _emailVerificationTokenRepository;
         private readonly IRegistrationEmailVerificationLinkFactory _emailVerificationLinkFactory;
         private readonly IPasswordHasher _passwordHasher;
 
         public RegisterUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher,
-            IEmailVerificationTokenRepository emailVerificationTokenRepository, IRegistrationEmailVerificationLinkFactory emailVerificationLinkFactory)
+            IEmailVerificationTokenRepository emailVerificationTokenRepository, IRegistrationEmailVerificationLinkFactory emailVerificationLinkFactory,
+            IPublishEndpoint publishEndpoint)
         {
             _userRepository = userRepository;
             _emailVerificationTokenRepository = emailVerificationTokenRepository;
             _emailVerificationLinkFactory = emailVerificationLinkFactory;
             _passwordHasher = passwordHasher;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -47,6 +51,12 @@ namespace InternetMarket.UserService.Application.Users.Register
             };
             await _emailVerificationTokenRepository.CreateAsync(token);
             string verificationLink = _emailVerificationLinkFactory.GenerateLink(token);
+
+            await _publishEndpoint.Publish(new UserRegistered(
+                user.Email,
+                user.Name,
+                verificationLink
+            ));
         }
     }
 }
