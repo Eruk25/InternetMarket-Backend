@@ -13,6 +13,7 @@ namespace InternetMarket.EmailService.Application.Extensions
         {
             services.AddMassTransit(x =>
             {
+                x.AddConsumer<UserRegisteredConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host("rabbitmq://localhost");
