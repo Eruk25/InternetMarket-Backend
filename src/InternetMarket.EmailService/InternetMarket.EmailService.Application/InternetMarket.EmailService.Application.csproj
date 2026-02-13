@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\InternetMarket.Contracts\InternetMarket.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>
