@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
+using InternetMarket.CartService.Application.Abstractions.Repositories;
+using InternetMarket.CartService.Infrastructure.Implementations.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,7 @@ namespace InternetMarket.CartService.Infrastructure.Extensions
             services.AddDbContext<CartContext>(option =>
                 option.UseSqlServer(connectionString));
 
+            services.AddScoped<ICartRepository, CartRepository>();
             return services;
         }
     }
