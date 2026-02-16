@@ -21,6 +21,7 @@ namespace InternetMarket.CartService.Infrastructure.Extensions
                 option.UseSqlServer(connectionString));
 
             services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<ICartItemRepository, CartItemRepository>();
             return services;
         }
     }
