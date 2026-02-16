@@ -20,8 +20,6 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.DB.Configuration
             builder.Property(u => u.Password)
                 .HasMaxLength(500)
                 .IsRequired();
-            builder.Property(u => u.CartId)
-                .IsRequired();
             builder.Property(u => u.Role)
                 .IsRequired();
             builder.Property(u => u.IsConfirmed)
