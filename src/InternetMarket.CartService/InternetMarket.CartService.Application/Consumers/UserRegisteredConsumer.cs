@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.CartService.Application.Abstractions.Repositories;
+using InternetMarket.CartService.Application.Carts.Create;
 using InternetMarket.CartService.Domain.Entities;
 using InternetMarket.Contracts.Events;
 using MassTransit;
+using MassTransit.Mediator;
 
 namespace InternetMarket.CartService.Application.Consumers
 {
     public class UserRegisteredConsumer : IConsumer<UserRegistered>
     {
-        private readonly ICartRepository _cartRepository;
+        private readonly IMediator _mediator;
 
-        public UserRegisteredConsumer(ICartRepository cartRepository)
+        public UserRegisteredConsumer(IMediator mediator)
         {
-            _cartRepository = cartRepository;
+            _mediator = mediator;
         }
 
         public async Task Consume(ConsumeContext<UserRegistered> context)
         {
-            var cart = new Cart(context.Message.UserId);
-            await _cartRepository.CreateAsync(cart);
+            await _mediator.Send(new CreateCartCommand(context.Message.UserId));
         }
 
 
