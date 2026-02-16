@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.Contracts.Events
 {
-    public record UserRegistered(string Email, string Name, string VerificationLink);
+    public record UserRegistered(Guid UserId, string Email, string Name, string VerificationLink);
 }
