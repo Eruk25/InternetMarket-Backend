@@ -31,7 +31,7 @@ namespace InternetMarket.UserService.API.Controllers
         {
             _mediator = mediator;
         }
-        
+
         [HttpGet]
         [Authorize]
         [Route("me")]
@@ -48,7 +48,7 @@ namespace InternetMarket.UserService.API.Controllers
         public async Task<IActionResult> UpdateUserProfileAsync([FromBody] UpdateUserProfileRequest request)
         {
             var userId = User.GetUserId();
-            await _mediator.Send(new UpdateUserProfileCommand(userId, request.Name, request.Email));
+            await _mediator.Send(new UpdateUserProfileCommand(userId, request.Name));
             return Ok();
         }
 
