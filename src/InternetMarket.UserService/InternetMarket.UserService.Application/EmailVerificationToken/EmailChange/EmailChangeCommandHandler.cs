@@ -2,21 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InternetMarket.Contracts.Events.Email;
 using InternetMarket.UserService.Application.Abstractions.EmailVerificationLinkFactory;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
+using MassTransit;
 using MediatR;
 
 namespace InternetMarket.UserService.Application.EmailVerificationToken.EmailChange
 {
     public class RequestEmailChangeCommandHandler : IRequestHandler<EmailChangeCommand>
     {
+        private readonly IPublishEndpoint _publishEndpoint;
         private readonly IEmailVerificationTokenRepository _emailVerificationTokenRepository;
         private readonly IChangeEmailVerificationLinkFactory _emailVerificationLinkFactory;
         private readonly IUserRepository _userRepository;
 
         public RequestEmailChangeCommandHandler(IEmailVerificationTokenRepository emailVerificationTokenRepository, IUserRepository userRepository,
-            IChangeEmailVerificationLinkFactory emailVerificationLinkFactory)
+            IChangeEmailVerificationLinkFactory emailVerificationLinkFactory, IPublishEndpoint publishEndpoint)
         {
+            _publishEndpoint = publishEndpoint;
             _emailVerificationTokenRepository = emailVerificationTokenRepository;
             _emailVerificationLinkFactory = emailVerificationLinkFactory;
             _userRepository = userRepository;
@@ -41,6 +45,9 @@ namespace InternetMarket.UserService.Application.EmailVerificationToken.EmailCha
             };
             await _emailVerificationTokenRepository.CreateAsync(token);
             var verificationLink = _emailVerificationLinkFactory.GenerateLink(token);
+            await _publishEndpoint.Publish(new EmailChangeRequested(
+                user.Email,
+                verificationLink));
         }
     }
 }
