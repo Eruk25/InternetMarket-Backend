@@ -53,6 +53,7 @@ namespace InternetMarket.UserService.Application.Users.Register
             string verificationLink = _emailVerificationLinkFactory.GenerateLink(token);
 
             await _publishEndpoint.Publish(new UserRegistered(
+                user.Id,
                 user.Email,
                 user.Name,
                 verificationLink
