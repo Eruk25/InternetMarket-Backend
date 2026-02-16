@@ -37,8 +37,7 @@ namespace InternetMarket.UserService.Application.Users.Register
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
 
-            var guid = Guid.NewGuid();
-            var user = new User(request.Name, request.Email, _passwordHasher.HashPassword(request.Password), guid);
+            var user = new User(request.Name, request.Email, _passwordHasher.HashPassword(request.Password));
 
             await _userRepository.CreateAsync(user);
 
