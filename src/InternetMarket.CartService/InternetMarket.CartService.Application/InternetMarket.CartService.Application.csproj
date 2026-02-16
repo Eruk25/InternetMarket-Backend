@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InternetMarket.CartService.Domain\InternetMarket.CartService.Domain.csproj" />
+    <ProjectReference Include="..\..\InternetMarket.Contracts\InternetMarket.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
