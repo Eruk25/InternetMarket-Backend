@@ -28,8 +28,6 @@ namespace InternetMarket.UserService.Application.Users.Update.UpdateUserProfile
 
             if (!string.IsNullOrWhiteSpace(request.Name))
                 user.UpdateName(request.Name);
-            if (!string.IsNullOrWhiteSpace(request.Email))
-                user.UpdateEmail(request.Email);
 
             await _userRepository.UpdateAsync(user);
         }
