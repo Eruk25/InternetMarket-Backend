@@ -19,6 +19,9 @@ namespace InternetMarket.CartService.Application.Carts.Create
 
         public async Task Handle(CreateCartCommand request, CancellationToken cancellationToken)
         {
+            if (await _cartRepository.ExistsByUserIdAsync(request.UserId))
+                return;
+
             var cart = new Cart(request.UserId);
             await _cartRepository.CreateAsync(cart);
         }
