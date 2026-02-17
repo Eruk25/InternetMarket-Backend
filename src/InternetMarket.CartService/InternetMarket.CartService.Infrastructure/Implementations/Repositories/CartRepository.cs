@@ -24,6 +24,12 @@ namespace InternetMarket.CartService.Infrastructure.Implementations.Repositories
             return user;
         }
 
+        public async Task<bool> ExisteByUserIdAsync(Guid UserId)
+        {
+            return await _context.Carts
+                .AnyAsync(c => c.UserId == UserId);
+        }
+
         public async Task CreateAsync(Cart cart)
         {
             await _context.Carts.AddAsync(cart);
@@ -41,6 +47,6 @@ namespace InternetMarket.CartService.Infrastructure.Implementations.Repositories
             _context.Carts.Remove(cart);
             await _context.SaveChangesAsync();
         }
-        
+
     }
 }
