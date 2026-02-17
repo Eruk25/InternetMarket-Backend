@@ -24,7 +24,7 @@ namespace InternetMarket.CartService.Infrastructure.Implementations.Repositories
             return user;
         }
 
-        public async Task<bool> ExisteByUserIdAsync(Guid UserId)
+        public async Task<bool> ExistsByUserIdAsync(Guid UserId)
         {
             return await _context.Carts
                 .AnyAsync(c => c.UserId == UserId);
