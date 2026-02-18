@@ -21,6 +21,7 @@ namespace InternetMarket.CartService.Application.Carts.Get
         public async Task<CartDto> Handle(GetCartByUserIdQuery request, CancellationToken cancellationToken)
         {
             var cart = await _cartRepository.GetByUserIdAsync(request.UserId);
+
             if (cart is null)
             {
                 cart = new Cart(request.UserId);
