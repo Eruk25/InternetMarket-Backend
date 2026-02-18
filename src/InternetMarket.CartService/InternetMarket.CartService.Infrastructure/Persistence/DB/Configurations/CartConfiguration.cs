@@ -20,5 +20,8 @@ public class CartConfiguration : IEntityTypeConfiguration<Cart>
         builder.Property(c => c.CreatedAt)
             .IsRequired();
         builder.Property(c => c.UpdatedAt);
+
+        builder.HasIndex(c => c.UserId)
+            .IsUnique();
     }
 }
