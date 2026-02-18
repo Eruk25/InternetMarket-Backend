@@ -7,7 +7,5 @@ using InternetMarket.CartService.Domain.Entities;
 
 namespace InternetMarket.CartService.Application.Carts
 {
-    public record CartDto(
-        IEnumerable<CartItemDto> CartItems
-    );
+    public record CartDto(IEnumerable<CartItemDto> CartItems);
 }
