@@ -10,7 +10,8 @@ namespace InternetMarket.CartService.Domain.Entities
     {
         public Guid Id { get; private set; }
         public Guid UserId { get; private set; }
-        public List<CartItem> CartItems { get; private set; } = new();
+        private readonly List<CartItem> CartItems = new();
+        public IReadOnlyCollection<CartItem> Items => CartItems.AsReadOnly();
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
