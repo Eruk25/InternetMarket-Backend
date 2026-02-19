@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.CartService.API.DTOs.Requests
 {
-    public record AddToCartRequest(Guid ProductId, int Quantity);
+    public record AddCartItemRequest(Guid ProductId, int Quantity);
 }
