@@ -18,6 +18,7 @@ namespace InternetMarket.CartService.Domain.Entities
         public Cart(Guid userId)
         {
             UserId = userId;
+            CreatedAt = DateTime.UtcNow;
         }
 
         public void AddItem(Guid productId, int quantity)
