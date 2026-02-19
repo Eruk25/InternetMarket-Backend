@@ -10,8 +10,8 @@ namespace InternetMarket.CartService.Domain.Entities
     {
         public Guid Id { get; private set; }
         public Guid UserId { get; private set; }
-        private readonly List<CartItem> CartItems = new();
-        public IReadOnlyCollection<CartItem> Items => CartItems.AsReadOnly();
+        private readonly List<CartItem> _cartItems = new();
+        public IReadOnlyCollection<CartItem> Items => _cartItems.AsReadOnly();
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
@@ -22,14 +22,14 @@ namespace InternetMarket.CartService.Domain.Entities
 
         public void AddItem(Guid productId, int quantity)
         {
-            var existing = CartItems.FirstOrDefault(ci => ci.ProductId == productId);
+            var existing = _cartItems.FirstOrDefault(ci => ci.ProductId == productId);
 
             if (existing is not null)
                 existing.Quantity += quantity;
 
             var item = new CartItem(productId, quantity);
 
-            CartItems.Add(item);
+            _cartItems.Add(item);
             UpdatedAt = DateTime.UtcNow;
         }
     }
