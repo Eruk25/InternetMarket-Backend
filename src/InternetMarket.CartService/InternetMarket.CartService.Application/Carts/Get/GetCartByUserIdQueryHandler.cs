@@ -28,7 +28,7 @@ namespace InternetMarket.CartService.Application.Carts.Get
                 await _cartRepository.CreateAsync(cart);
             }
 
-            var cartItems = cart.CartItems
+            var cartItems = cart.Items
                 .Select(ci => new CartItemDto(
                     ci.ProductId,
                     ci.Quantity,
