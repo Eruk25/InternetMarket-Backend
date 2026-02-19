@@ -19,5 +19,18 @@ namespace InternetMarket.CartService.Domain.Entities
         {
             UserId = userId;
         }
+
+        public void AddItem(Guid productId, int quantity)
+        {
+            var existing = CartItems.FirstOrDefault(ci => ci.ProductId == productId);
+
+            if (existing is not null)
+                existing.Quantity += quantity;
+
+            var item = new CartItem(productId, quantity);
+
+            CartItems.Add(item);
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }
