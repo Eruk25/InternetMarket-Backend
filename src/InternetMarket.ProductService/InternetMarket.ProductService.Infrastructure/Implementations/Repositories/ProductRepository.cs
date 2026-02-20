@@ -36,6 +36,16 @@ namespace InternetMarket.ProductService.Infrastructure.Implementations.Repositor
             return product;
         }
 
+        public async Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<Guid> ids)
+        {
+            var products = await _context.Products
+                .Where(p => ids.Contains(p.Id))
+                .Include(p => p.Category)
+                .Include(p => p.Provider)
+                .ToListAsync();
+            return products;
+        }
+
         public async Task CreateAsync(Product product)
         {
             await _context.Products.AddAsync(product);
