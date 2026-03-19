@@ -21,14 +21,14 @@ namespace InternetMarket.CartService.Domain.Entities
             CreatedAt = DateTime.UtcNow;
         }
 
-        public void AddItem(Guid productId, int quantity)
+        public void AddItem(Guid productId, string title, decimal price, int quantity)
         {
             var existing = _cartItems.FirstOrDefault(ci => ci.ProductId == productId);
 
             if (existing is not null)
                 existing.Quantity += quantity;
 
-            var item = new CartItem(productId, quantity);
+            var item = new CartItem(productId, title, price, quantity);
 
             _cartItems.Add(item);
             UpdatedAt = DateTime.UtcNow;
