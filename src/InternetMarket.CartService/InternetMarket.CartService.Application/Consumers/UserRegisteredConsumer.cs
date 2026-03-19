@@ -8,21 +8,22 @@ using InternetMarket.CartService.Domain.Entities;
 using InternetMarket.Contracts.Events;
 using MassTransit;
 using MassTransit.Mediator;
+using MediatR;
 
 namespace InternetMarket.CartService.Application.Consumers
 {
     public class UserRegisteredConsumer : IConsumer<UserRegistered>
     {
-        private readonly IMediator _mediator;
+        private readonly ISender _sender;
 
-        public UserRegisteredConsumer(IMediator mediator)
+        public UserRegisteredConsumer(ISender sender)
         {
-            _mediator = mediator;
+            _sender = sender;
         }
 
         public async Task Consume(ConsumeContext<UserRegistered> context)
         {
-            await _mediator.Send(new CreateCartCommand(context.Message.UserId));
+            await _sender.Send(new CreateCartCommand(context.Message.UserId));
         }
 
     }
