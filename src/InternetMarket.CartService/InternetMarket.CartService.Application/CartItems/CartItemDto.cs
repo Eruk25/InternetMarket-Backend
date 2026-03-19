@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.CartService.Application.CartItems
 {
-    public record CartItemDto(Guid ProductId, int Quantity, decimal UntilPrice);
+    public record CartItemDto(Guid ProductId, string Title, decimal Price, int Quantity);
 }
