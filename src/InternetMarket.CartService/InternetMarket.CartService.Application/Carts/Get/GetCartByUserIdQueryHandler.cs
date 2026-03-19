@@ -31,8 +31,9 @@ namespace InternetMarket.CartService.Application.Carts.Get
             var cartItems = cart.Items
                 .Select(ci => new CartItemDto(
                     ci.ProductId,
-                    ci.Quantity,
-                    ci.UntilPrice))
+                    ci.Title,
+                    ci.Price,
+                    ci.Quantity))
                 .ToList();
             return new CartDto(cartItems);
         }
