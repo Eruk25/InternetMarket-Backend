@@ -14,9 +14,11 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
             .IsRequired();
         builder.Property(ci => ci.ProductId)
             .IsRequired();
+        builder.Property(ci => ci.Title)
+            .IsRequired();
         builder.Property(ci => ci.Quantity)
             .IsRequired();
-        builder.Property(ci => ci.UntilPrice)
+        builder.Property(ci => ci.Price)
             .IsRequired();
     }
 }
