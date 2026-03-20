@@ -10,8 +10,9 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
     public void Configure(EntityTypeBuilder<CartItem> builder)
     {
         builder.HasKey(ci => ci.Id);
-        builder.Property(ci => ci.CartId)
-            .IsRequired();
+        builder.HasOne(ci => ci.Cart)
+            .WithMany(c => c.Items)
+            .HasForeignKey(ci => ci.CartId);
         builder.Property(ci => ci.ProductId)
             .IsRequired();
         builder.Property(ci => ci.Title)
