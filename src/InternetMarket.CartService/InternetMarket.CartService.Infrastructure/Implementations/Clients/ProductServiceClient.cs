@@ -21,15 +21,16 @@ namespace InternetMarket.CartService.Infrastructure.Implementations.Clients
 
         public async Task<ProductDto?> GetProductByIdAsync(Guid productId)
         {
-            string jsonPayload = JsonSerializer.Serialize(productId);
+            var payload = new { Ids = new List<Guid> { productId } };
+            string jsonPayload = JsonSerializer.Serialize(payload);
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync($"products/by-ids", content);
+            var response = await _httpClient.PostAsync($"by-ids", content);
 
             if (!response.IsSuccessStatusCode)
                 throw new Exception();
 
-            var product = await response.Content.ReadFromJsonAsync<ProductDto>();
-            return product;
+            var products = await response.Content.ReadFromJsonAsync<List<ProductDto>>();
+            return products?.FirstOrDefault();
         }
     }
 }
