@@ -4,6 +4,7 @@ using InternetMarket.CartService.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InternetMarket.CartService.Infrastructure.Migrations
 {
     [DbContext(typeof(CartContext))]
-    partial class CartContextModelSnapshot : ModelSnapshot
+    [Migration("20260319130625_RemoveExcessCartId")]
+    partial class RemoveExcessCartId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,6 +57,9 @@ namespace InternetMarket.CartService.Infrastructure.Migrations
                     b.Property<Guid>("CartId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CartId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -71,16 +77,22 @@ namespace InternetMarket.CartService.Infrastructure.Migrations
 
                     b.HasIndex("CartId");
 
+                    b.HasIndex("CartId1");
+
                     b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("InternetMarket.CartService.Domain.Entities.CartItem", b =>
                 {
-                    b.HasOne("InternetMarket.CartService.Domain.Entities.Cart", "Cart")
-                        .WithMany("Items")
+                    b.HasOne("InternetMarket.CartService.Domain.Entities.Cart", null)
+                        .WithMany("_cartItems")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("InternetMarket.CartService.Domain.Entities.Cart", "Cart")
+                        .WithMany("Items")
+                        .HasForeignKey("CartId1");
 
                     b.Navigation("Cart");
                 });
@@ -88,6 +100,8 @@ namespace InternetMarket.CartService.Infrastructure.Migrations
             modelBuilder.Entity("InternetMarket.CartService.Domain.Entities.Cart", b =>
                 {
                     b.Navigation("Items");
+
+                    b.Navigation("_cartItems");
                 });
 #pragma warning restore 612, 618
         }
