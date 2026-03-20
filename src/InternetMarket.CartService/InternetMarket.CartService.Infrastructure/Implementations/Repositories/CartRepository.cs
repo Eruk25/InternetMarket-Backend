@@ -20,6 +20,7 @@ namespace InternetMarket.CartService.Infrastructure.Implementations.Repositories
         public async Task<Cart?> GetByUserIdAsync(Guid UserId)
         {
             var user = await _context.Carts
+                .Include(c => c.Items)
                 .FirstOrDefaultAsync(c => c.UserId == UserId);
             return user;
         }
