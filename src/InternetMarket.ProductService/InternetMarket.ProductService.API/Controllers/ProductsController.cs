@@ -33,7 +33,7 @@ namespace InternetMarket.ProductService.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<ProductDto>> GetByIdAsync([FromQuery] Guid id)
+        public async Task<ActionResult<ProductDto>> GetByIdAsync(Guid id)
         {
             var product = await _mediator.Send(new GetProductByIdQuery(id));
             return Ok(product);
