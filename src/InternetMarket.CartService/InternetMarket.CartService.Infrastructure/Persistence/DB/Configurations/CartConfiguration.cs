@@ -13,7 +13,7 @@ public class CartConfiguration : IEntityTypeConfiguration<Cart>
         builder.HasKey(c => c.Id);
         builder.Property(c => c.UserId)
             .IsRequired();
-        builder.HasMany<CartItem>("_cartItems")
+        builder.HasMany(c => c.Items)
             .WithOne()
             .HasForeignKey(ci => ci.CartId)
             .OnDelete(DeleteBehavior.Cascade);
@@ -23,7 +23,5 @@ public class CartConfiguration : IEntityTypeConfiguration<Cart>
 
         builder.HasIndex(c => c.UserId)
             .IsUnique();
-        builder.Navigation("_cartItems")
-            .UsePropertyAccessMode(PropertyAccessMode.Field);
     }
 }
