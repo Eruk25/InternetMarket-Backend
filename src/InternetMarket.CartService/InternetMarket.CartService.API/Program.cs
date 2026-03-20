@@ -1,3 +1,4 @@
+using InternetMarket.CartService.API.Extensions;
 using InternetMarket.CartService.Application.Extensions;
 using InternetMarket.CartService.Infrastructure.Extensions;
 
@@ -5,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services
+    .AddPresentation()
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
@@ -16,5 +18,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.MapControllers();
 app.Run();
