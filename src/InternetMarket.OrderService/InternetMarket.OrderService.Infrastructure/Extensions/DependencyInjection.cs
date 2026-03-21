@@ -21,7 +21,6 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
                 options.UseSqlServer(connectionString));
 
             services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             return services;
         }
     }
