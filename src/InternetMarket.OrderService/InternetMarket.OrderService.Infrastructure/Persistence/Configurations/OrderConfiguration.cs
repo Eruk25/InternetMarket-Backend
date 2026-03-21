@@ -15,9 +15,6 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence.Configurations
             builder.HasKey(o => o.Id);
             builder.Property(o => o.UserId)
                 .IsRequired();
-            builder.HasMany(o => o.OrderItems)
-                .WithOne(oi => oi.Order)
-                .HasForeignKey(oi => oi.OrderId);
             builder.Property(o => o.PaymentDate)
                 .IsRequired();
             builder.Property(o => o.Status)
@@ -25,6 +22,14 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence.Configurations
             builder.Property(o => o.CreatedAt)
                 .IsRequired();
             builder.Property(o => o.UpdatedAt);
+
+            builder.HasMany(o => o.OrderItems)
+                .WithOne(oi => oi.Order)
+                .HasForeignKey(oi => oi.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.Metadata
+                .FindNavigation(nameof(Order.OrderItems))!
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }
