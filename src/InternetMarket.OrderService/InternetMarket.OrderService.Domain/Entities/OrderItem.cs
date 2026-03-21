@@ -16,10 +16,9 @@ namespace InternetMarket.OrderService.Domain.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
-        public OrderItem(Guid productId, Guid orderId, int quantity, decimal untilPrice)
+        public OrderItem(Guid productId, int quantity, decimal untilPrice)
         {
             ProductId = productId;
-            OrderId = orderId;
             Quantity = quantity;
             UntilPrice = untilPrice;
             CreatedAt = DateTime.UtcNow;
