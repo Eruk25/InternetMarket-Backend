@@ -23,10 +23,10 @@ namespace InternetMarket.CartService.API.Extensions
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
 
-                        ValidIssuer = configuration[""],
-                        ValidAudience = configuration[""],
+                        ValidIssuer = configuration["AuthOptions:Issuer"],
+                        ValidAudience = configuration["AuthOptions:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(configuration[""]!)),
+                            Encoding.UTF8.GetBytes(configuration["AuthOptions:SecretKey"]!)),
                         RoleClaimType = ClaimTypes.Role
                     };
                 });
