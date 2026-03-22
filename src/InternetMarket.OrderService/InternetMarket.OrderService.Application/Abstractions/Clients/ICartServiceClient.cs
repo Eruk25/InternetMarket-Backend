@@ -8,6 +8,8 @@ namespace InternetMarket.OrderService.Application.Abstractions.Clients
 {
     public interface ICartServiceClient
     {
-        Task<CartDto> GetCartAsync(Guid userId);
+        Task<CartDto?> GetCartByUserIdAsync(Guid userId);
+        Task ClearCartAsync(Guid cartId);
+
     }
 }
