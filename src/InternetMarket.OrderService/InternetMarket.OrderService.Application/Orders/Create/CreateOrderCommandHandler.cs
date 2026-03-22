@@ -22,8 +22,7 @@ namespace InternetMarket.OrderService.Application.Orders.Create
 
         public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            var cart = await _cartClient.GetCartAsync(request.UserId);
-
+            var cart = await _cartClient.GetCartByUserIdAsync(request.UserId);
             if (cart is null || !cart.CartItems.Any())
                 throw new Exception("Cart is empty");
 
@@ -37,6 +36,7 @@ namespace InternetMarket.OrderService.Application.Orders.Create
             order.AddItems(orderItems);
 
             await _orderRepository.CreateAsync(order);
+            await _cartClient.ClearCartAsync(request.UserId);
         }
     }
 }
