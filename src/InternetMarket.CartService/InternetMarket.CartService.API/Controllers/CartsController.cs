@@ -6,6 +6,7 @@ using InternetMarket.CartService.API.DTOs.Requests;
 using InternetMarket.CartService.API.Extensions;
 using InternetMarket.CartService.Application.CartItems.Create;
 using InternetMarket.CartService.Application.Carts;
+using InternetMarket.CartService.Application.Carts.Clear;
 using InternetMarket.CartService.Application.Carts.Get;
 using InternetMarket.CartService.Infrastructure.Migrations;
 using MediatR;
@@ -41,6 +42,22 @@ namespace InternetMarket.CartService.API.Controllers
         {
             var userId = User.GetUserId();
             await _mediator.Send(new AddCartItemCommand(userId, request.ProductId, request.Quantity));
+            return NoContent();
+        }
+
+        [HttpGet]
+        [Route("{userId}")]
+        public async Task<ActionResult<CartDto>> GetByIdAsync(Guid userId)
+        {
+            var cart = await _mediator.Send(new GetCartByUserIdQuery(userId));
+            return cart;
+        }
+
+        [HttpDelete]
+        [Route("clear/{userId}")]
+        public async Task<ActionResult> ClearAsync(Guid userId)
+        {
+            await _mediator.Send(new ClearCartCommand(userId));
             return NoContent();
         }
     }
