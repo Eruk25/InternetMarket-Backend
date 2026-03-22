@@ -16,7 +16,7 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence.Configurations
             builder.Property(o => o.UserId)
                 .IsRequired();
             builder.Property(o => o.PaymentDate)
-                .IsRequired();
+                .IsRequired(false);
             builder.Property(o => o.Status)
                 .IsRequired();
             builder.Property(o => o.CreatedAt)
