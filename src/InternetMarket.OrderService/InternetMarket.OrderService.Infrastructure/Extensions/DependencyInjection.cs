@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InternetMarket.OrderService.Application.Abstractions.Clients;
 using InternetMarket.OrderService.Application.Abstractions.Repositories;
+using InternetMarket.OrderService.Infrastructure.Implementations.Clients;
 using InternetMarket.OrderService.Infrastructure.Implementations.Repositories;
 using InternetMarket.OrderService.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +22,11 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
             services.AddDbContext<OrderContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            services.AddHttpClient<ICartServiceClient, CartServiceClient>(client =>
+            {
+                var cartSection = configuration.GetSection("CartService");
+                client.BaseAddress = new Uri(cartSection["BaseUrl"]!);
+            });
             services.AddScoped<IOrderRepository, OrderRepository>();
             return services;
         }
