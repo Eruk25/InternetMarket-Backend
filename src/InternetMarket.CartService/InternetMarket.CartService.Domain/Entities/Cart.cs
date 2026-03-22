@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Net.ServerSentEvents;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace InternetMarket.CartService.Domain.Entities
@@ -31,6 +33,14 @@ namespace InternetMarket.CartService.Domain.Entities
 
             Items.Add(item);
             UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void Clear()
+        {
+            if (Items.Count == 0)
+                return;
+
+            Items.Clear();
         }
     }
 }
