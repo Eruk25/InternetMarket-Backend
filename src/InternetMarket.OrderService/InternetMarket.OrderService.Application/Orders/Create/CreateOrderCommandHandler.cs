@@ -29,6 +29,7 @@ namespace InternetMarket.OrderService.Application.Orders.Create
             var orderItems = cart.CartItems
                 .Select(ci => new OrderItem(
                     ci.ProductId,
+                    ci.Title,
                     ci.Quantity,
                     ci.Price));
 
