@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.OrderService.API.Extensions;
+using InternetMarket.OrderService.Application.Orders;
 using InternetMarket.OrderService.Application.Orders.Create;
 using InternetMarket.OrderService.Application.Orders.Delete;
+using InternetMarket.OrderService.Application.Orders.Get.GetAll;
+using InternetMarket.OrderService.Application.Orders.Get.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +22,22 @@ namespace InternetMarket.OrderService.API.Controllers
         public OrderController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<OrderDto>>> GetAllByIdAsync()
+        {
+            var userId = User.GetUserId();
+            var orders = await _mediator.Send(new GetAllOrdersByUserIdQuery(userId));
+            return Ok(orders);
+        }
+
+        [HttpGet]
+        [Route("{orderId}")]
+        public async Task<ActionResult<OrderDto>> GetByIdAsync([FromRoute] Guid orderId)
+        {
+            var order = await _mediator.Send(new GetOrderByIdQuery(orderId));
+            return order;
         }
 
         [HttpPost]
