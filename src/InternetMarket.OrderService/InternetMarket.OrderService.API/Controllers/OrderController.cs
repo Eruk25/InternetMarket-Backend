@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.OrderService.API.Extensions;
 using InternetMarket.OrderService.Application.Orders.Create;
+using InternetMarket.OrderService.Application.Orders.Delete;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,7 @@ namespace InternetMarket.OrderService.API.Controllers
         }
 
         [HttpPost]
-        [Route("create-order")]
+        [Route("create")]
         public async Task<IActionResult> CreateAsync()
         {
             var userId = Guid.Parse("184CF4DB-492A-4419-FD61-08DE6D5434FE");
@@ -29,5 +30,12 @@ namespace InternetMarket.OrderService.API.Controllers
             return Ok();
         }
 
+        [HttpDelete]
+        [Route("cancel/{orderId}")]
+        public async Task<IActionResult> CancelAsync([FromRoute] Guid orderId)
+        {
+            await _mediator.Send(new CancelOrderCommand(orderId));
+            return Ok();
+        }
     }
 }
