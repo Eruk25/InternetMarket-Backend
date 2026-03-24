@@ -6,6 +6,7 @@ using InternetMarket.OrderService.Application.Abstractions.Repositories;
 using InternetMarket.OrderService.Domain.Entities;
 using InternetMarket.OrderService.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace InternetMarket.OrderService.Infrastructure.Implementations.Repositories
 {
@@ -18,10 +19,11 @@ namespace InternetMarket.OrderService.Infrastructure.Implementations.Repositorie
             _context = context;
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync()
+        public async Task<IEnumerable<Order>> GetAllByUserIdAsync(Guid userId)
         {
             var orders = await _context.Orders
                 .Include(o => o.OrderItems)
+                .Where(o => o.UserId == userId)
                 .ToListAsync();
             return orders;
         }
