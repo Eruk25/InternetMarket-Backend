@@ -8,7 +8,7 @@ namespace InternetMarket.OrderService.Application.Abstractions.Repositories
 {
     public interface IOrderRepository
     {
-        Task<IEnumerable<Order>> GetAllAsync();
+        Task<IEnumerable<Order>> GetAllByUserIdAsync(Guid userId);
         Task<Order?> GetByIdAsync(Guid id);
         Task CreateAsync(Order order);
         Task UpdateAsync(Order order);
