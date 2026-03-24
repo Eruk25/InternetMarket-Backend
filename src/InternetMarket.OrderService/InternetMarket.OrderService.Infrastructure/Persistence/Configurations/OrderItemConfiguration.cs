@@ -19,8 +19,9 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence.Configurations
                 .IsRequired();
             builder.Property(oi => oi.Quantity)
                 .IsRequired();
-            builder.Property(oi => oi.UntilPrice)
+            builder.Property(oi => oi.UnitPrice)
                 .IsRequired();
+            builder.Ignore(oi => oi.TotalPrice);
             builder.Property(oi => oi.CreatedAt)
                 .IsRequired();
             builder.Property(oi => oi.UpdatedAt);
