@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InternetMarket.Contracts.Events.Order;
 using InternetMarket.OrderService.Application.Abstractions.Clients;
 using InternetMarket.OrderService.Application.Abstractions.Repositories;
 using InternetMarket.OrderService.Domain.Entities;
+using MassTransit;
 using MediatR;
 
 namespace InternetMarket.OrderService.Application.Orders.Create
@@ -13,11 +15,13 @@ namespace InternetMarket.OrderService.Application.Orders.Create
     {
         private readonly IOrderRepository _orderRepository;
         private readonly ICartServiceClient _cartClient;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public CreateOrderCommandHandler(IOrderRepository orderRepository, ICartServiceClient cartClient)
+        public CreateOrderCommandHandler(IOrderRepository orderRepository, ICartServiceClient cartClient, IPublishEndpoint publishEndpoint)
         {
             _orderRepository = orderRepository;
             _cartClient = cartClient;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -38,6 +42,17 @@ namespace InternetMarket.OrderService.Application.Orders.Create
 
             await _orderRepository.CreateAsync(order);
             await _cartClient.ClearCartAsync(request.UserId);
+
+            await _publishEndpoint.Publish(new OrderCreated(
+                order.Id,
+                request.Email,
+                orderItems.Select(oi => new Contracts.Events.Order.DTOs.OrderItem(
+                    oi.Title,
+                    oi.Quantity,
+                    oi.UnitPrice
+                )),
+                order.TotalPrice
+            ));
         }
     }
 }
