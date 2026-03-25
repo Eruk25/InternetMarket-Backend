@@ -14,9 +14,19 @@ namespace InternetMarket.OrderService.API.Extensions
             var userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (userId is null)
-                throw new KeyNotFoundException($"User with id {userId} was not found");
+                throw new KeyNotFoundException($"User was not found");
 
             return Guid.Parse(userId);
+        }
+
+        public static string GetUserEmail(this ClaimsPrincipal principal)
+        {
+            var email = principal.FindFirst(ClaimTypes.Email)?.Value;
+
+            if (email is null)
+                throw new Exception($"Email was not found");
+
+            return email;
         }
     }
 }
