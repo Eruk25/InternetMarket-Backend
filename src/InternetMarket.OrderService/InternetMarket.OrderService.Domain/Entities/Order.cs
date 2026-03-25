@@ -12,6 +12,7 @@ namespace InternetMarket.OrderService.Domain.Entities
         public Guid UserId { get; private set; }
         private readonly List<OrderItem> _orderItems = new List<OrderItem>();
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
+        public decimal TotalPrice { get; private set; }
         public DateTime? PaymentDate { get; private set; }
         public string Status { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -32,6 +33,7 @@ namespace InternetMarket.OrderService.Domain.Entities
             {
                 _orderItems.Add(item);
             }
+            TotalPrice = _orderItems.Sum(oi => oi.TotalPrice);
         }
     }
 }
