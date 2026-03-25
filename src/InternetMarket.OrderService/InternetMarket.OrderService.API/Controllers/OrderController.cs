@@ -9,6 +9,7 @@ using InternetMarket.OrderService.Application.Orders.Delete;
 using InternetMarket.OrderService.Application.Orders.Get.GetAll;
 using InternetMarket.OrderService.Application.Orders.Get.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InternetMarket.OrderService.API.Controllers
@@ -44,7 +45,7 @@ namespace InternetMarket.OrderService.API.Controllers
         [Route("create")]
         public async Task<IActionResult> CreateAsync()
         {
-            var userId = Guid.Parse("184CF4DB-492A-4419-FD61-08DE6D5434FE");
+            var userId = User.GetUserId();
             await _mediator.Send(new CreateOrderCommand(userId));
             return Ok();
         }
