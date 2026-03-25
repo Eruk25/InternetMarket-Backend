@@ -46,7 +46,8 @@ namespace InternetMarket.OrderService.API.Controllers
         public async Task<IActionResult> CreateAsync()
         {
             var userId = User.GetUserId();
-            await _mediator.Send(new CreateOrderCommand(userId));
+            var email = User.GetUserEmail();
+            await _mediator.Send(new CreateOrderCommand(userId, email));
             return Ok();
         }
 
