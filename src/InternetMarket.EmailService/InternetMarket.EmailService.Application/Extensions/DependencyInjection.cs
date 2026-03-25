@@ -6,6 +6,7 @@ using InternetMarket.Contracts.Events.Email;
 using InternetMarket.Contracts.Events.Password;
 using InternetMarket.EmailService.Application.Consumers;
 using InternetMarket.EmailService.Application.Consumers.Email;
+using InternetMarket.EmailService.Application.Consumers.Order;
 using InternetMarket.EmailService.Application.Consumers.Password;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ namespace InternetMarket.EmailService.Application.Extensions
                 x.AddConsumer<EmailChangeRequestedConsumer>();
                 x.AddConsumer<UserRegisteredConsumer>();
                 x.AddConsumer<PasswordResetRequestedConsumer>();
+                x.AddConsumer<OrderCreatedConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host("localhost", "/", h =>
