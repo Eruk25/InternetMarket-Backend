@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.OrderService.Domain.Entities;
+using InternetMarket.OrderService.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,6 +21,10 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence.Configurations
             builder.Property(o => o.PaymentDate)
                 .IsRequired(false);
             builder.Property(o => o.Status)
+                .HasConversion(
+                    status => status.Value,
+                    value => OrderStatus.FromValue(value)
+                )
                 .IsRequired();
             builder.Property(o => o.CreatedAt)
                 .IsRequired();
