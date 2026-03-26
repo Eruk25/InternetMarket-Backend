@@ -23,6 +23,7 @@ namespace InternetMarket.EmailService.Application.Extensions
                 x.AddConsumer<UserRegisteredConsumer>();
                 x.AddConsumer<PasswordResetRequestedConsumer>();
                 x.AddConsumer<OrderCreatedConsumer>();
+                x.AddConsumer<OrderCancelledConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host("localhost", "/", h =>
