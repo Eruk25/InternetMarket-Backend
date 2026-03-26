@@ -55,7 +55,8 @@ namespace InternetMarket.OrderService.API.Controllers
         [Route("cancel/{orderId}")]
         public async Task<IActionResult> CancelAsync([FromRoute] Guid orderId)
         {
-            await _mediator.Send(new CancelOrderCommand(orderId));
+            var email = User.GetUserEmail();
+            await _mediator.Send(new CancelOrderCommand(orderId, email));
             return Ok();
         }
     }
