@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InternetMarket.OrderService.Domain.ValueObjects;
 
 namespace InternetMarket.OrderService.Domain.Entities
 {
@@ -21,7 +22,6 @@ namespace InternetMarket.OrderService.Domain.Entities
         public Order(Guid userId)
         {
             UserId = userId;
-            Status = "status";
             CreatedAt = DateTime.UtcNow;
         }
 
@@ -34,6 +34,14 @@ namespace InternetMarket.OrderService.Domain.Entities
                 _orderItems.Add(item);
             }
             TotalPrice = _orderItems.Sum(oi => oi.TotalPrice);
+        }
+
+        public void Cancel()
+        {
+            if (Status == OrderStatus.Paid)
+                throw new NotImplementedException();
+
+            Status = OrderStatus.Cancelled;
         }
     }
 }
