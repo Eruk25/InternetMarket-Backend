@@ -14,7 +14,7 @@ namespace InternetMarket.OrderService.Domain.Entities
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
         public decimal TotalPrice { get; private set; }
         public DateTime? PaymentDate { get; private set; }
-        public string Status { get; private set; }
+        public OrderStatus Status { get; private set; } = OrderStatus.Created;
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
 
