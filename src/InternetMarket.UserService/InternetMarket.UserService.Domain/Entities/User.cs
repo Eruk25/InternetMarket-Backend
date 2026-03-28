@@ -1,5 +1,7 @@
 ﻿using System.Data;
+using System.Globalization;
 using System.Runtime.Serialization;
+using InternetMarket.UserService.Domain.ValueObjects;
 
 namespace InternetMarket.UserService.Domain.Entities;
 
@@ -7,17 +9,17 @@ public class User
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; }
-    public string Email { get; private set; }
-    public string Password { get; private set; }
-    public string Role { get; private set; }
+    public Email Email { get; private set; }
+    public Password Password { get; private set; }
+    public UserRole Role { get; private set; }
     public bool IsConfirmed { get; private set; }
 
     public User(string name, string email, string password)
     {
         Name = name;
-        Email = email;
-        Password = password;
-        Role = "Role";
+        Email = Email.Create(email);
+        Password = Password.Create(password);
+        Role = UserRole.Client;
         IsConfirmed = false;
     }
 
@@ -30,22 +32,16 @@ public class User
 
     public void UpdateEmail(string email)
     {
-        if (string.IsNullOrWhiteSpace(email))
-            throw new ArgumentNullException("Email cannot be null or empty", nameof(email));
-        Email = email;
+        Email = Email.Create(email);
     }
 
     public void UpdatePassword(string password)
     {
-        if (string.IsNullOrWhiteSpace(password))
-            throw new ArgumentNullException("Password cannot be null or empty", nameof(password));
-        Password = password;
+        Password = Password.Create(password);
     }
 
-    public void UpdateRole(string role)
+    public void UpdateRole(UserRole role)
     {
-        if (string.IsNullOrWhiteSpace(role))
-            throw new ArgumentNullException("Role cannot be null or empty", nameof(role));
         Role = role;
     }
 
