@@ -14,11 +14,11 @@ public class User
     public UserRole Role { get; private set; }
     public bool IsConfirmed { get; private set; }
 
-    public User(string name, string email, string password)
+    public User(string name, Email email, Password password)
     {
         Name = name;
-        Email = Email.Create(email);
-        Password = Password.Create(password);
+        Email = email;
+        Password = password;
         Role = UserRole.Client;
         IsConfirmed = false;
     }
@@ -30,14 +30,14 @@ public class User
         Name = name;
     }
 
-    public void UpdateEmail(string email)
+    public void UpdateEmail(Email email)
     {
-        Email = Email.Create(email);
+        Email = email;
     }
 
-    public void UpdatePassword(string password)
+    public void UpdatePassword(Password password)
     {
-        Password = Password.Create(password);
+        Password = password;
     }
 
     public void UpdateRole(UserRole role)
