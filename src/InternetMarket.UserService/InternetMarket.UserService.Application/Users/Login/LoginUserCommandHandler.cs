@@ -31,7 +31,7 @@ namespace InternetMarket.UserService.Application.Users.Login
 
             var user = await _userRepository.GetByEmailAsync(request.Email);
 
-            if (user is null || !_passwordHasher.VerifyPassword(request.Password, user.Password))
+            if (user is null || !_passwordHasher.VerifyPassword(request.Password, user.Password.Value))
                 throw new InvalidOperationException("Invalid email or password.");
 
             return _tokenGenerator.GenerateToken(user);
