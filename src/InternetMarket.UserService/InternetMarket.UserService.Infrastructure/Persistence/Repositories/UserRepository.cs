@@ -29,7 +29,7 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.Repositories
         public async Task<User?> GetByEmailAsync(string Email)
         {
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == Email);
+                .FirstOrDefaultAsync(u => u.Email.Value == Email);
             return user;
         }
 
