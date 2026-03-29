@@ -11,7 +11,7 @@ namespace InternetMarket.UserService.Application.Users.GetMe
     public class GetMyProfileQueryHandler : IRequestHandler<GetMyProfileQuery, GetMyProfileResponse>
     {
         private readonly IUserRepository _userRepository;
-        
+
         public GetMyProfileQueryHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
