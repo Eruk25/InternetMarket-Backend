@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
+using InternetMarket.UserService.Domain.ValueObjects;
 using MediatR;
 
 namespace InternetMarket.UserService.Application.Users.Update.UpdateUserEmail
@@ -27,7 +28,7 @@ namespace InternetMarket.UserService.Application.Users.Update.UpdateUserEmail
             if (user is null)
                 throw new InvalidOperationException("User was not found.");
 
-            user.UpdateEmail(request.Email);
+            user.UpdateEmail(Email.Create(request.Email));
             await _userRepository.UpdateAsync(user);
         }
     }
