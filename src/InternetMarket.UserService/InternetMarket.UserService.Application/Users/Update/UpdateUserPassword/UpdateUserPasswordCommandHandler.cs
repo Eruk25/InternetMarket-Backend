@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using InternetMarket.UserService.Application.Abstractions.PasswordHasher;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
 using InternetMarket.UserService.Domain.Entities;
+using InternetMarket.UserService.Domain.ValueObjects;
 using MediatR;
 
 namespace InternetMarket.UserService.Application.Users.Update.UpdateUserPassword
@@ -39,7 +40,7 @@ namespace InternetMarket.UserService.Application.Users.Update.UpdateUserPassword
                 throw new KeyNotFoundException("User was not found.");
 
             var hashedPassword = _passwordHasher.HashPassword(request.NewPassword);
-            user.UpdatePassword(hashedPassword);
+            user.UpdatePassword(Password.Create(hashedPassword));
 
             await _userRepository.UpdateAsync(user);
             await _resetPasswordTokenRepository.DeleteAsync(token);
