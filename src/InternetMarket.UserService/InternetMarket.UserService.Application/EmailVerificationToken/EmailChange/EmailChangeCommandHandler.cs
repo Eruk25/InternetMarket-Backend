@@ -46,7 +46,7 @@ namespace InternetMarket.UserService.Application.EmailVerificationToken.EmailCha
             await _emailVerificationTokenRepository.CreateAsync(token);
             var verificationLink = _emailVerificationLinkFactory.GenerateLink(token);
             await _publishEndpoint.Publish(new EmailChangeRequested(
-                user.Email,
+                user.Email.Value,
                 verificationLink));
         }
     }
