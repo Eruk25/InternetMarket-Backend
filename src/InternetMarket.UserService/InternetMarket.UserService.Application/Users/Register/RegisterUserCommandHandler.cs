@@ -53,7 +53,7 @@ namespace InternetMarket.UserService.Application.Users.Register
 
             await _publishEndpoint.Publish(new UserRegistered(
                 user.Id,
-                user.Email,
+                user.Email.Value,
                 user.Name,
                 verificationLink
             ));
