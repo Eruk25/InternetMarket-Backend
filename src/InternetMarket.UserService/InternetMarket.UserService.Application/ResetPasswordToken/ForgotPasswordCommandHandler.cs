@@ -47,7 +47,7 @@ namespace InternetMarket.UserService.Application.ResetPasswordToken
             string verificationLink = _resetPasswordLinkFactory.GenerateLink(token);
             await _publishEndpoint.Publish(new PasswordResetRequested
             {
-                Email = user.Email,
+                Email = user.Email.Value,
                 ResetLink = verificationLink
             });
         }
