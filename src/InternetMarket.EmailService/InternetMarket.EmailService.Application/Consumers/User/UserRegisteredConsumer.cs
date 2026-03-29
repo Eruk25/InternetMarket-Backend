@@ -23,7 +23,7 @@ namespace InternetMarket.EmailService.Application.Consumers
             EmailMetadata emailMetadata = new EmailMetadata(
                 context.Message.Email,
                 "Hello! From InternetMerket",
-                $"""To verify your email click <a src="{context.Message.VerificationLink}">here</a>"""
+                $"""To verify your email click <a href="{context.Message.VerificationLink}">here</a>"""
             );
             await _emailSender.SendAsync(emailMetadata);
         }
