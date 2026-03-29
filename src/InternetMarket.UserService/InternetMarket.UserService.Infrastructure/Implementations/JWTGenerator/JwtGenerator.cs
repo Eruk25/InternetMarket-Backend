@@ -22,8 +22,8 @@ namespace InternetMarket.UserService.Infrastructure.Implementations.JWTGenerator
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
+                new Claim(ClaimTypes.Email, user.Email.Value),
+                new Claim(ClaimTypes.Role, user.Role.Name.ToString())
             };
 
             var token = new JwtSecurityToken(
