@@ -8,6 +8,7 @@ using InternetMarket.UserService.Application.Abstractions.PasswordHasher;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
 using InternetMarket.UserService.Domain;
 using InternetMarket.UserService.Domain.Entities;
+using InternetMarket.UserService.Domain.ValueObjects;
 using MassTransit;
 using MediatR;
 
@@ -37,7 +38,10 @@ namespace InternetMarket.UserService.Application.Users.Register
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
 
-            var user = new User(request.Name, request.Email, _passwordHasher.HashPassword(request.Password));
+            var user = new User(
+                request.Name,
+                Email.Create(request.Email),
+                Password.Create(_passwordHasher.HashPassword(request.Password)));
 
             await _userRepository.CreateAsync(user);
 
