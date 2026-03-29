@@ -19,12 +19,12 @@ namespace InternetMarket.UserService.Application.Users.GetMe
 
         public async Task<GetMyProfileResponse> Handle(GetMyProfileQuery request, CancellationToken cancellationToken)
         {
-            if(request is null)
+            if (request is null)
                 throw new ArgumentNullException(nameof(request));
 
             var user = await _userRepository.GetByIdAsync(request.UserId);
 
-            if(user is null)
+            if (user is null)
                 throw new InvalidOperationException($"User with id {request.UserId} not found");
 
             return new GetMyProfileResponse(user.Id, user.Name, user.Email.Value);
