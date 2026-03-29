@@ -15,7 +15,7 @@ namespace InternetMarket.UserService.Domain.ValueObjects
 
         public static bool IsValid(string value)
         {
-            if (string.IsNullOrWhiteSpace(value) || Regex.IsMatch(value, _emailPattern))
+            if (string.IsNullOrWhiteSpace(value) || !Regex.IsMatch(value, _emailPattern))
                 return false;
             return true;
         }
