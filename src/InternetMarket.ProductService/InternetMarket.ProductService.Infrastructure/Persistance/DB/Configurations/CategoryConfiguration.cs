@@ -13,7 +13,7 @@ namespace InternetMarket.ProductService.Infrastructure.Persistance.DB.Configurat
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Title)
+            builder.Property(c => c.CategoryName)
                 .HasMaxLength(80);
         }
     }
