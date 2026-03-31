@@ -7,6 +7,6 @@ using MediatR;
 
 namespace InternetMarket.ProductService.Application.Products
 {
-    public record ProductDto(Guid Id, string Title, string Description,
+    public record ProductDto(Guid Id, string ProductName, string Description,
         decimal Price, int Quantity, string Category, string Provider);
 }
