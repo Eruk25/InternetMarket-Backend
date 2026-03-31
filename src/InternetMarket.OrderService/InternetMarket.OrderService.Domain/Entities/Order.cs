@@ -26,8 +26,6 @@ namespace InternetMarket.OrderService.Domain.Entities
             CreatedAt = DateTime.UtcNow;
         }
 
-        public Order() { }
-
         public void AddItems(IEnumerable<OrderItem> items)
         {
             foreach (var item in items)
