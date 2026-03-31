@@ -8,11 +8,11 @@ namespace InternetMarket.ProductService.Domain.Entities
     public class Category
     {
         public Guid Id { get; private set; }
-        public string Title { get; private set; }
+        public string CategoryName { get; private set; }
 
-        public Category(string title)
+        public Category(string categoryName)
         {
-            Title = title;
+            CategoryName = categoryName;
         }
     }
 }
