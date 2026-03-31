@@ -25,11 +25,11 @@ namespace InternetMarket.ProductService.Application.Products.Get.GetById
 
             return new ProductDto(
                 product.Id,
-                product.Title,
+                product.ProductName,
                 product.Description,
                 product.Price,
                 product.Quantity,
-                product.Category!.Title,
+                product.Category!.CategoryName,
                 product.Provider!.Name);
         }
     }

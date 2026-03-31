@@ -22,11 +22,11 @@ namespace InternetMarket.ProductService.Application.Products.Get.GetByIds
 
             return products.Select(p => new ProductDto(
                 p.Id,
-                p.Title,
+                p.ProductName,
                 p.Description,
                 p.Price,
                 p.Quantity,
-                p.Category!.Title,
+                p.Category!.CategoryName,
                 p.Provider!.Name
             ));
         }
