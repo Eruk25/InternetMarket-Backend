@@ -30,7 +30,7 @@ namespace InternetMarket.ProductService.Application.Products.Get.GetById
                 product.Price.Value,
                 product.Quantity.Value,
                 product.Category!.CategoryName,
-                product.Provider!.Name);
+                product.Provider!.Name.Value);
         }
     }
 }

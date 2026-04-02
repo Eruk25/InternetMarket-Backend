@@ -27,7 +27,7 @@ namespace InternetMarket.ProductService.Application.Products.Get.GetByIds
                 p.Price.Value,
                 p.Quantity.Value,
                 p.Category!.CategoryName,
-                p.Provider!.Name
+                p.Provider!.Name.Value
             ));
         }
     }
