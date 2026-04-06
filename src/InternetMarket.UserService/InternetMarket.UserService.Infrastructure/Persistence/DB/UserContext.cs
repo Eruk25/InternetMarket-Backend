@@ -1,7 +1,9 @@
 using System.Net.Http.Headers;
 using InternetMarket.UserService.Domain.Entities;
 using InternetMarket.UserService.Infrastructure.Persistence.DB.Configurations;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace InternetMarket.UserService.Infrastructure.Persistence.DB
 {
@@ -16,6 +18,10 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.DB
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new EmailVerificationTokenConfiguration());
             modelBuilder.ApplyConfiguration(new ResetPasswordTokenConfiguration());
+
+            modelBuilder.AddInboxStateEntity();
+            modelBuilder.AddOutboxMessageEntity();
+            modelBuilder.AddOutboxStateEntity();
         }
     }
 }
