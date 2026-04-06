@@ -9,6 +9,7 @@ using InternetMarket.UserService.Infrastructure.Implementations.JWTGenerator;
 using InternetMarket.UserService.Infrastructure.Implementations.PasswordHasher;
 using InternetMarket.UserService.Infrastructure.Persistence.DB;
 using InternetMarket.UserService.Infrastructure.Persistence.Repositories;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,31 @@ namespace InternetMarket.UserService.Infrastructure.Extensions
             var connectionString = section["DefaultConnection"];
             services.AddDbContext<UserContext>(opt =>
                 opt.UseSqlServer(connectionString));
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    x.AddEntityFrameworkOutbox<UserContext>(o =>
+                    {
+                        o.UseSqlServer();
+
+                        o.UseBusOutbox();
+
+                        o.QueryDelay = TimeSpan.FromSeconds(5);
+
+                        o.DuplicateDetectionWindow = TimeSpan.FromMinutes(30);
+                    });
+
+                    cfg.Host("localhost", "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
+
             services.Configure<AuthOptions>(configuration.GetSection("AuthOptions"));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEmailVerificationTokenRepository, EmailVerificationTokenRepository>();
