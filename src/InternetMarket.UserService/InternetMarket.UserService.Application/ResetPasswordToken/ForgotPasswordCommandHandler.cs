@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using InternetMarket.Contracts.Events.Password;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
 using InternetMarket.UserService.Application.Abstractions.ResetPasswordLinkFactory;
+using InternetMarket.UserService.Application.Abstractions.UnitOfWork;
 using MassTransit;
 using MediatR;
+
 
 namespace InternetMarket.UserService.Application.ResetPasswordToken
 {
@@ -16,14 +18,15 @@ namespace InternetMarket.UserService.Application.ResetPasswordToken
         private readonly IResetPasswordTokenRepository _resetPasswordTokenRepository;
         private readonly IUserRepository _userRepository;
         private readonly IResetPasswordLinkFactory _resetPasswordLinkFactory;
-
+        private readonly IUnitOfWork _unitOfWork;
         public ForgotPasswordCommandHandler(IResetPasswordTokenRepository resetPasswordTokenRepository, IUserRepository userRepository,
-            IResetPasswordLinkFactory resetPasswordLinkFactory, IPublishEndpoint publishEndpoint)
+            IResetPasswordLinkFactory resetPasswordLinkFactory, IPublishEndpoint publishEndpoint, IUnitOfWork unitOfWork)
         {
             _resetPasswordTokenRepository = resetPasswordTokenRepository;
             _userRepository = userRepository;
             _resetPasswordLinkFactory = resetPasswordLinkFactory;
             _publishEndpoint = publishEndpoint;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
@@ -50,6 +53,8 @@ namespace InternetMarket.UserService.Application.ResetPasswordToken
                 Email = user.Email.Value,
                 ResetLink = verificationLink
             });
+
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }
