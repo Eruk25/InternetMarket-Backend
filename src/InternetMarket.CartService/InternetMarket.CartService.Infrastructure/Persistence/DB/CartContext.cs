@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using InternetMarket.CartService.Domain.Entities;
+using MassTransit;
 
 namespace InternetMarket.CartService.Infrastructure;
 
@@ -14,5 +15,9 @@ public class CartContext : DbContext
     {
         modelBuilder.ApplyConfiguration(new CartConfiguration());
         modelBuilder.ApplyConfiguration(new CartItemConfiguration());
+
+        modelBuilder.AddInboxStateEntity();
+        modelBuilder.AddOutboxMessageEntity();
+        modelBuilder.AddOutboxStateEntity();
     }
 }
