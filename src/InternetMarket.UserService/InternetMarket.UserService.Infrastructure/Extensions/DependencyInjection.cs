@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using InternetMarket.UserService.Application.Abstractions.PasswordHasher;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
 using InternetMarket.UserService.Application.Abstractions.TokenGenerator;
+using InternetMarket.UserService.Application.Abstractions.UnitOfWork;
 using InternetMarket.UserService.Infrastructure.Implementations.JWTGenerator;
 using InternetMarket.UserService.Infrastructure.Implementations.PasswordHasher;
+using InternetMarket.UserService.Infrastructure.Implementations.UnitOfWork;
 using InternetMarket.UserService.Infrastructure.Persistence.DB;
 using InternetMarket.UserService.Infrastructure.Persistence.Repositories;
 using MassTransit;
@@ -27,19 +29,19 @@ namespace InternetMarket.UserService.Infrastructure.Extensions
 
             services.AddMassTransit(x =>
             {
+                x.AddEntityFrameworkOutbox<UserContext>(o =>
+                {
+                    o.UseSqlServer();
+
+                    o.UseBusOutbox();
+
+                    o.QueryDelay = TimeSpan.FromSeconds(5);
+
+                    o.DuplicateDetectionWindow = TimeSpan.FromMinutes(30);
+                });
+
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    x.AddEntityFrameworkOutbox<UserContext>(o =>
-                    {
-                        o.UseSqlServer();
-
-                        o.UseBusOutbox();
-
-                        o.QueryDelay = TimeSpan.FromSeconds(5);
-
-                        o.DuplicateDetectionWindow = TimeSpan.FromMinutes(30);
-                    });
-
                     cfg.Host("localhost", "/", h =>
                     {
                         h.Username("guest");
@@ -56,6 +58,7 @@ namespace InternetMarket.UserService.Infrastructure.Extensions
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<ITokenGenerator, JwtGenerator>();
             services.AddScoped<Identity.PasswordHasher.PasswordHasher>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
     }
