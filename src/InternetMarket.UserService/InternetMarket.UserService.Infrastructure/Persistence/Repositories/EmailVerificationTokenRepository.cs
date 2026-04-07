@@ -29,13 +29,11 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.Repositories
         public async Task DeleteAsync(EmailVerificationToken token)
         {
             _context.EmailVerificationTokens.Remove(token);
-            await _context.SaveChangesAsync();
         }
 
         public async Task CreateAsync(EmailVerificationToken token)
         {
             await _context.EmailVerificationTokens.AddAsync(token);
-            await _context.SaveChangesAsync();
         }
     }
 }

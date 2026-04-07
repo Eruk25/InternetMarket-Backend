@@ -28,13 +28,11 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.Repositories
         public async Task CreateAsync(ResetPasswordToken token)
         {
             await _context.AddAsync(token);
-            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(ResetPasswordToken token)
         {
             _context.Remove(token);
-            await _context.SaveChangesAsync();
         }
 
     }
