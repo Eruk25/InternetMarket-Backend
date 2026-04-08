@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.OrderService.Application.Abstractions.Clients;
 using InternetMarket.OrderService.Application.Abstractions.Repositories;
+using InternetMarket.OrderService.Application.Abstractions.UnitOfWork;
 using InternetMarket.OrderService.Infrastructure.Implementations.Clients;
 using InternetMarket.OrderService.Infrastructure.Implementations.Repositories;
+using InternetMarket.OrderService.Infrastructure.Implementations.UnitOfWork;
 using InternetMarket.OrderService.Infrastructure.Persistence;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +54,7 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
                 });
             });
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
     }
