@@ -12,17 +12,7 @@ namespace InternetMarket.OrderService.Application.Extensions
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
-            services.AddMassTransit(x =>
-            {
-                x.UsingRabbitMq((context, cfg) =>
-                {
-                    cfg.Host("localhost", "/", h =>
-                    {
-                        h.Username("guest");
-                        h.Password("guest");
-                    });
-                });
-            });
+
             return services;
         }
     }
