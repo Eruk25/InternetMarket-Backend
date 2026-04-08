@@ -39,19 +39,16 @@ namespace InternetMarket.OrderService.Infrastructure.Implementations.Repositorie
         public async Task CreateAsync(Order order)
         {
             await _context.Orders.AddAsync(order);
-            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Order order)
         {
             _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(Order order)
+        public async Task UpdateAsync(Order order)
         {
             _context.Orders.Update(order);
-            return _context.SaveChangesAsync();
         }
     }
 }
