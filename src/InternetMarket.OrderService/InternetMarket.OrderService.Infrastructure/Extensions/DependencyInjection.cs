@@ -7,6 +7,7 @@ using InternetMarket.OrderService.Application.Abstractions.Repositories;
 using InternetMarket.OrderService.Infrastructure.Implementations.Clients;
 using InternetMarket.OrderService.Infrastructure.Implementations.Repositories;
 using InternetMarket.OrderService.Infrastructure.Persistence;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,29 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
             {
                 var cartSection = configuration.GetSection("CartService");
                 client.BaseAddress = new Uri(cartSection["BaseUrl"]!);
+            });
+
+            services.AddMassTransit(x =>
+            {
+                x.AddEntityFrameworkOutbox<OrderContext>(o =>
+                {
+                    o.UseSqlServer();
+
+                    o.UseBusOutbox();
+
+                    o.QueryDelay = TimeSpan.FromSeconds(5);
+
+                    o.DuplicateDetectionWindow = TimeSpan.FromMinutes(30);
+                });
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("localhost", "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                });
             });
             services.AddScoped<IOrderRepository, OrderRepository>();
             return services;
