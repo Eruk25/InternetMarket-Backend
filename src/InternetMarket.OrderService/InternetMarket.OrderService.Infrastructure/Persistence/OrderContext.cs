@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.OrderService.Domain.Entities;
 using InternetMarket.OrderService.Infrastructure.Persistence.Configurations;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -20,6 +21,10 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence
         {
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
+
+            modelBuilder.AddInboxStateEntity();
+            modelBuilder.AddOutboxMessageEntity();
+            modelBuilder.AddOutboxStateEntity();
         }
     }
 }
