@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using InternetMarket.Contracts.Events.Order;
 using InternetMarket.OrderService.Application.Abstractions.Clients;
 using InternetMarket.OrderService.Application.Abstractions.Repositories;
+using InternetMarket.OrderService.Application.Abstractions.UnitOfWork;
 using InternetMarket.OrderService.Domain.Entities;
 using MassTransit;
 using MediatR;
@@ -16,12 +17,14 @@ namespace InternetMarket.OrderService.Application.Orders.Create
         private readonly IOrderRepository _orderRepository;
         private readonly ICartServiceClient _cartClient;
         private readonly IPublishEndpoint _publishEndpoint;
-
-        public CreateOrderCommandHandler(IOrderRepository orderRepository, ICartServiceClient cartClient, IPublishEndpoint publishEndpoint)
+        private readonly IUnitOfWork _unitOfWork;
+        public CreateOrderCommandHandler(IOrderRepository orderRepository, ICartServiceClient cartClient,
+        IPublishEndpoint publishEndpoint, IUnitOfWork unitOfWork)
         {
             _orderRepository = orderRepository;
             _cartClient = cartClient;
             _publishEndpoint = publishEndpoint;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -51,8 +54,9 @@ namespace InternetMarket.OrderService.Application.Orders.Create
                     oi.Quantity,
                     oi.UnitPrice
                 )),
-                order.TotalPrice
-            ));
+                order.TotalPrice));
+
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

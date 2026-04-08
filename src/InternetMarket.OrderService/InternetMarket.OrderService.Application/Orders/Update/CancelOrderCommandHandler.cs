@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.Contracts.Events.Order;
 using InternetMarket.OrderService.Application.Abstractions.Repositories;
+using InternetMarket.OrderService.Application.Abstractions.UnitOfWork;
 using MassTransit;
 using MediatR;
 
@@ -13,11 +14,13 @@ namespace InternetMarket.OrderService.Application.Orders.Delete
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CancelOrderCommandHandler(IOrderRepository orderRepository, IPublishEndpoint publishEndpoint)
+        public CancelOrderCommandHandler(IOrderRepository orderRepository, IPublishEndpoint publishEndpoint, IUnitOfWork unitOfWork)
         {
             _orderRepository = orderRepository;
             _publishEndpoint = publishEndpoint;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(CancelOrderCommand request, CancellationToken cancellationToken)
@@ -34,6 +37,8 @@ namespace InternetMarket.OrderService.Application.Orders.Delete
                 order.Id,
                 request.Email
             ));
+
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }
