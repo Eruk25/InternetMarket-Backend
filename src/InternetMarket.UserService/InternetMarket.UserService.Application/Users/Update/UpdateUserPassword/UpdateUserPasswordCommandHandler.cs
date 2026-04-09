@@ -34,7 +34,7 @@ namespace InternetMarket.UserService.Application.Users.Update.UpdateUserPassword
             if (token is null)
                 throw new Exception("Token invalid or expired");
 
-            var user = await _userRepository.GetByEmailAsync(request.Email);
+            var user = await _userRepository.GetByEmailAsync(Email.Create(request.Email));
 
             if (user is null)
                 throw new KeyNotFoundException("User was not found.");
