@@ -11,6 +11,7 @@ namespace InternetMarket.ProductService.Domain.Entities
         public Guid Id { get; private set; }
         public CategoryName CategoryName { get; private set; }
 
+        public Category() { }
         public Category(CategoryName categoryName)
         {
             CategoryName = categoryName;

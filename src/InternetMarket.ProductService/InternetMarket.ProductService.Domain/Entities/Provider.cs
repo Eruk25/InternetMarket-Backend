@@ -16,6 +16,8 @@ namespace InternetMarket.ProductService.Domain.Entities
         public Email Email { get; private set; }
         public NumberPhone NumberPhone { get; private set; }
 
+        public Provider() { }
+
         public Provider(ProviderName name, Address address, Email email, NumberPhone numberPhone)
         {
             Name = name;
