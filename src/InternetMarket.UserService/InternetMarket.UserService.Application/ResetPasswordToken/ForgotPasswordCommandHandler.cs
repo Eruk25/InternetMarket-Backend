@@ -6,6 +6,7 @@ using InternetMarket.Contracts.Events.Password;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
 using InternetMarket.UserService.Application.Abstractions.ResetPasswordLinkFactory;
 using InternetMarket.UserService.Application.Abstractions.UnitOfWork;
+using InternetMarket.UserService.Domain.ValueObjects;
 using MassTransit;
 using MediatR;
 
@@ -34,7 +35,7 @@ namespace InternetMarket.UserService.Application.ResetPasswordToken
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
 
-            var user = await _userRepository.GetByEmailAsync(request.Email);
+            var user = await _userRepository.GetByEmailAsync(Email.Create(request.Email));
 
             if (user is null)
                 throw new KeyNotFoundException($"User was not found.");
