@@ -8,6 +8,7 @@ using MediatR;
 using System.Runtime.Serialization;
 using InternetMarket.UserService.Application.Abstractions.PasswordHasher;
 using InternetMarket.UserService.Application.Abstractions.TokenGenerator;
+using InternetMarket.UserService.Domain.ValueObjects;
 
 namespace InternetMarket.UserService.Application.Users.Login
 {
@@ -29,7 +30,7 @@ namespace InternetMarket.UserService.Application.Users.Login
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
 
-            var user = await _userRepository.GetByEmailAsync(request.Email);
+            var user = await _userRepository.GetByEmailAsync(Email.Create(request.Email));
 
             if (user is null || !_passwordHasher.VerifyPassword(request.Password, user.Password.Value))
                 throw new InvalidOperationException("Invalid email or password.");
