@@ -15,7 +15,7 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
             .HasForeignKey(ci => ci.CartId);
         builder.Property(ci => ci.ProductId)
             .IsRequired();
-        builder.Property(ci => ci.Title)
+        builder.Property(ci => ci.ProductName)
             .IsRequired();
         builder.Property(ci => ci.Quantity)
             .IsRequired();
