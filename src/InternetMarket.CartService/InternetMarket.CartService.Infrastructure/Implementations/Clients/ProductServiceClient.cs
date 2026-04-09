@@ -27,7 +27,10 @@ namespace InternetMarket.CartService.Infrastructure.Implementations.Clients
             var response = await _httpClient.PostAsync($"by-ids", content);
 
             if (!response.IsSuccessStatusCode)
-                throw new Exception();
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"ProductService error: {response.StatusCode}. Details: {error}");
+            }
 
             var products = await response.Content.ReadFromJsonAsync<List<ProductDto>>();
             return products?.FirstOrDefault();
