@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using InternetMarket.Contracts.Events.Email;
 using InternetMarket.UserService.Application.Abstractions.EmailVerificationLinkFactory;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
+using InternetMarket.UserService.Domain.ValueObjects;
 using MassTransit;
 using MediatR;
 
@@ -31,7 +32,7 @@ namespace InternetMarket.UserService.Application.EmailVerificationToken.EmailCha
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
 
-            var user = await _userRepository.GetByEmailAsync(request.Email);
+            var user = await _userRepository.GetByEmailAsync(Email.Create(request.Email));
 
             if (user is null)
                 throw new InvalidOperationException("User was not found.");
