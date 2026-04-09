@@ -1,5 +1,6 @@
 using InternetMarket.UserService.Application.Abstractions.Repositories;
 using InternetMarket.UserService.Domain.Entities;
+using InternetMarket.UserService.Domain.ValueObjects;
 using InternetMarket.UserService.Infrastructure.Persistence.DB;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,10 +27,10 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.Repositories
                 .FirstOrDefaultAsync(u => u.Id == Id);
             return user;
         }
-        public async Task<User?> GetByEmailAsync(string Email)
+        public async Task<User?> GetByEmailAsync(Email email)
         {
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email.Value == Email);
+                .FirstOrDefaultAsync(u => u.Email == email);
             return user;
         }
 
