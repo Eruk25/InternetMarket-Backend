@@ -35,7 +35,7 @@ namespace InternetMarket.CartService.Application.CartItems.Create
                 await _cartRepository.CreateAsync(cart);
             }
 
-            cart.AddItem(product.Id, product.Title, product.Price, request.Quantity);
+            cart.AddItem(product.Id, product.ProductName, product.Price, request.Quantity);
             await _cartRepository.UpdateAsync(cart);
         }
     }
