@@ -27,6 +27,11 @@ namespace InternetMarket.EmailService.Infrastructure.Extensions.DI
                 x.AddConsumer<OrderCancelledConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
+                    cfg.ReceiveEndpoint("email-service-user-registered", e =>
+                    {
+                        e.ConfigureConsumer<UserRegisteredConsumer>(context);
+                    });
+
                     cfg.Host("localhost", "/", h =>
                     {
                         h.Username("guest");
