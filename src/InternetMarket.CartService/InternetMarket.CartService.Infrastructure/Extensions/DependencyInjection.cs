@@ -37,10 +37,20 @@ namespace InternetMarket.CartService.Infrastructure.Extensions
                 x.AddEntityFrameworkOutbox<CartContext>(o =>
                 {
                     o.UseSqlServer();
+
+                    o.UseBusOutbox();
+
+                    o.QueryDelay = TimeSpan.FromSeconds(5);
+
+                    o.DuplicateDetectionWindow = TimeSpan.FromMinutes(30);
                 });
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
+                    cfg.ReceiveEndpoint("cart-service-user-registered", e =>
+                    {
+                        e.ConfigureConsumer<UserRegisteredConsumer>(context);
+                    });
 
                     cfg.Host("localhost", "/", h =>
                     {
