@@ -38,7 +38,7 @@ namespace InternetMarket.OrderService.Domain.Entities
         public void Cancel()
         {
             if (Status == OrderStatus.Paid)
-                throw new NotImplementedException();
+                throw new ArgumentException("Cannot cancel paid order.");
 
             Status = OrderStatus.Cancelled;
         }
