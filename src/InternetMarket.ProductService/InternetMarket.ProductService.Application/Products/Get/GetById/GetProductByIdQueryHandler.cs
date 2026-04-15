@@ -21,7 +21,7 @@ namespace InternetMarket.ProductService.Application.Products.Get.GetById
             var product = await _productRepository.GetByIdAsync(request.Id);
 
             if (product is null)
-                throw new ArgumentNullException($"Product with id {request.Id} was not founded.");
+                throw new ArgumentNullException($"Product with id {request.Id} was not found.");
 
             return new ProductDto(
                 product.Id,

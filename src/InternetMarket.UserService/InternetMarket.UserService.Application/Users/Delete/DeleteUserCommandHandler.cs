@@ -24,7 +24,7 @@ namespace InternetMarket.UserService.Application.Users.Delete
             var user = await _userRepository.GetByIdAsync(request.Id);
 
             if (user is null)
-                throw new KeyNotFoundException($"User with id {request.Id} was not founded");
+                throw new KeyNotFoundException($"User with id {request.Id} was not found");
 
             await _userRepository.DeleteAsync(user);
         }
