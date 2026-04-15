@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InternetMarket.ProductService.Infrastructure\InternetMarket.ProductService.Infrastructure.csproj" />
+    <ProjectReference Include="..\InternetMarket.ProductService.Application\InternetMarket.ProductService.Application.csproj" />
   </ItemGroup>
 
 </Project>
