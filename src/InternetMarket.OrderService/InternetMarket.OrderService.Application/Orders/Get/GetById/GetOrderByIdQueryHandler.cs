@@ -21,7 +21,7 @@ namespace InternetMarket.OrderService.Application.Orders.Get.GetById
             var order = await _orderRepository.GetByIdAsync(request.OrderId);
 
             if (order is null)
-                throw new Exception("Order was not found");
+                throw new ArgumentNullException("Order was not found");
 
             return new OrderDto(
                 order.Id,

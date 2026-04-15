@@ -31,7 +31,7 @@ namespace InternetMarket.OrderService.Application.Orders.Create
         {
             var cart = await _cartClient.GetCartByUserIdAsync(request.UserId);
             if (cart is null || !cart.CartItems.Any())
-                throw new Exception("Cart is empty");
+                throw new ArgumentNullException("Cart is empty");
 
             var orderItems = cart.CartItems
                 .Select(ci => new OrderItem(

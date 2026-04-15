@@ -20,8 +20,8 @@ namespace InternetMarket.CartService.Application.Carts.Clear
         {
             var cart = await _cartRepository.GetByUserIdAsync(request.UserId);
 
-            if (cart is null)
-                throw new Exception("Cart is empty");
+            if (!cart!.Items.Any())
+                throw new ArgumentNullException("Cart is empty");
 
             cart.Clear();
             await _cartRepository.UpdateAsync(cart);

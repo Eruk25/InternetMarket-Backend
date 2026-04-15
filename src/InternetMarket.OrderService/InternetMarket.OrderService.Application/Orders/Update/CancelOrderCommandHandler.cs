@@ -28,7 +28,7 @@ namespace InternetMarket.OrderService.Application.Orders.Delete
             var order = await _orderRepository.GetByIdAsync(request.OrderId);
 
             if (order is null)
-                throw new Exception("Order was not found");
+                throw new ArgumentNullException("Order was not found");
 
             order.Cancel();
             await _orderRepository.UpdateAsync(order);
