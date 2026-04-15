@@ -14,7 +14,7 @@ namespace InternetMarket.ProductService.Infrastructure.Extensions
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionSection = configuration.GetSection("ConnectionStrings");
             var connectionString = connectionSection["DefaultConnection"];
