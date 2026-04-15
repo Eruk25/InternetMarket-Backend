@@ -11,7 +11,7 @@ using InternetMarket.UserService.API.Implementations.EmailVerificationLinkFactor
 using InternetMarket.UserService.Application.Abstractions.ResetPasswordLinkFactory;
 using InternetMarket.UserService.API.Implementations.ResetPasswordLinkFactory;
 
-namespace InternetMarket.UserService.API.Exstensions
+namespace InternetMarket.UserService.API.Extensions
 {
     public static class DependencyInjection
     {

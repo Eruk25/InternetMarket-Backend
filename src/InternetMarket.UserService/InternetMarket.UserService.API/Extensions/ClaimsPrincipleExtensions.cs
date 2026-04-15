@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace InternetMarket.UserService.API.Exstensions
+namespace InternetMarket.UserService.API.Extensions
 {
     public static class ClaimsPrincipleExtensions
     {
