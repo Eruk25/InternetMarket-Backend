@@ -23,7 +23,7 @@ namespace InternetMarket.EmailService.Application.Consumers.Password
             EmailMetadata emailMetadata = new EmailMetadata(
                 context.Message.Email,
                 "Reset password. InternetMarket",
-                $"""For password reseting click <a src="{context.Message.ResetLink}">here</a>"""
+                $"""For password resetting click <a src="{context.Message.ResetLink}">here</a>"""
             );
             await _emailSender.SendAsync(emailMetadata);
         }
