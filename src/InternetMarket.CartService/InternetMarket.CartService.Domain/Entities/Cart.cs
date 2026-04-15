@@ -27,7 +27,10 @@ namespace InternetMarket.CartService.Domain.Entities
             var existing = Items.FirstOrDefault(ci => ci.ProductId == productId);
 
             if (existing is not null)
+            {
                 existing.Quantity += quantity;
+                return;
+            }
 
             var item = new CartItem(productId, productName, price, quantity);
 
