@@ -23,7 +23,7 @@ namespace InternetMarket.EmailService.Application.Consumers.Email
             EmailMetadata emailMetadata = new EmailMetadata(
                 context.Message.Email,
                 "Change Email. InternetMarket",
-                $"""For email changing click <a src="{context.Message.VerificationLink}">here</a>""");
+                $"""For email changing click <a href="{context.Message.VerificationLink}">here</a>""");
             await _emailSender.SendAsync(emailMetadata);
         }
     }
