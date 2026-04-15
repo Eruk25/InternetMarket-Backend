@@ -1,13 +1,10 @@
-using InternetMarket.EmailService.Application.Extensions;
 using InternetMarket.EmailService.Infrastructure.Extensions.DI;
 using InternetMarket.EmailService.Infrastructure.Extensions.FluentEmail;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddApplication()
-    .AddInfrastructure(builder.Configuration);
-builder.Services
+    .AddInfrastructure(builder.Configuration)
     .AddFluentEmail(builder.Configuration);
 builder.Services.AddOpenApi();
 
