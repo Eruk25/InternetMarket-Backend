@@ -22,8 +22,7 @@ namespace InternetMarket.EmailService.Application.Consumers.Order
         {
             EmailMetadata emailMetadata = new EmailMetadata(
                 context.Message.Email,
-                $"Заказ №{context.Message.OrderId} был отменен.",
-                $"Something must be"
+                $"Заказ №{context.Message.OrderId} был отменен."
             );
 
             await _emailSender.SendAsync(emailMetadata);
