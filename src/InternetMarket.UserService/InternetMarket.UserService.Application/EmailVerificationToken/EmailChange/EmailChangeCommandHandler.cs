@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using InternetMarket.Contracts.Events.Email;
 using InternetMarket.UserService.Application.Abstractions.EmailVerificationLinkFactory;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
+using InternetMarket.UserService.Application.Abstractions.UnitOfWork;
 using InternetMarket.UserService.Domain.ValueObjects;
 using MassTransit;
 using MediatR;
@@ -17,14 +18,16 @@ namespace InternetMarket.UserService.Application.EmailVerificationToken.EmailCha
         private readonly IEmailVerificationTokenRepository _emailVerificationTokenRepository;
         private readonly IChangeEmailVerificationLinkFactory _emailVerificationLinkFactory;
         private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public RequestEmailChangeCommandHandler(IEmailVerificationTokenRepository emailVerificationTokenRepository, IUserRepository userRepository,
-            IChangeEmailVerificationLinkFactory emailVerificationLinkFactory, IPublishEndpoint publishEndpoint)
+            IChangeEmailVerificationLinkFactory emailVerificationLinkFactory, IPublishEndpoint publishEndpoint, IUnitOfWork unitOfWork)
         {
             _publishEndpoint = publishEndpoint;
             _emailVerificationTokenRepository = emailVerificationTokenRepository;
             _emailVerificationLinkFactory = emailVerificationLinkFactory;
             _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(EmailChangeCommand request, CancellationToken cancellationToken)
@@ -49,6 +52,7 @@ namespace InternetMarket.UserService.Application.EmailVerificationToken.EmailCha
             await _publishEndpoint.Publish(new EmailChangeRequested(
                 user.Email.Value,
                 verificationLink));
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

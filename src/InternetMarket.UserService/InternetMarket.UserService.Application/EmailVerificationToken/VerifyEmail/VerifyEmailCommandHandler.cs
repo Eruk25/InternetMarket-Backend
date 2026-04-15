@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
+using InternetMarket.UserService.Application.Abstractions.UnitOfWork;
 using MediatR;
 
 namespace InternetMarket.UserService.Application.EmailVerificationToken.VerifyEmail
@@ -10,10 +11,11 @@ namespace InternetMarket.UserService.Application.EmailVerificationToken.VerifyEm
     public class VerifyEmailCommandHandler : IRequestHandler<VerifyEmailCommand, bool>
     {
         private readonly IEmailVerificationTokenRepository _emailVerificationTokenRepository;
-
-        public VerifyEmailCommandHandler(IEmailVerificationTokenRepository emailVerificationTokenRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public VerifyEmailCommandHandler(IEmailVerificationTokenRepository emailVerificationTokenRepository, IUnitOfWork unitOfWork)
         {
             _emailVerificationTokenRepository = emailVerificationTokenRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<bool> Handle(VerifyEmailCommand request, CancellationToken cancellationToken)
@@ -29,6 +31,7 @@ namespace InternetMarket.UserService.Application.EmailVerificationToken.VerifyEm
             token.User.UpdateConfirm(true);
 
             await _emailVerificationTokenRepository.DeleteAsync(token);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             return true;
         }
     }
