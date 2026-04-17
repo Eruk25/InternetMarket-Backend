@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using InternetMarket.UserService.API.DTOs.Requests.UpdateEmail;
 using InternetMarket.UserService.API.DTOs.Requests.UpdateProfile;
-using InternetMarket.UserService.API.Exstensions;
+using InternetMarket.UserService.API.Extensions;
 using InternetMarket.UserService.Application.EmailVerificationToken.EmailChange;
 using InternetMarket.UserService.Application.ResetPasswordToken;
 using InternetMarket.UserService.Application.Users.Get;

@@ -1,4 +1,4 @@
-using InternetMarket.UserService.API.Exstensions;
+using InternetMarket.UserService.API.Extensions;
 using InternetMarket.UserService.Application.Extensions;
 using InternetMarket.UserService.Infrastructure.Extensions;
 
