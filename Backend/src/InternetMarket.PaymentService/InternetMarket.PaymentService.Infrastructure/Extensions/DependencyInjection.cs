@@ -15,6 +15,7 @@ namespace InternetMarket.PaymentService.Infrastructure.Extensions
         {
             var paymentSection = configuration.GetSection("ConnectionStrings");
             var connectionString = paymentSection["DefaultConnection"];
+
             services.AddDbContext<PaymentContext>(options =>
                 options.UseSqlServer(connectionString));
 
