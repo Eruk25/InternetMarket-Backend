@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InternetMarket.PaymentService.Domain\InternetMarket.PaymentService.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
