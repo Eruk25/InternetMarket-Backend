@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.PaymentService.Domain.Entities;
+using InternetMarket.PaymentService.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -29,14 +30,14 @@ namespace InternetMarket.PaymentService.Infrastructure.Persistence.Configuration
         {
             builder.HasData(new
             {
-                Id = Guid.Parse("4dea45ad-4dbf-4ae2-b589-cb442554e357"),
+                Id = PaymentConstants.CardId,
                 Name = "Банковская карта",
                 SystemName = "Card",
                 IsActive = true
             },
             new
             {
-                Id = Guid.Parse("f40f776b-49cf-4d0e-b209-bb7a62ca6eb9"),
+                Id = PaymentConstants.CashId,
                 Name = "Наличные",
                 SystemName = "Cash",
                 IsActive = true
