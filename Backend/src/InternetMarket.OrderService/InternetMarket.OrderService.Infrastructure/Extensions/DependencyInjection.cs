@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using InternetMarket.OrderService.Application.Abstractions.Clients;
 using InternetMarket.OrderService.Application.Abstractions.Repositories;
 using InternetMarket.OrderService.Application.Abstractions.UnitOfWork;
+using InternetMarket.OrderService.Application.Consumers;
 using InternetMarket.OrderService.Infrastructure.Implementations.Clients;
 using InternetMarket.OrderService.Infrastructure.Implementations.Repositories;
 using InternetMarket.OrderService.Infrastructure.Implementations.UnitOfWork;
@@ -33,6 +34,8 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
 
             services.AddMassTransit(x =>
             {
+                x.AddConsumer<UserRegisteredConsumer>();
+                x.AddConsumer<TransactionSuccessfulConsumer>();
                 x.AddEntityFrameworkOutbox<OrderContext>(o =>
                 {
                     o.UseSqlServer();
@@ -46,14 +49,24 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
+                    cfg.ReceiveEndpoint("order-service-user-registered", e =>
+                    {
+                        e.ConfigureConsumer<UserRegisteredConsumer>(context);
+                    });
+                    cfg.ReceiveEndpoint("order-service-transaction-successful", e =>
+                    {
+                        e.ConfigureConsumer<TransactionSuccessfulConsumer>(context);
+                    });
                     cfg.Host("localhost", "/", h =>
                     {
                         h.Username("guest");
                         h.Password("guest");
                     });
+                    cfg.ConfigureEndpoints(context);
                 });
             });
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
