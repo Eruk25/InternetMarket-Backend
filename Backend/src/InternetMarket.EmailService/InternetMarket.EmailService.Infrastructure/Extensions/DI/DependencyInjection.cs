@@ -25,6 +25,7 @@ namespace InternetMarket.EmailService.Infrastructure.Extensions.DI
                 x.AddConsumer<PasswordResetRequestedConsumer>();
                 x.AddConsumer<OrderCreatedConsumer>();
                 x.AddConsumer<OrderCancelledConsumer>();
+                x.AddConsumer<OrderPaidConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.ReceiveEndpoint("email-service-user-registered", e =>
