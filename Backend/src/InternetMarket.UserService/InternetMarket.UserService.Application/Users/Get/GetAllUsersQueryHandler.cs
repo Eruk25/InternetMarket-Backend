@@ -24,7 +24,7 @@ namespace InternetMarket.UserService.Application.Users.Get
 
             var users = await _userRepository.GetAllAsync();
 
-            return users.Select(u => new UserDto(u.Id, u.Name, u.Email.Value, u.Role.Name));
+            return users.Select(u => new UserDto(u.Id, u.FullName.FirstName, u.FullName.LastName, u.Email.Value, u.Role.Name));
         }
     }
 }

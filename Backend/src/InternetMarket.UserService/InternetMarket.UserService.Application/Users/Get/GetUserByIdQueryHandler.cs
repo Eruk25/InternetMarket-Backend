@@ -28,7 +28,7 @@ namespace InternetMarket.UserService.Application.Users.Get
             if (user is null)
                 throw new KeyNotFoundException($"User with id {request.Id} was not found");
 
-            return new UserDto(user.Id, user.Name, user.Email.Value, user.Role.Name);
+            return new UserDto(user.Id, user.FullName.FirstName, user.FullName.LastName, user.Email.Value, user.Role.Name);
         }
     }
 }
