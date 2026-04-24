@@ -7,7 +7,7 @@ builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddFluentEmail(builder.Configuration);
 builder.Services.AddOpenApi();
-
+builder.Services.AddControllers();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
