@@ -8,26 +8,25 @@ namespace InternetMarket.UserService.Domain.Entities;
 public class User
 {
     public Guid Id { get; private set; }
-    public string Name { get; private set; }
+    public FullName FullName { get; private set; }
     public Email Email { get; private set; }
     public Password Password { get; private set; }
     public UserRole Role { get; private set; }
     public bool IsConfirmed { get; private set; }
-
-    public User(string name, Email email, Password password)
+    private User() { }
+    public User(FullName fullName, Email email, Password password)
     {
-        Name = name;
+        FullName = fullName;
         Email = email;
         Password = password;
         Role = UserRole.Client;
         IsConfirmed = false;
     }
 
-    public void UpdateName(string name)
+    public void UpdateName(FullName fullName)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentNullException("Name cannot be null or empty", nameof(name));
-        Name = name;
+        if (FullName == fullName) return;
+        FullName = fullName;
     }
 
     public void UpdateEmail(Email email)
