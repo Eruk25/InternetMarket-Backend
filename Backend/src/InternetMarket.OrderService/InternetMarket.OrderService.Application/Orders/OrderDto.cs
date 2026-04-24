@@ -6,5 +6,6 @@ using InternetMarket.OrderService.Domain.Entities;
 
 namespace InternetMarket.OrderService.Application.Orders
 {
-    public record OrderDto(Guid OrderId, IEnumerable<OrderItemDto> OrderItems, DateTime CreatedAt);
+    public record OrderDto(Guid OrderId, string FirstName, string LastName, string NumberPhone,
+     string Address, string City, IEnumerable<OrderItemDto> OrderItems, DateTime CreatedAt, decimal TotalPrice);
 }
