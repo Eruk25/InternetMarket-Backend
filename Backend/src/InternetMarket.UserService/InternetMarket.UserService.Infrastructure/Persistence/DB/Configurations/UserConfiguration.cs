@@ -10,9 +10,17 @@ namespace InternetMarket.UserService.Infrastructure.Persistence.DB.Configuration
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(u => u.Id);
-            builder.Property(u => u.Name)
-                .HasMaxLength(30)
-                .IsRequired();
+            builder.OwnsOne(u => u.FullName, navigatorBuilder =>
+            {
+                navigatorBuilder.Property(n => n.FirstName)
+                    .HasColumnName("FirstName")
+                    .IsRequired()
+                    .HasMaxLength(50);
+                navigatorBuilder.Property(n => n.LastName)
+                    .HasColumnName("LastName")
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
             builder.HasIndex(u => u.Email)
                 .IsUnique();
             builder.Property(u => u.Email)
