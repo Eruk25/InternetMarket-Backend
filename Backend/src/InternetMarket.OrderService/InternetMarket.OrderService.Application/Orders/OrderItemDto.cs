@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.OrderService.Application.Orders
 {
-    public record OrderItemDto(string Title, int Quantity, decimal UnitPrice, decimal TotalPrice);
+    public record OrderItemDto(string ProductName, int Quantity, decimal UnitPrice, decimal TotalPrice);
 }
