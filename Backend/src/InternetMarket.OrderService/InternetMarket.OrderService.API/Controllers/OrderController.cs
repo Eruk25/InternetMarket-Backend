@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InternetMarket.OrderService.API.DTOs;
 using InternetMarket.OrderService.API.Extensions;
 using InternetMarket.OrderService.Application.Orders;
 using InternetMarket.OrderService.Application.Orders.Create;
@@ -16,11 +17,11 @@ namespace InternetMarket.OrderService.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OrderController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public OrderController(IMediator mediator)
+        public OrdersController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -43,11 +44,10 @@ namespace InternetMarket.OrderService.API.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> CreateAsync()
+        public async Task<IActionResult> CreateAsync([FromBody] CreateOrderRequest request)
         {
             var userId = User.GetUserId();
-            var email = User.GetUserEmail();
-            await _mediator.Send(new CreateOrderCommand(userId, email));
+            await _mediator.Send(new CreateOrderCommand(userId, request.NumberPhone, request.Street, request.City, request.ZipCode));
             return Ok();
         }
 
