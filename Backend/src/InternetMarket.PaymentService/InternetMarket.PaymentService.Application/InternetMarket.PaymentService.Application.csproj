@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.8" />
+    <PackageReference Include="MediatR" Version="14.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InternetMarket.PaymentService.Domain\InternetMarket.PaymentService.Domain.csproj" />
+    <ProjectReference Include="..\..\InternetMarket.Contracts\InternetMarket.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>
