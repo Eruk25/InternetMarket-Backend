@@ -25,13 +25,19 @@ namespace InternetMarket.OrderService.Application.Orders.Get.GetById
 
             return new OrderDto(
                 order.Id,
+                order.CustomerName.FirstName,
+                order.CustomerName.LastName,
+                order.CustomerPhone.Value,
+                order.CustomerAddress.Street,
+                order.CustomerAddress.City,
                 order.OrderItems.Select(oi => new OrderItemDto(
-                    oi.Title,
+                    oi.ProductName,
                     oi.Quantity,
                     oi.UnitPrice,
                     oi.TotalPrice
                 )),
-                order.CreatedAt);
+                order.CreatedAt,
+                order.TotalPrice);
         }
     }
 }
