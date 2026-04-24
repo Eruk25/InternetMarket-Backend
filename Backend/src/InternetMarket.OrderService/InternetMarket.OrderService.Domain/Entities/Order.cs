@@ -21,10 +21,13 @@ namespace InternetMarket.OrderService.Domain.Entities
         public OrderStatus Status { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
-
-        public Order(Guid userId)
+        private Order() { }
+        public Order(Guid userId, FullName customerName, NumberPhone customerNumber, Address customerAddress)
         {
             UserId = userId;
+            CustomerName = customerName;
+            CustomerPhone = customerNumber;
+            CustomerAddress = customerAddress;
             Status = OrderStatus.Created;
             CreatedAt = DateTime.UtcNow;
         }
