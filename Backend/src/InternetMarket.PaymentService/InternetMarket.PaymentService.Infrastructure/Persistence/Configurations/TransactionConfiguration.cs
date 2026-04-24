@@ -16,7 +16,14 @@ namespace InternetMarket.PaymentService.Infrastructure.Persistence.Configuration
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Amount)
                 .IsRequired();
+            builder.Property(t => t.ExternalToken)
+                .IsRequired();
+            builder.Property(t => t.OrderId)
+                .IsRequired();
             builder.Property(t => t.PaymentId)
+                .IsRequired();
+            builder.Property(t => t.PaymentDate);
+            builder.Property(t => t.CreatedAt)
                 .IsRequired();
             builder.HasOne(t => t.PaymentMethod)
                 .WithMany()
