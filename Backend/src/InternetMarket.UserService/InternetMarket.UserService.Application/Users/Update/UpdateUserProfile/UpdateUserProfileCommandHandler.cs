@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.UserService.Application.Abstractions.Repositories;
+using InternetMarket.UserService.Domain.ValueObjects;
 using MediatR;
 
 namespace InternetMarket.UserService.Application.Users.Update.UpdateUserProfile
@@ -26,8 +27,8 @@ namespace InternetMarket.UserService.Application.Users.Update.UpdateUserProfile
             if (user is null)
                 throw new InvalidOperationException($"User with Id {request.Id} not found.");
 
-            if (!string.IsNullOrWhiteSpace(request.Name))
-                user.UpdateName(request.Name);
+            var fullName = new FullName(request.FirstName, request.LastName);
+            user.UpdateName(fullName);
 
             await _userRepository.UpdateAsync(user);
         }
