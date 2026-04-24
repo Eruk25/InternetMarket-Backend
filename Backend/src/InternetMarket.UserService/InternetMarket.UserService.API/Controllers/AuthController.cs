@@ -29,7 +29,7 @@ namespace InternetMarket.UserService.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync([FromBody] RegisterUserRequest request)
         {
-            await _mediator.Send(new RegisterUserCommand(request.Name, request.Email, request.Password));
+            await _mediator.Send(new RegisterUserCommand(request.FirstName, request.LastName, request.Email, request.Password));
             return Ok();
         }
 

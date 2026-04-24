@@ -48,7 +48,7 @@ namespace InternetMarket.UserService.API.Controllers
         public async Task<IActionResult> UpdateUserProfileAsync([FromBody] UpdateUserProfileRequest request)
         {
             var userId = User.GetUserId();
-            await _mediator.Send(new UpdateUserProfileCommand(userId, request.Name));
+            await _mediator.Send(new UpdateUserProfileCommand(userId, request.FirstName, request.LastName));
             return Ok();
         }
 
