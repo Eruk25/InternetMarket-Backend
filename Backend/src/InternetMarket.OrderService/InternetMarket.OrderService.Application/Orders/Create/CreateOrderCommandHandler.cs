@@ -7,6 +7,7 @@ using InternetMarket.OrderService.Application.Abstractions.Clients;
 using InternetMarket.OrderService.Application.Abstractions.Repositories;
 using InternetMarket.OrderService.Application.Abstractions.UnitOfWork;
 using InternetMarket.OrderService.Domain.Entities;
+using InternetMarket.OrderService.Domain.ValueObjects;
 using MassTransit;
 using MediatR;
 
@@ -15,16 +16,18 @@ namespace InternetMarket.OrderService.Application.Orders.Create
     public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand>
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IUserRepository _userRepository;
         private readonly ICartServiceClient _cartClient;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IUnitOfWork _unitOfWork;
         public CreateOrderCommandHandler(IOrderRepository orderRepository, ICartServiceClient cartClient,
-        IPublishEndpoint publishEndpoint, IUnitOfWork unitOfWork)
+        IPublishEndpoint publishEndpoint, IUnitOfWork unitOfWork, IUserRepository userRepository)
         {
             _orderRepository = orderRepository;
             _cartClient = cartClient;
             _publishEndpoint = publishEndpoint;
             _unitOfWork = unitOfWork;
+            _userRepository = userRepository;
         }
 
         public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -33,6 +36,11 @@ namespace InternetMarket.OrderService.Application.Orders.Create
             if (cart is null || !cart.CartItems.Any())
                 throw new ArgumentNullException("Cart is empty");
 
+            var user = await _userRepository.GetByIdAsync(request.UserId);
+
+            if (user is null)
+                throw new ArgumentException("User not found");
+
             var orderItems = cart.CartItems
                 .Select(ci => new OrderItem(
                     ci.ProductId,
@@ -40,7 +48,8 @@ namespace InternetMarket.OrderService.Application.Orders.Create
                     ci.Quantity,
                     ci.Price));
 
-            var order = new Order(request.UserId);
+            var order = new Order(request.UserId, user.FullName, NumberPhone.Create(request.NumberPhone),
+             Address.Create(request.Street, request.City, request.ZipCode));
             order.AddItems(orderItems);
 
             await _orderRepository.CreateAsync(order);
@@ -48,9 +57,9 @@ namespace InternetMarket.OrderService.Application.Orders.Create
 
             await _publishEndpoint.Publish(new OrderCreated(
                 order.Id,
-                request.Email,
+                user.Email.Value,
                 orderItems.Select(oi => new Contracts.Events.Order.DTOs.OrderItem(
-                    oi.Title,
+                    oi.ProductName,
                     oi.Quantity,
                     oi.UnitPrice
                 )),
