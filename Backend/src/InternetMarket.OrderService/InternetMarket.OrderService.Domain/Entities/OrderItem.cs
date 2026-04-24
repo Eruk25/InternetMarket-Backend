@@ -8,7 +8,7 @@ namespace InternetMarket.OrderService.Domain.Entities
     public class OrderItem
     {
         public Guid Id { get; set; }
-        public string Title { get; set; }
+        public string ProductName { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice => Quantity * UnitPrice;
@@ -18,10 +18,10 @@ namespace InternetMarket.OrderService.Domain.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
-        public OrderItem(Guid productId, string title, int quantity, decimal unitPrice)
+        public OrderItem(Guid productId, string productName, int quantity, decimal unitPrice)
         {
             ProductId = productId;
-            Title = title;
+            ProductName = productName;
             Quantity = quantity;
             UnitPrice = unitPrice;
             CreatedAt = DateTime.UtcNow;
