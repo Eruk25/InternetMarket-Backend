@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InternetMarket.PaymentService.Domain\InternetMarket.PaymentService.Domain.csproj" />
+    <ProjectReference Include="..\InternetMarket.PaymentService.Application\InternetMarket.PaymentService.Application.csproj" />
   </ItemGroup>
 
 </Project>
