@@ -6,5 +6,6 @@ using MediatR;
 
 namespace InternetMarket.OrderService.Application.Orders.Create
 {
-    public record CreateOrderCommand(Guid UserId, string Email) : IRequest;
+    public record CreateOrderCommand(Guid UserId, string NumberPhone, string Street,
+     string City, string ZipCode) : IRequest;
 }
