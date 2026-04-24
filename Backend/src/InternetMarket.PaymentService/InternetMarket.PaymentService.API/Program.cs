@@ -1,8 +1,10 @@
+using InternetMarket.PaymentService.Application.Extensions;
 using InternetMarket.PaymentService.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddApplication()
     .AddInfrastructure(builder.Configuration);
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
