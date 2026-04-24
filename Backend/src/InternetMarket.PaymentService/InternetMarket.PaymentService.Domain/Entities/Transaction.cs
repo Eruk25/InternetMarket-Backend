@@ -11,15 +11,31 @@ namespace InternetMarket.PaymentService.Domain.Entities
         public Guid Id { get; private set; }
         public Status Status { get; private set; }
         public decimal Amount { get; private set; }
+        public string ExternalToken { get; private set; }
+        public Guid OrderId { get; private set; }
         public Guid PaymentId { get; private set; }
         public PaymentMethod? PaymentMethod { get; private set; }
-        public DateTime UpdatedAt { get; private set; }
-
-        public Transaction(decimal amount, Guid paymentId)
+        public DateTime CreatedAt { get; private set; }
+        public DateTime PaymentDate { get; private set; }
+        private Transaction() { }
+        public Transaction(decimal amount, string externalToken, Guid paymentId, Guid orderId)
         {
             Status = Status.Pending;
             Amount = amount;
-            UpdatedAt = DateTime.UtcNow;
+            ExternalToken = externalToken;
+            OrderId = orderId;
+            PaymentId = paymentId;
+            CreatedAt = DateTime.UtcNow;
+        }
+
+        public void ConfirmSuccess()
+        {
+            if (Status == Status.Success) return;
+
+            if (Status == Status.Failed)
+                throw new InvalidOperationException($"Cannot change status if it Success");
+            Status = Status.Success;
+            PaymentDate = DateTime.UtcNow;
         }
     }
 }
