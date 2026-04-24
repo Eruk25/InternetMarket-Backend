@@ -61,7 +61,6 @@ namespace InternetMarket.PaymentService.Infrastructure.Extensions
                     cfg.ConfigureEndpoints(context);
                 });
             });
-            services.AddHttpClient<IPaymentGateway, BePaidClient>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             return services;
