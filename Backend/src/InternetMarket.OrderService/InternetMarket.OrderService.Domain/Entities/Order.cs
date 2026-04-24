@@ -13,6 +13,9 @@ namespace InternetMarket.OrderService.Domain.Entities
         public Guid UserId { get; private set; }
         private readonly List<OrderItem> _orderItems = new List<OrderItem>();
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
+        public FullName CustomerName { get; private set; }
+        public NumberPhone CustomerPhone { get; private set; }
+        public Address CustomerAddress { get; private set; }
         public decimal TotalPrice { get; private set; }
         public DateTime? PaymentDate { get; private set; }
         public OrderStatus Status { get; private set; }
