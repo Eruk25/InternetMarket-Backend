@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using InternetMarket.OrderService.Domain.ValueObjects;
 
@@ -52,7 +53,7 @@ namespace InternetMarket.OrderService.Domain.Entities
         public void Cancel()
         {
             if (Status == OrderStatus.Paid)
-                throw new ArgumentException("Cannot cancel paid order.");
+                throw new InvalidOperationException("Cannot cancel Paid order");
 
             Status = OrderStatus.Cancelled;
         }
