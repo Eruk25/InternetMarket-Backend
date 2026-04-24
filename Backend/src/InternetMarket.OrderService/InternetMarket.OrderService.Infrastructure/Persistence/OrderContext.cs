@@ -14,6 +14,7 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence
     {
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public OrderContext(DbContextOptions<OrderContext> options) : base(options) { }
 
@@ -21,6 +22,7 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence
         {
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
 
             modelBuilder.AddInboxStateEntity();
             modelBuilder.AddOutboxMessageEntity();
