@@ -37,7 +37,7 @@ namespace InternetMarket.UserService.Application.Users.Register
                 throw new ArgumentNullException(nameof(request));
 
             var user = new User(
-                request.Name,
+                new FullName(request.FirstName, request.LastName),
                 Email.Create(request.Email),
                 Password.Create(_passwordHasher.HashPassword(request.Password)));
 
@@ -56,7 +56,8 @@ namespace InternetMarket.UserService.Application.Users.Register
             await _publishEndpoint.Publish(new UserRegistered(
                 user.Id,
                 user.Email.Value,
-                user.Name,
+                user.FullName.FirstName,
+                user.FullName.LastName,
                 verificationLink
             ));
 
