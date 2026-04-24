@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.UserService.API.DTOs.Requests.Register
 {
-    public record RegisterUserRequest(string Name, string Email, string Password);
+    public record RegisterUserRequest(string FirstName, string LastName, string Email, string Password);
 }
