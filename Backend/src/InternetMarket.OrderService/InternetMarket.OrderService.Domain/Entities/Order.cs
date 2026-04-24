@@ -37,6 +37,14 @@ namespace InternetMarket.OrderService.Domain.Entities
             }
             TotalPrice = _orderItems.Sum(oi => oi.TotalPrice);
         }
+        public void Paid()
+        {
+            if (Status == OrderStatus.Paid) return;
+            if (Status == OrderStatus.Cancelled)
+                throw new InvalidOperationException("Cannot paid cancelled order");
+            Status = OrderStatus.Paid;
+            PaymentDate = DateTime.UtcNow;
+        }
 
         public void Cancel()
         {
