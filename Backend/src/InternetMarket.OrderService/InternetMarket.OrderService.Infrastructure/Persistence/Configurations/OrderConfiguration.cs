@@ -16,6 +16,38 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence.Configurations
             builder.HasKey(o => o.Id);
             builder.Property(o => o.UserId)
                 .IsRequired();
+            builder.OwnsOne(o => o.CustomerName, navigatorBuilder =>
+            {
+                navigatorBuilder.Property(n => n.FirstName)
+                    .HasColumnName("FirstName")
+                    .IsRequired()
+                    .HasMaxLength(50);
+                navigatorBuilder.Property(n => n.LastName)
+                    .HasColumnName("LastName")
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+            builder.Property(p => p.CustomerPhone)
+                .HasConversion(
+                    numberPhone => numberPhone.Value,
+                    value => NumberPhone.Create(value))
+                .HasMaxLength(50)
+                .IsRequired();
+            builder.OwnsOne(o => o.CustomerAddress, navigatorBuilder =>
+            {
+                navigatorBuilder.Property(a => a.City)
+                    .HasColumnName("City")
+                    .IsRequired()
+                    .HasMaxLength(30);
+                navigatorBuilder.Property(a => a.Street)
+                    .HasColumnName("Street")
+                    .IsRequired()
+                    .HasMaxLength(50);
+                navigatorBuilder.Property(a => a.ZipCode)
+                    .HasColumnName("ZipCode")
+                    .IsRequired()
+                    .HasMaxLength(6);
+            });
             builder.Property(o => o.TotalPrice)
                 .IsRequired();
             builder.Property(o => o.PaymentDate)
