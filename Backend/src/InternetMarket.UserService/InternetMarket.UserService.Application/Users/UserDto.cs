@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.UserService.Application.Users
 {
-    public record UserDto(Guid Id, string Name, string Email, string Role);
+    public record UserDto(Guid Id, string FirstName, string LastName, string Email, string Role);
 }
