@@ -21,7 +21,8 @@ namespace InternetMarket.UserService.Infrastructure.Implementations.JWTGenerator
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Name, user.FullName.FirstName),
+                new Claim(ClaimTypes.Name, user.FullName.LastName),
                 new Claim(ClaimTypes.Email, user.Email.Value),
                 new Claim(ClaimTypes.Role, user.Role.Name.ToString())
             };
