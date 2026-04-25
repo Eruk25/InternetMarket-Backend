@@ -1,6 +1,0 @@
-@InternetMarket.NotificationService.API_HostAddress = http://localhost:5002
-
-GET {{InternetMarket.NotificationService.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
