@@ -6,5 +6,5 @@ using MediatR;
 
 namespace InternetMarket.OrderService.Application.Orders.Delete
 {
-    public record CancelOrderCommand(Guid OrderId, string Email) : IRequest;
+    public record CancelOrderCommand(Guid OrderId) : IRequest;
 }
