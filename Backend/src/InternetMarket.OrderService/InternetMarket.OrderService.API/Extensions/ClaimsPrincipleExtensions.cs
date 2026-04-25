@@ -18,15 +18,5 @@ namespace InternetMarket.OrderService.API.Extensions
 
             return Guid.Parse(userId);
         }
-
-        public static string GetUserEmail(this ClaimsPrincipal principal)
-        {
-            var email = principal.FindFirst(ClaimTypes.Email)?.Value;
-
-            if (email is null)
-                throw new Exception($"Email was not found");
-
-            return email;
-        }
     }
 }
