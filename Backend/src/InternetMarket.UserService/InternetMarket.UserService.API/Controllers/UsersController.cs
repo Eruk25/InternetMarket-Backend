@@ -61,8 +61,8 @@ namespace InternetMarket.UserService.API.Controllers
         }
 
         [HttpPost]
-        [Route("{id}/email-change-confirm")]
-        public async Task<IActionResult> UpdateEmailAsync([FromQuery] Guid token, [FromBody] UpdateEmailRequest request)
+        [Route("{token}/email-change-confirm")]
+        public async Task<IActionResult> UpdateEmailAsync([FromRoute] Guid token, [FromBody] UpdateEmailRequest request)
         {
             var userId = User.GetUserId();
             await _mediator.Send(new UpdateUserEmailCommand(userId, request.Email, token));
