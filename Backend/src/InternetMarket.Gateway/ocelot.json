@@ -1,0 +1,141 @@
+{
+    "Routes": [
+        {
+            "DownstreamPathTemplate": "/api/products/all",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5206
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/products/all",
+            "UpstreamHttpMethod": [
+                "Get"
+            ],
+            "Priority": 1
+        },
+        {
+            "DownstreamPathTemplate": "/api/products/by-ids",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5206
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/products/by-ids",
+            "UpstreamHttpMethod": [
+                "Post"
+            ],
+            "Priority": 1
+        },
+        {
+            "DownstreamPathTemplate": "/api/products/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5206
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/products/{id}",
+            "UpstreamHttpMethod": [
+                "Get"
+            ],
+            "Priority": 0
+        },
+        {
+            "DownstreamPathTemplate": "/api/auth/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5287
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/auth/{everything}",
+            "UpstreamHttpMethod": [
+                "Post"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/users/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5287
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/users/{everything}",
+            "UpstreamHttpMethod": [
+                "Get",
+                "Post",
+                "Put",
+                "Patch",
+                "Delete"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/payments/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5235
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/payments/{everything}",
+            "UpstreamHttpMethod": [
+                "Post"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/orders/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5207
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/orders/{everything}",
+            "UpstreamHttpMethod": [
+                "Get",
+                "Post",
+                "Delete"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/orders/cancel/{orderId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5207
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/orders/cancel/{orderId}",
+            "UpstreamHttpMethod": [
+                "Delete"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/carts/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5244
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/carts/{everything}",
+            "UpstreamHttpMethod": [
+                "Get",
+                "Post",
+                "Delete"
+            ]
+        }
+    ]
+}
