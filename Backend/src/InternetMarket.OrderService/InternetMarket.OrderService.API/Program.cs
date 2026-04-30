@@ -11,6 +11,7 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+app.UseCors();
 app.MapControllers();
 app.UseHttpsRedirection();
 app.Run();

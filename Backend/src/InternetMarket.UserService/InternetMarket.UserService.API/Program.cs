@@ -12,6 +12,7 @@ builder.Services
     .AddFluentEmail(builder.Configuration);
 var app = builder.Build();
 
+app.UseCors();
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
