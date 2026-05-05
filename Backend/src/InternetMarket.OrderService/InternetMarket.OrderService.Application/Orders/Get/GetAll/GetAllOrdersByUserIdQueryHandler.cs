@@ -34,7 +34,8 @@ namespace InternetMarket.OrderService.Application.Orders.Get.GetAll
                     oi.TotalPrice
                 )),
                 o.CreatedAt,
-                o.TotalPrice
+                o.TotalPrice,
+                o.Status.Name
             ));
         }
     }
