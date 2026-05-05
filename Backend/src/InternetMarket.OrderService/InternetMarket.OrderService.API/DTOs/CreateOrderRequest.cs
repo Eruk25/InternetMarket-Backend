@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.OrderService.API.DTOs
 {
-    public record CreateOrderRequest(string NumberPhone, string Street, string City, string ZipCode);
+    public record CreateOrderRequest(string NumberPhone, string Street, string City);
 }
