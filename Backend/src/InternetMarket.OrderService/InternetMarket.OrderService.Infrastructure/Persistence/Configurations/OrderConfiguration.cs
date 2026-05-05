@@ -43,10 +43,6 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence.Configurations
                     .HasColumnName("Street")
                     .IsRequired()
                     .HasMaxLength(50);
-                navigatorBuilder.Property(a => a.ZipCode)
-                    .HasColumnName("ZipCode")
-                    .IsRequired()
-                    .HasMaxLength(6);
             });
             builder.Property(o => o.TotalPrice)
                 .IsRequired();
