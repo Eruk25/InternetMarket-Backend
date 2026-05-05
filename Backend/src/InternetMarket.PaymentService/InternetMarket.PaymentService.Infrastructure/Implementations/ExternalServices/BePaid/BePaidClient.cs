@@ -62,8 +62,8 @@ namespace InternetMarket.PaymentService.Infrastructure.Implementations.ExternalS
                     },
                     Settings = new Settings
                     {
-                        ReturnUrl = "https://bepaid.by",
-                        SuccessUrl = "https://bepaid.by",
+                        ReturnUrl = "http://localhost:3000/",
+                        SuccessUrl = "http://localhost:3000/",
                         DeclineUrl = "https://bepaid.by",
                         FailUrl = "https://bepaid.by",
                         CancelUrl = "https://bepaid.by",
