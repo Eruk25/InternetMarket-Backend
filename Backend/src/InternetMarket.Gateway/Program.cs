@@ -16,7 +16,6 @@ builder.Services.AddOpenApi();
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 builder.Services.AddOcelot();
 var app = builder.Build();
-await app.UseOcelot();
 app.UseCors();
 if (app.Environment.IsDevelopment())
 {
@@ -25,5 +24,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+await app.UseOcelot();
 app.Run();
 
