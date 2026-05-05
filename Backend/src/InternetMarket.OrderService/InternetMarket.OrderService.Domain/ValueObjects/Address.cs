@@ -9,24 +9,19 @@ namespace InternetMarket.OrderService.Domain.ValueObjects
     {
         public string Street { get; private set; }
         public string City { get; private set; }
-        public string ZipCode { get; private set; }
 
-        private Address(string street, string city, string zipCode)
+        private Address(string street, string city)
         {
             Street = street;
             City = city;
-            ZipCode = zipCode;
         }
 
-        public static Address Create(string street, string city, string zipCode)
+        public static Address Create(string street, string city)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(street);
             ArgumentException.ThrowIfNullOrWhiteSpace(city);
-            ArgumentException.ThrowIfNullOrWhiteSpace(zipCode);
 
-            if (zipCode.Length != 6)
-                throw new ArgumentException("Zip code must have 6 symbols");
-            return new Address(street, city, zipCode);
+            return new Address(street, city);
         }
     }
 }
