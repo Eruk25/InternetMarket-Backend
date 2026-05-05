@@ -29,6 +29,7 @@ namespace InternetMarket.CartService.API.Controllers
 
         [HttpGet]
         [Route("me")]
+        [Authorize]
         public async Task<ActionResult<CartDto>> GetMyCartAsync()
         {
             var userId = User.GetUserId();
