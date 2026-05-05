@@ -49,7 +49,7 @@ namespace InternetMarket.OrderService.Application.Orders.Create
                     ci.Price));
 
             var order = new Order(request.UserId, user.FullName, NumberPhone.Create(request.NumberPhone),
-             Address.Create(request.Street, request.City, request.ZipCode));
+             Address.Create(request.Street, request.City));
             order.AddItems(orderItems);
 
             await _orderRepository.CreateAsync(order);
