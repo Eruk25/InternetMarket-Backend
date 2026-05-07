@@ -13,20 +13,42 @@ namespace InternetMarket.ProductService.Domain.Entities
         public ProductName ProductName { get; private set; }
         public Description Description { get; private set; }
         public Price Price { get; private set; }
-        public Quantity Quantity { get; private set; }
+        public Quantity PhysicalQuantity { get; private set; }
+        public Quantity AvailableQuantity { get; private set; }
+        public Quantity ReservedQuantity { get; private set; }
         public Guid CategoryId { get; private set; }
         public Category? Category { get; private set; }
         public Guid ProviderId { get; private set; }
         public Provider? Provider { get; private set; }
 
-        public Product(ProductName productName, Description description, Price price, Quantity quantity, Guid categoryId, Guid providerId)
+        public Product(ProductName productName, Description description, Price price, Quantity physicalQuantity, Guid categoryId, Guid providerId)
         {
             ProductName = productName;
             Description = description;
             Price = price;
-            Quantity = quantity;
+            PhysicalQuantity = physicalQuantity;
+            AvailableQuantity = physicalQuantity;
+            ReservedQuantity = Quantity.Create(0);
             CategoryId = categoryId;
             ProviderId = providerId;
+        }
+
+        public void Reserve(int quantity)
+        {
+            ReservedQuantity = ReservedQuantity.Add(quantity);
+            AvailableQuantity = AvailableQuantity.Subtract(quantity);
+        }
+
+        public void CancelReservation(int quantity)
+        {
+            ReservedQuantity = ReservedQuantity.Subtract(quantity);
+            AvailableQuantity = AvailableQuantity.Add(quantity);
+        }
+
+        public void ConfirmShipment(int quantity)
+        {
+            PhysicalQuantity = PhysicalQuantity.Subtract(quantity);
+            ReservedQuantity = ReservedQuantity.Subtract(quantity);
         }
     }
 }
