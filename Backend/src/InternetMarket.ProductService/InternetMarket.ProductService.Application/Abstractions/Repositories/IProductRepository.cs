@@ -13,6 +13,7 @@ namespace InternetMarket.ProductService.Application.Abstractions.Repositories
         public Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<Guid> ids);
         public Task CreateAsync(Product product);
         public Task UpdateAsync(Product product);
+        public Task UpdateRangeAsync(IEnumerable<Product> products);
         public Task DeleteAsync(Product product);
     }
 }
