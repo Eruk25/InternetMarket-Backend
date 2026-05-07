@@ -63,5 +63,10 @@ namespace InternetMarket.ProductService.Infrastructure.Implementations.Repositor
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
         }
+        public async Task UpdateRangeAsync(IEnumerable<Product> products)
+        {
+            _context.Products.UpdateRange(products);
+            await _context.SaveChangesAsync();
+        }
     }
 }
