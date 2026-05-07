@@ -24,11 +24,21 @@ namespace InternetMarket.ProductService.Infrastructure.Persistance.DB.Configurat
                     description => description.Value,
                     value => Description.Create(value))
                 .HasMaxLength(550);
-            builder.Property(p => p.Quantity)
+            builder.Property(p => p.PhysicalQuantity)
                 .HasConversion(
                     quantity => quantity.Value,
                     value => Quantity.Create(value))
                 .IsRequired();
+            builder.Property(p => p.ReservedQuantity)
+            .HasConversion(
+                quantity => quantity.Value,
+                value => Quantity.Create(value))
+            .IsRequired();
+            builder.Property(p => p.AvailableQuantity)
+            .HasConversion(
+                quantity => quantity.Value,
+                value => Quantity.Create(value))
+            .IsRequired();
             builder.Property(p => p.Price)
                 .HasConversion(
                     price => price.Value,
