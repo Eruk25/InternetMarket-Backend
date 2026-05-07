@@ -20,14 +20,16 @@ namespace InternetMarket.OrderService.Application.Orders.Create
         private readonly ICartServiceClient _cartClient;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IProductServiceClient _productClient;
         public CreateOrderCommandHandler(IOrderRepository orderRepository, ICartServiceClient cartClient,
-        IPublishEndpoint publishEndpoint, IUnitOfWork unitOfWork, IUserRepository userRepository)
+        IPublishEndpoint publishEndpoint, IUnitOfWork unitOfWork, IUserRepository userRepository, IProductServiceClient productClient)
         {
             _orderRepository = orderRepository;
             _cartClient = cartClient;
             _publishEndpoint = publishEndpoint;
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
+            _productClient = productClient;
         }
 
         public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -54,7 +56,12 @@ namespace InternetMarket.OrderService.Application.Orders.Create
 
             await _orderRepository.CreateAsync(order);
             await _cartClient.ClearCartAsync(request.UserId);
-
+            Dictionary<Guid, int> itemsToReserve = new Dictionary<Guid, int>();
+            foreach (var orderItem in order.OrderItems)
+            {
+                itemsToReserve.Add(orderItem.ProductId, orderItem.Quantity);
+            }
+            await _productClient.ReserveAsync(itemsToReserve);
             await _publishEndpoint.Publish(new OrderCreated(
                 order.Id,
                 user.Email.Value,
