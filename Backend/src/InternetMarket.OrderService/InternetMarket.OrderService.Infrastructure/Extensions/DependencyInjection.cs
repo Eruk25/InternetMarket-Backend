@@ -31,6 +31,11 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
                 var cartSection = configuration.GetSection("CartService");
                 client.BaseAddress = new Uri(cartSection["BaseUrl"]!);
             });
+            services.AddHttpClient<IProductServiceClient, ProductServiceClient>(client =>
+            {
+                var productSection = configuration.GetSection("ProductService");
+                client.BaseAddress = new Uri(productSection["BaseUrl"]!);
+            });
 
             services.AddMassTransit(x =>
             {
