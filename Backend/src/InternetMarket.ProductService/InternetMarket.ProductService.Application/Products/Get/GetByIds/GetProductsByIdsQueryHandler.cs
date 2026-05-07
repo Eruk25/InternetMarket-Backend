@@ -25,7 +25,7 @@ namespace InternetMarket.ProductService.Application.Products.Get.GetByIds
                 p.ProductName.Value,
                 p.Description.Value,
                 p.Price.Value,
-                p.Quantity.Value,
+                p.AvailableQuantity.Value,
                 p.Category!.CategoryName.Value,
                 p.Provider!.Name.Value
             ));
