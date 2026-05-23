@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.ProductService.Domain.ValueObjects.Category
 {
-    public class CategoryName
+    public record CategoryName
     {
         public string Value { get; private set; }
 

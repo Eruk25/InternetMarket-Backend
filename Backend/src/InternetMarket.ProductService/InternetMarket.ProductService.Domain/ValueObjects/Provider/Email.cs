@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.ProductService.Domain.ValueObjects
 {
-    public class Email
+    public record Email
     {
         private static readonly string _emailPattern = @"^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail?.com$";
         public string Value { get; private set; }

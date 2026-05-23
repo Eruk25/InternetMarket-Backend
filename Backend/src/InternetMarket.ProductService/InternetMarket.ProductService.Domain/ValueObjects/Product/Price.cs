@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.ProductService.Domain.ValueObjects
 {
-    public class Price
+    public record Price
     {
         public decimal Value { get; }
 

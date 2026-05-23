@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InternetMarket.ProductService.Domain.ValueObjects
 {
-    public class NumberPhone
+    public record NumberPhone
     {
         private static readonly string _numberPattern = @"^\+375(17|25|29|33|44|24)\d{7}$";
         public string Value { get; private set; }
