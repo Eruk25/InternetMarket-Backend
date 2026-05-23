@@ -21,6 +21,16 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence.Configurations
                 .IsRequired();
             builder.Property(oi => oi.UnitPrice)
                 .IsRequired();
+            builder.Property(oi => oi.Weight)
+                .IsRequired();
+            builder.Property(oi => oi.Length)
+                .IsRequired();
+            builder.Property(oi => oi.Width)
+                .IsRequired();
+            builder.Property(oi => oi.Height)
+                .IsRequired();
+            builder.Property(oi => oi.IsLargeSizeProduct)
+                .IsRequired();
             builder.Ignore(oi => oi.TotalPrice);
             builder.Property(oi => oi.CreatedAt)
                 .IsRequired();
