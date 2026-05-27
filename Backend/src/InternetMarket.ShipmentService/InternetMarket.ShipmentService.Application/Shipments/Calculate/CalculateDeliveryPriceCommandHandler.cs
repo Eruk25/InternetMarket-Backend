@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.ShipmentService.Application.Abstractions.Clients;
+using InternetMarket.ShipmentService.Domain.ValueObjects;
 using MediatR;
 
 namespace InternetMarket.ShipmentService.Application.Shipments.Calculate
@@ -18,7 +19,13 @@ namespace InternetMarket.ShipmentService.Application.Shipments.Calculate
 
         public async Task<CalculateDeliveryPriceResponse?> Handle(CalculateDeliveryPriceCommand request, CancellationToken cancellationToken)
         {
-            return await _shipmentClient.CalculateTariffAsync(request.ToCityCode, request.TypeOfDelivery);
+            DeliveryType deliveryType = request.DeliveryType switch
+            {
+                _ when request.DeliveryType == DeliveryType.OrderPickupPoint.Value => DeliveryType.OrderPickupPoint,
+                _ when request.DeliveryType == DeliveryType.CourierDelivery.Value => DeliveryType.CourierDelivery,
+                _ => throw new ArgumentException($"Неизветсный тип доставки: {request.DeliveryType}")
+            };
+            return await _shipmentClient.CalculateTariffAsync(request.ToCityCode, deliveryType, request.OrderItems);
         }
     }
 }
