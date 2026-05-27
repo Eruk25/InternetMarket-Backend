@@ -33,17 +33,6 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence.Configurations
                     value => NumberPhone.Create(value))
                 .HasMaxLength(50)
                 .IsRequired();
-            builder.OwnsOne(o => o.CustomerAddress, navigatorBuilder =>
-            {
-                navigatorBuilder.Property(a => a.City)
-                    .HasColumnName("City")
-                    .IsRequired()
-                    .HasMaxLength(30);
-                navigatorBuilder.Property(a => a.Street)
-                    .HasColumnName("Street")
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
             builder.Property(o => o.TotalPrice)
                 .IsRequired();
             builder.Property(o => o.PaymentDate)
