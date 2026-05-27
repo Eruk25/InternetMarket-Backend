@@ -23,7 +23,7 @@ namespace InternetMarket.EmailService.Application.Consumers.Order
         public async Task Consume(ConsumeContext<OrderCreated> context)
         {
             var itemshtml = string.Join("", context.Message.Items.Select(oi =>
-                $"<li>{oi.Title} - {oi.Quantity} шт. (цена: {oi.UnitPrice:C})</li>"));
+                $"<li>{oi.ProductName} - {oi.Quantity} шт. (цена: {oi.UnitPrice:C})</li>"));
 
             EmailMetadata emailMetadata = new EmailMetadata(
                 context.Message.Email,
