@@ -57,6 +57,15 @@ namespace InternetMarket.OrderService.Domain.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
+        public void Received()
+        {
+            if (Status == OrderStatus.Received) return;
+            if (Status == OrderStatus.Cancelled)
+                throw new InvalidOperationException("Нельзя сделать стату Получе, если заказ отменен.");
+            Status = OrderStatus.Received;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
         public void Cancel()
         {
             if (Status == OrderStatus.Paid)
