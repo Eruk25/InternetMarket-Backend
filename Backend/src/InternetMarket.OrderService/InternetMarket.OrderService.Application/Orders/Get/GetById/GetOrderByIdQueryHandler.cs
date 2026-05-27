@@ -28,8 +28,6 @@ namespace InternetMarket.OrderService.Application.Orders.Get.GetById
                 order.CustomerName.FirstName,
                 order.CustomerName.LastName,
                 order.CustomerPhone.Value,
-                order.CustomerAddress.Street,
-                order.CustomerAddress.City,
                 order.OrderItems.Select(oi => new OrderItemDto(
                     oi.ProductName,
                     oi.Quantity,
