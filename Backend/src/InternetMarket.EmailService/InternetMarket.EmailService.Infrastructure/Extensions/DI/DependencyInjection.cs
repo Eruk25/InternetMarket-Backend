@@ -32,6 +32,10 @@ namespace InternetMarket.EmailService.Infrastructure.Extensions.DI
                     {
                         e.ConfigureConsumer<UserRegisteredConsumer>(context);
                     });
+                    cfg.ReceiveEndpoint("email-service-order-created", e =>
+                    {
+                        e.ConfigureConsumer<OrderCreatedConsumer>(context);
+                    });
 
                     cfg.Host("localhost", "/", h =>
                     {
