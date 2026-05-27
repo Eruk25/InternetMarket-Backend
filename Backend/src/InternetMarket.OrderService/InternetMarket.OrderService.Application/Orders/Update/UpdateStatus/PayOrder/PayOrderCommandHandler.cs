@@ -10,14 +10,14 @@ using MediatR;
 
 namespace InternetMarket.OrderService.Application.Orders.Update.UpdateStatus
 {
-    public class UpdateOrderStatusCommandHandler : IRequestHandler<UpdateOrderStatusCommand>
+    public class PayOrderCommandHandler : IRequestHandler<PayOrderCommand>
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public UpdateOrderStatusCommandHandler(IOrderRepository orderRepository, IUserRepository userRepository, IUnitOfWork unitOfWork,
+        public PayOrderCommandHandler(IOrderRepository orderRepository, IUserRepository userRepository, IUnitOfWork unitOfWork,
          IPublishEndpoint publishEndpoint)
         {
             _orderRepository = orderRepository;
@@ -26,7 +26,7 @@ namespace InternetMarket.OrderService.Application.Orders.Update.UpdateStatus
             _publishEndpoint = publishEndpoint;
         }
 
-        public async Task Handle(UpdateOrderStatusCommand request, CancellationToken cancellationToken)
+        public async Task Handle(PayOrderCommand request, CancellationToken cancellationToken)
         {
             var order = await _orderRepository.GetByIdAsync(request.OrderId);
 

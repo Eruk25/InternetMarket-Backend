@@ -6,5 +6,5 @@ using MediatR;
 
 namespace InternetMarket.OrderService.Application.Orders.Update.UpdateStatus
 {
-    public record UpdateOrderStatusCommand(Guid OrderId) : IRequest;
+    public record PayOrderCommand(Guid OrderId) : IRequest;
 }
