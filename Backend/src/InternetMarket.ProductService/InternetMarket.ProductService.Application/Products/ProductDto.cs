@@ -8,5 +8,6 @@ using MediatR;
 namespace InternetMarket.ProductService.Application.Products
 {
     public record ProductDto(Guid Id, string ProductName, string Description,
-        decimal Price, int Quantity, string Category, string Provider);
+        decimal Price, int Quantity, string Category, string Provider, int Weight,
+        int Length, int Width, int Height, bool IsLargeSizeProduct);
 }
