@@ -27,7 +27,12 @@ namespace InternetMarket.ProductService.Application.Products.Get.GetByIds
                 p.Price.Value,
                 p.AvailableQuantity.Value,
                 p.Category!.CategoryName.Value,
-                p.Provider!.Name.Value
+                p.Provider!.Name.Value,
+                p.Weight.Value,
+                p.Length.Value,
+                p.Width.Value,
+                p.Height.Value,
+                p.IsLargeSizeProduct
             ));
         }
     }
