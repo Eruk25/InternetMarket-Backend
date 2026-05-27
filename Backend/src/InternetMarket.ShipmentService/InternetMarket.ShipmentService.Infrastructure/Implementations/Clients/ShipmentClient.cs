@@ -1,12 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Runtime;
 using System.Threading.Tasks;
 using InternetMarket.ShipmentService.Application.Abstractions.Clients;
 using InternetMarket.ShipmentService.Application.DTOs;
 using InternetMarket.ShipmentService.Application.Shipments.Calculate;
+using InternetMarket.ShipmentService.Application.Shipments.Create;
+using InternetMarket.ShipmentService.Application.Shipments.Get;
+using InternetMarket.ShipmentService.Application.Shipments.Get.GetDeliveryPoints;
 using InternetMarket.ShipmentService.Domain.ValueObjects;
 using InternetMarket.ShipmentService.Infrastructure.Implementations.Clients.DTOs.Requests;
 using InternetMarket.ShipmentService.Infrastructure.Implementations.Clients.DTOs.Responses;
@@ -23,24 +28,23 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
         private readonly string TokenCacheKey = "cdek_access_token";
         private readonly CdekOptions _options;
         private readonly HttpClient _httpClient;
+        private readonly PackagePacker _packagePacker;
 
-        public ShipmentClient(IDistributedCache cache, IOptions<CdekOptions> options, HttpClient httpClient)
+        public ShipmentClient(IDistributedCache cache, IOptions<CdekOptions> options, HttpClient httpClient, PackagePacker packagePacker)
         {
             _cache = cache;
             _options = options.Value;
             _httpClient = httpClient;
+            _packagePacker = packagePacker;
         }
 
-        public async Task<CalculateDeliveryPriceResponse?> CalculateTariffAsync(int toCityCode, int typeOfDelivery, CancellationToken cancellationToken = default)
+        public async Task<CalculateDeliveryPriceResponse?> CalculateTariffAsync(int toCityCode, DeliveryType deliveryType, IEnumerable<OrderItemDto> orderItems, CancellationToken cancellationToken = default)
         {
-            if (typeOfDelivery is not (482 or 483))
-                return null;
-            var token = await GetTokenAsync();
             var request = new CalculateDeliveryPriceRequest
             {
                 Type = 1,
                 Currency = 7,
-                TariffCode = typeOfDelivery == DeliveryType.OrderPickupPoint.Value ? 483 : 482,
+                TariffCode = deliveryType == DeliveryType.OrderPickupPoint ? 483 : 482,
                 FromLocation = new ShipmentLocation
                 {
                     Code = 9220
@@ -49,16 +53,13 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
                 {
                     Code = toCityCode
                 },
-                Packages = new List<Package>
-                {
-                    new Package
-                    {
-                        Weight = 1000
-                    }
-                }
+                Packages = _packagePacker.FormPackage(orderItems)
             };
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var response = await _httpClient.PostAsJsonAsync("calculator/tariff", request);
+            var token = await GetTokenAsync();
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post, "calculator/tariff");
+            httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            httpRequest.Content = JsonContent.Create(request);
+            var response = await _httpClient.SendAsync(httpRequest, cancellationToken);
             if (response.IsSuccessStatusCode)
             {
                 var deliveryInfo = await response.Content.ReadFromJsonAsync<CdekTariffResponse>(cancellationToken);
@@ -75,7 +76,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
                 };
             }
 
-            if (typeOfDelivery == DeliveryType.CourierDelivery.Value)
+            if (deliveryType == DeliveryType.CourierDelivery)
             {
                 return new CalculateDeliveryPriceResponse
                 {
@@ -89,26 +90,111 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
             return null;
         }
 
-        public Task CreateOrderAsync()
+        public async Task<CreateOrderDeliveryResponse> CreateOrderAsync(int? toCityCode, string? deliveryPointId, DeliveryType deliveryType, string? City, string? address, string fullName, string numberPhone, IEnumerable<OrderItemDto> orderItems, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            int tariffCode = deliveryType == DeliveryType.OrderPickupPoint ? 483 : 482;
+            var request = new CreateOrderRequest
+            {
+                Type = 1,
+                TariffCode = tariffCode,
+                FromLocation = new ShipmentLocation
+                {
+                    Code = 9220,
+                    City = "Минск",
+                    Address = "улица Немига, 46"
+                },
+                Recipient = new Recipient
+                {
+                    FullName = fullName,
+                    Phones = new List<Phone>
+                    {
+                        new Phone { Number = numberPhone}
+                    }
+                },
+                Packages = _packagePacker.FormPackage(orderItems)
+            };
+
+            if (deliveryType == DeliveryType.OrderPickupPoint)
+            {
+                if (string.IsNullOrWhiteSpace(deliveryPointId))
+                    throw new ArgumentException("Для доставки на ПВЗ необзодим ID пункта выдачи", nameof(deliveryPointId));
+                request.DeliveryPoint = deliveryPointId;
+                request.ToLocation = null;
+            }
+            else
+            {
+                if (toCityCode == null)
+                    throw new ArgumentException("Для курьерской доставки необходим код города назначения.", nameof(toCityCode));
+                request.ToLocation = new ShipmentLocation
+                {
+
+                    Code = toCityCode.Value,
+                    City = City,
+                    Address = address
+                };
+                request.DeliveryPoint = null;
+            }
+
+            var token = await GetTokenAsync();
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post, "orders");
+            httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            httpRequest.Content = JsonContent.Create(request);
+            var response = await _httpClient.SendAsync(httpRequest, cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            var orderInfo = await response.Content.ReadFromJsonAsync<CdekCreateOrderDeliveryResponse>(cancellationToken);
+            if (orderInfo is null)
+                throw new ArgumentException("Ответ от СДЭК пустой.");
+
+            return new CreateOrderDeliveryResponse
+            {
+                ShipmentOrderId = orderInfo.Entity.ShipmentOrderId,
+                State = orderInfo.Requests.FirstOrDefault()!.State
+            };
         }
 
         public async Task<IEnumerable<ShipmentCityResponse>?> GetCitiesAsync(string name, CancellationToken cancellationToken = default)
         {
             var token = await GetTokenAsync();
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var response = await _httpClient.GetAsync($"location/suggest/cities?name={name}&country_code=BY");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"location/suggest/cities?name={name}&country_code=BY");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.SendAsync(request, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            var cities = await response.Content.ReadFromJsonAsync<IEnumerable<ShipmentCityResponse>>(cancellationToken);
+            var cities = await response.Content.ReadFromJsonAsync<IEnumerable<CdekShipmentCityResponse>>(cancellationToken);
+            if (cities is null)
+                throw new ArgumentException("Ответ от СДЭК пустой.");
 
-            return cities;
+            return cities.Select(c => new ShipmentCityResponse
+            {
+                Code = c.Code,
+                FullName = c.FullName
+            });
         }
 
-        public Task<object> GetOrderInfo(Guid id)
+        public async Task<IEnumerable<DeliveryPointResponse>?> GetDeliveryPointsAsync(int cityCode, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var token = await GetTokenAsync();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"deliverypoints?city_code={cityCode}&type=PVZ");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.SendAsync(request, cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            var deliveryPoints = await response.Content.ReadFromJsonAsync<IEnumerable<CdekDeliveryPointResponse>>(cancellationToken);
+            if (deliveryPoints is null)
+                throw new ArgumentException("Ответ от СДЭК пустой.");
+
+            return deliveryPoints.Select(dp => new DeliveryPointResponse
+            {
+                DeliveryCode = dp.DeliveryCode,
+                Location = new DeliveryLocation
+                {
+                    CityCode = dp.Location.CityCode,
+                    City = dp.Location.City,
+                    Address = dp.Location.Address
+                }
+            });
         }
 
         public async Task<string> GetTokenAsync()
