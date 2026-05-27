@@ -27,6 +27,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Extensions
             services.Configure<CdekOptions>(configuration.GetSection("ShipmentService"));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IShipmentRepository, ShipmentRepository>();
+            services.AddScoped<PackagePacker>();
             services.AddHttpClient<IShipmentClient, ShipmentClient>(client =>
             {
                 var shipmentSection = configuration.GetSection("ShipmentService");
