@@ -22,7 +22,7 @@ namespace InternetMarket.OrderService.Application.Consumers
 
         public async Task Consume(ConsumeContext<TransactionSuccessful> context)
         {
-            await _sender.Send(new UpdateOrderStatusCommand(context.Message.OrderId));
+            await _sender.Send(new PayOrderCommand(context.Message.OrderId));
         }
     }
 }
