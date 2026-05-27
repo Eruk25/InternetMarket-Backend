@@ -10,5 +10,11 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients.
     {
         [JsonPropertyName("code")]
         public int Code { get; set; }
+        [JsonPropertyName("city")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? City { get; set; }
+        [JsonPropertyName("address")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? Address { get; set; }
     }
 }
