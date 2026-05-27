@@ -41,6 +41,7 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
             {
                 x.AddConsumer<UserRegisteredConsumer>();
                 x.AddConsumer<TransactionSuccessfulConsumer>();
+                x.AddConsumer<ShipmentCreatedConsumer>();
                 x.AddEntityFrameworkOutbox<OrderContext>(o =>
                 {
                     o.UseSqlServer();
@@ -61,6 +62,10 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
                     cfg.ReceiveEndpoint("order-service-transaction-successful", e =>
                     {
                         e.ConfigureConsumer<TransactionSuccessfulConsumer>(context);
+                    });
+                    cfg.ReceiveEndpoint("order-service-shipment-created", e =>
+                    {
+                        e.ConfigureConsumer<ShipmentCreatedConsumer>(context);
                     });
                     cfg.Host("localhost", "/", h =>
                     {
