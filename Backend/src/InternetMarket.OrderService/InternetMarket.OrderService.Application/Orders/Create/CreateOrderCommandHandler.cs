@@ -48,10 +48,14 @@ namespace InternetMarket.OrderService.Application.Orders.Create
                     ci.ProductId,
                     ci.Title,
                     ci.Quantity,
-                    ci.Price));
+                    ci.Price,
+                    ci.Weight,
+                    ci.Length,
+                    ci.Width,
+                    ci.Height,
+                    ci.IsLargeSizeProduct));
 
-            var order = new Order(request.UserId, user.FullName, NumberPhone.Create(request.NumberPhone),
-             Address.Create(request.Street, request.City));
+            var order = new Order(request.UserId, user.FullName, NumberPhone.Create(request.NumberPhone));
             order.AddItems(orderItems);
 
             await _orderRepository.CreateAsync(order);
@@ -63,12 +67,25 @@ namespace InternetMarket.OrderService.Application.Orders.Create
             }
             await _productClient.ReserveAsync(itemsToReserve);
             await _publishEndpoint.Publish(new OrderCreated(
+                request.DeliveryType,
+                request.ToCityCode,
+                request.DeliveryPointId,
+                request.City,
+                request.Address,
+                request.FullName,
+                request.NumberPhone,
                 order.Id,
                 user.Email.Value,
                 orderItems.Select(oi => new Contracts.Events.Order.DTOs.OrderItem(
+                    oi.ProductId,
                     oi.ProductName,
                     oi.Quantity,
-                    oi.UnitPrice
+                    oi.UnitPrice,
+                    oi.Weight,
+                    oi.Length,
+                    oi.Width,
+                    oi.Height,
+                    oi.IsLargeSizeProduct
                 )),
                 order.TotalPrice));
 
