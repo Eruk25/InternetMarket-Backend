@@ -25,8 +25,6 @@ namespace InternetMarket.OrderService.Application.Orders.Get.GetAll
                 o.CustomerName.FirstName,
                 o.CustomerName.LastName,
                 o.CustomerPhone.Value,
-                o.CustomerAddress.Street,
-                o.CustomerAddress.City,
                 o.OrderItems.Select(oi => new OrderItemDto(
                     oi.ProductName,
                     oi.Quantity,
