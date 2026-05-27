@@ -21,5 +21,15 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
             .IsRequired();
         builder.Property(ci => ci.Price)
             .IsRequired();
+        builder.Property(ci => ci.Weight)
+            .IsRequired();
+        builder.Property(ci => ci.Length)
+            .IsRequired();
+        builder.Property(ci => ci.Width)
+            .IsRequired();
+        builder.Property(ci => ci.Height)
+            .IsRequired();
+        builder.Property(ci => ci.IsLargeSizeProduct)
+            .IsRequired();
     }
 }
