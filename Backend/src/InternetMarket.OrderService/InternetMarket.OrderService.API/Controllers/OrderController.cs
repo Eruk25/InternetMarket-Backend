@@ -47,7 +47,15 @@ namespace InternetMarket.OrderService.API.Controllers
         public async Task<IActionResult> CreateAsync([FromBody] CreateOrderRequest request)
         {
             var userId = User.GetUserId();
-            await _mediator.Send(new CreateOrderCommand(userId, request.NumberPhone, request.Street, request.City));
+            await _mediator.Send(new CreateOrderCommand(
+                userId,
+                request.DeliveryType,
+                request.ToCityCode,
+                request.DeliveryPointId,
+                request.City,
+                request.Address,
+                request.FullName,
+                request.NumberPhone));
             return Ok();
         }
 
