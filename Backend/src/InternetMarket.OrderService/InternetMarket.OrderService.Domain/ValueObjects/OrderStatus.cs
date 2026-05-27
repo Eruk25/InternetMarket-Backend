@@ -12,7 +12,8 @@ namespace InternetMarket.OrderService.Domain.ValueObjects
         public static readonly OrderStatus Created = new OrderStatus(nameof(Created), 1);
         public static readonly OrderStatus Paid = new OrderStatus(nameof(Paid), 2);
         public static readonly OrderStatus Shipped = new OrderStatus(nameof(Shipped), 3);
-        public static readonly OrderStatus Cancelled = new OrderStatus(nameof(Cancelled), 4);
+        public static readonly OrderStatus Received = new OrderStatus(nameof(Received), 4);
+        public static readonly OrderStatus Cancelled = new OrderStatus(nameof(Cancelled), 5);
 
         public OrderStatus(string name, int value) : base(name, value) { }
     }
