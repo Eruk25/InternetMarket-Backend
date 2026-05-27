@@ -63,7 +63,7 @@ namespace InternetMarket.ShipmentService.API.Controllers
             if (_environment.IsDevelopment())
                 return NotFound();
 
-            await _mediator.Send(new UpdateStatusCommand(orderId));
+            await _mediator.Send(new ReceivedStatusCommand(orderId));
             return NoContent();
         }
 
