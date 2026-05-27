@@ -136,6 +136,76 @@
                 "Post",
                 "Delete"
             ]
+        },
+        {
+            "UpstreamPathTemplate": "/api/shipments/create-order/{orderId}",
+            "UpstreamHttpMethod": [
+                "Post"
+            ],
+            "DownstreamPathTemplate": "/api/shipments/create-order/{orderId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5260
+                }
+            ]
+        },
+        {
+            "UpstreamPathTemplate": "/api/shipments/test/orders/{orderId}/complete",
+            "UpstreamHttpMethod": [
+                "Post"
+            ],
+            "DownstreamPathTemplate": "/api/shipments/test/orders/{orderId}/complete",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5260
+                }
+            ]
+        },
+        {
+            "UpstreamPathTemplate": "/api/shipments/deliverypoints",
+            "UpstreamHttpMethod": [
+                "Get"
+            ],
+            "DownstreamPathTemplate": "/api/shipments/deliverypoints",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5260
+                }
+            ]
+        },
+        {
+            "UpstreamPathTemplate": "/api/shipments/calculator",
+            "UpstreamHttpMethod": [
+                "Post"
+            ],
+            "DownstreamPathTemplate": "/api/shipments/calculator",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5260
+                }
+            ]
+        },
+        {
+            "UpstreamPathTemplate": "/api/shipments/cities",
+            "UpstreamHttpMethod": [
+                "Get"
+            ],
+            "DownstreamPathTemplate": "/api/shipments/cities",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5260
+                }
+            ]
         }
     ]
 }
