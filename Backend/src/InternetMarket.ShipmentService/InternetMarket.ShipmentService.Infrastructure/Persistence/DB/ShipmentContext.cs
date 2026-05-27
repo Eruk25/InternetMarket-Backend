@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.ShipmentService.Domain.Entities;
 using InternetMarket.ShipmentService.Infrastructure.Persistence.DB.Configurations;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace InternetMarket.ShipmentService.Infrastructure.Persistence.DB
@@ -17,6 +18,9 @@ namespace InternetMarket.ShipmentService.Infrastructure.Persistence.DB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ShipmentConfiguration());
+            modelBuilder.AddInboxStateEntity();
+            modelBuilder.AddOutboxMessageEntity();
+            modelBuilder.AddOutboxStateEntity();
         }
     }
 }
