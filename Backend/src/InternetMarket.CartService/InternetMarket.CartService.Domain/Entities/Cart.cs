@@ -22,17 +22,18 @@ namespace InternetMarket.CartService.Domain.Entities
             CreatedAt = DateTime.UtcNow;
         }
 
-        public void AddItem(Guid productId, string productName, decimal price, int quantity)
+        public void AddItem(Guid productId, string productName, decimal price, int quantity, int weight,
+         int length, int width, int height, bool isLargeSizeProduct)
         {
             var existing = Items.FirstOrDefault(ci => ci.ProductId == productId);
 
             if (existing is not null)
             {
-                existing.Quantity += quantity;
+                existing.Increase(quantity);
                 return;
             }
 
-            var item = new CartItem(productId, productName, price, quantity);
+            var item = new CartItem(productId, productName, price, quantity, weight, length, width, height, isLargeSizeProduct);
 
             Items.Add(item);
             UpdatedAt = DateTime.UtcNow;
