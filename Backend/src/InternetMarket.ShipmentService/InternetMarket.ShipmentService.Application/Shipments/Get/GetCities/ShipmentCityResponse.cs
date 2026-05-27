@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace InternetMarket.ShipmentService.Application.DTOs
+namespace InternetMarket.ShipmentService.Application.Shipments.Get
 {
     public class ShipmentCityResponse
     {
-        [JsonPropertyName("code")]
         public int Code { get; set; }
-        [JsonPropertyName("full_name")]
         public string FullName { get; set; } = default!;
     }
 }
