@@ -20,8 +20,12 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients.
         [JsonPropertyName("from_location")]
         public ShipmentLocation FromLocation { get; set; } = default!;
         [JsonPropertyName("to_location")]
-        public ShipmentLocation ToLocation { get; set; } = default!;
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public ShipmentLocation? ToLocation { get; set; }
+        [JsonPropertyName("delivery_point")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? DeliveryPoint { get; set; }
         [JsonPropertyName("packages")]
-        public List<Package> Packages { get; set; } = default!;
+        public List<CdekPackage> Packages { get; set; } = default!;
     }
 }
