@@ -24,9 +24,9 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Reposito
             return shipments;
         }
 
-        public async Task<Shipment?> GetByIdAsync(Guid id)
+        public async Task<Shipment?> GetByIdAsync(Guid orderId)
         {
-            var shipment = await _context.Shipments.FirstOrDefaultAsync(s => s.Id == id);
+            var shipment = await _context.Shipments.FirstOrDefaultAsync(s => s.OrderId == orderId);
             return shipment;
         }
 
