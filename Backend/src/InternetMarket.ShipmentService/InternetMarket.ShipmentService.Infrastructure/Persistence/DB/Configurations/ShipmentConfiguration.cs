@@ -35,17 +35,24 @@ namespace InternetMarket.ShipmentService.Infrastructure.Persistence.DB.Configura
                     .HasMaxLength(50);
                 navigatorBuilder.Property(l => l.Address)
                     .HasColumnName("Address")
-                    .IsRequired(true)
+                    .IsRequired(false)
                     .HasMaxLength(50);
             });
             builder.Property(s => s.NumberPhone)
                 .HasConversion(
                     numberPhone => numberPhone.Value,
-                    value => NumberPhone.Create(value));
+                    value => NumberPhone.Create(value))
+                .IsRequired(true);
             builder.Property(s => s.Status)
                 .HasConversion(
                     status => status.Value,
-                    value => Status.FromValue(value));
+                    value => Status.FromValue(value))
+                .IsRequired(true);
+            builder.Property(s => s.DeliveryType)
+                .HasConversion(
+                    deliveryType => deliveryType.Value,
+                    value => DeliveryType.FromValue(value))
+                .IsRequired(true);
             builder.Property(s => s.ShipmentAmount)
                 .IsRequired(true);
         }
