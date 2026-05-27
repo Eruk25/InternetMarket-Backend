@@ -16,19 +16,16 @@ namespace InternetMarket.OrderService.Domain.Entities
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
         public FullName CustomerName { get; private set; }
         public NumberPhone CustomerPhone { get; private set; }
-        public Address CustomerAddress { get; private set; }
         public decimal TotalPrice { get; private set; }
         public DateTime? PaymentDate { get; private set; }
         public OrderStatus Status { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
-        private Order() { }
-        public Order(Guid userId, FullName customerName, NumberPhone customerNumber, Address customerAddress)
+        public Order(Guid userId, FullName customerName, NumberPhone customerNumber)
         {
             UserId = userId;
             CustomerName = customerName;
             CustomerPhone = customerNumber;
-            CustomerAddress = customerAddress;
             Status = OrderStatus.Created;
             CreatedAt = DateTime.UtcNow;
         }
@@ -48,14 +45,24 @@ namespace InternetMarket.OrderService.Domain.Entities
                 throw new InvalidOperationException("Cannot paid cancelled order");
             Status = OrderStatus.Paid;
             PaymentDate = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void Shipped()
+        {
+            if (Status == OrderStatus.Shipped) return;
+            if (Status == OrderStatus.Cancelled)
+                throw new InvalidOperationException("Нельзя сделать статус в Доставке, если заказ отменен.");
+            Status = OrderStatus.Shipped;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         public void Cancel()
         {
             if (Status == OrderStatus.Paid)
                 throw new InvalidOperationException("Cannot cancel Paid order");
-
             Status = OrderStatus.Cancelled;
+            UpdatedAt = DateTime.UtcNow;
         }
     }
 }
