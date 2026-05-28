@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Transactions;
+using InternetMarket.PaymentService.Application.PaymentMethods.Get;
 using InternetMarket.PaymentService.Application.Transactions.Create;
 using InternetMarket.PaymentService.Application.Transactions.Update;
 using MediatR;
@@ -23,6 +24,13 @@ namespace InternetMarket.PaymentService.API.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet]
+        [Route("methods")]
+        public async Task<IActionResult> GetPaymentMethodsAsync()
+        {
+            var results = await _mediator.Send(new GetPaymentMethodsQuery());
+            return Ok(results);
+        }
         [HttpPost]
         [Route("pay/{orderId}")]
         public async Task<IActionResult> PayAsync([FromRoute] Guid orderId)
