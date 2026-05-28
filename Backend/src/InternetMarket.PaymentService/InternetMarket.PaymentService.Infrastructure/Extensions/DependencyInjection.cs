@@ -63,6 +63,7 @@ namespace InternetMarket.PaymentService.Infrastructure.Extensions
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<IPaymentMehtodRepository, PaymentMethodRepository>();
             return services;
         }
     }
