@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using InternetMarket.PaymentService.Application.Abstractions.Repositories;
+using InternetMarket.PaymentService.Domain.Entities;
+using InternetMarket.PaymentService.Infrastructure.Persistence.DB;
+using Microsoft.EntityFrameworkCore;
+
+namespace InternetMarket.PaymentService.Infrastructure.Implementations.Repositories
+{
+    public class PaymentMethodRepository : IPaymentMehtodRepository
+    {
+        private readonly PaymentContext _context;
+
+        public PaymentMethodRepository(PaymentContext context)
+        {
+            _context = context;
+        }
+
+        public async Task CreateAsync(PaymentMethod paymentMethod, CancellationToken cancellationToken = default)
+        {
+            await _context.AddAsync(paymentMethod, cancellationToken);
+        }
+
+        public async Task DeleteAsync(PaymentMethod paymentMethod, CancellationToken cancellationToken = default)
+        {
+            _context.Remove(paymentMethod);
+        }
+
+        public async Task<IEnumerable<PaymentMethod>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            var paymentMethods = await _context.PaymentMethods.ToListAsync(cancellationToken);
+            return paymentMethods;
+        }
+
+        public async Task UpdateAsync(PaymentMethod paymentMethod, CancellationToken cancellationToken = default)
+        {
+            _context.PaymentMethods.Update(paymentMethod);
+        }
+    }
+}
