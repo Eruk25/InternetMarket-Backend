@@ -36,13 +36,16 @@ namespace InternetMarket.OrderService.Application.Orders.Create
         {
             var cart = await _cartClient.GetCartByUserIdAsync(request.UserId);
             if (cart is null || !cart.CartItems.Any())
-                throw new ArgumentNullException("Cart is empty");
+                throw new ArgumentNullException("Корзина пуста.");
 
             var user = await _userRepository.GetByIdAsync(request.UserId);
 
             if (user is null)
-                throw new ArgumentException("User not found");
+                throw new ArgumentException("Пользователь не найден.");
 
+            if (request.PaymentMethod != PaymentMethod.Card.Name && request.PaymentMethod != PaymentMethod.Cash.Name)
+                throw new ArgumentException("Неверный способ оплаты.");
+            var paymentMethod = PaymentMethod.FromName(request.PaymentMethod);
             var orderItems = cart.CartItems
                 .Select(ci => new OrderItem(
                     ci.ProductId,
@@ -54,19 +57,19 @@ namespace InternetMarket.OrderService.Application.Orders.Create
                     ci.Width,
                     ci.Height,
                     ci.IsLargeSizeProduct));
-
-            var order = new Order(request.UserId, user.FullName, NumberPhone.Create(request.NumberPhone));
+            var order = new Order(
+                request.UserId,
+                user.FullName,
+                NumberPhone.Create(request.NumberPhone),
+                paymentMethod,
+                new DeliveryInfo(request.DeliveryType, request.ToCityCode, request.DeliveryPointId, request.City, request.Address));
             order.AddItems(orderItems);
 
             await _orderRepository.CreateAsync(order);
-            await _cartClient.ClearCartAsync(request.UserId);
-            Dictionary<Guid, int> itemsToReserve = new Dictionary<Guid, int>();
-            foreach (var orderItem in order.OrderItems)
+            if (paymentMethod == PaymentMethod.Cash)
             {
-                itemsToReserve.Add(orderItem.ProductId, orderItem.Quantity);
-            }
-            await _productClient.ReserveAsync(itemsToReserve);
-            await _publishEndpoint.Publish(new OrderCreated(
+                await _publishEndpoint.Publish(new OrderCreated(
+                request.PaymentMethod,
                 request.DeliveryType,
                 request.ToCityCode,
                 request.DeliveryPointId,
@@ -88,8 +91,16 @@ namespace InternetMarket.OrderService.Application.Orders.Create
                     oi.IsLargeSizeProduct
                 )),
                 order.TotalPrice));
-
+            }
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+            Dictionary<Guid, int> itemsToReserve = new Dictionary<Guid, int>();
+            foreach (var orderItem in order.OrderItems)
+            {
+                itemsToReserve.Add(orderItem.ProductId, orderItem.Quantity);
+            }
+            await _productClient.ReserveAsync(itemsToReserve);
+            await _cartClient.ClearCartAsync(request.UserId);
+
         }
     }
 }
