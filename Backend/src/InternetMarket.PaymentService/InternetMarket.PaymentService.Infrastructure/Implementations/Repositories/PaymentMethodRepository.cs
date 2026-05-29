@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InternetMarket.PaymentService.Infrastructure.Implementations.Repositories
 {
-    public class PaymentMethodRepository : IPaymentMehtodRepository
+    public class PaymentMethodRepository : IPaymentMethodRepository
     {
         private readonly PaymentContext _context;
 
