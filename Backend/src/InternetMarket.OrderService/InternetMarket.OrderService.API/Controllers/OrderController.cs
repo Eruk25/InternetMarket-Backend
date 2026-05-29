@@ -49,6 +49,7 @@ namespace InternetMarket.OrderService.API.Controllers
             var userId = User.GetUserId();
             await _mediator.Send(new CreateOrderCommand(
                 userId,
+                request.PaymentMethod,
                 request.DeliveryType,
                 request.ToCityCode,
                 request.DeliveryPointId,
