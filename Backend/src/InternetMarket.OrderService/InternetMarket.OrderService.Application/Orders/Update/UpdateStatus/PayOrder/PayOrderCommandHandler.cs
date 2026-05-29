@@ -31,15 +31,38 @@ namespace InternetMarket.OrderService.Application.Orders.Update.UpdateStatus
             var order = await _orderRepository.GetByIdAsync(request.OrderId);
 
             if (order is null)
-                throw new ArgumentNullException("Order was not found");
+                throw new ArgumentNullException("Заказ не найден.");
 
             order.Paid();
             var user = await _userRepository.GetByIdAsync(order.UserId);
 
             if (user is null)
-                throw new ArgumentNullException("User wan not found");
+                throw new ArgumentNullException("Пользователь не найден.");
 
             await _publishEndpoint.Publish(new OrderPaid(order.Id, user.Email.Value));
+            await _publishEndpoint.Publish(new OrderCreated(
+                order.PaymentMethod.Name,
+                order.DeliveryInfo.DeliveryType,
+                order.DeliveryInfo.ToCityCode,
+                order.DeliveryInfo.DeliveryPointId,
+                order.DeliveryInfo.City,
+                order.DeliveryInfo.Address,
+                order.CustomerName.ToString(),
+                order.CustomerPhone.Value,
+                order.Id,
+                user.Email.Value,
+                order.OrderItems.Select(oi => new Contracts.Events.Order.DTOs.OrderItem(
+                    oi.ProductId,
+                    oi.ProductName,
+                    oi.Quantity,
+                    oi.UnitPrice,
+                    oi.Weight,
+                    oi.Length,
+                    oi.Width,
+                    oi.Height,
+                    oi.IsLargeSizeProduct
+                )),
+                order.TotalPrice));
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
