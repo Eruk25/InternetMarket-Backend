@@ -38,6 +38,11 @@ namespace InternetMarket.ShipmentService.Infrastructure.Persistence.DB.Configura
                     .IsRequired(false)
                     .HasMaxLength(50);
             });
+            builder.Property(s => s.PaymentMethod)
+                .HasConversion(
+                    paymentMethod => paymentMethod.Value,
+                    value => PaymentMethod.FromValue(value))
+                .IsRequired(true);
             builder.Property(s => s.NumberPhone)
                 .HasConversion(
                     numberPhone => numberPhone.Value,
