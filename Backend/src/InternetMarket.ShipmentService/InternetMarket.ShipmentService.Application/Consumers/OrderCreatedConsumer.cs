@@ -22,6 +22,7 @@ namespace InternetMarket.ShipmentService.Application.Consumers
         public async Task Consume(ConsumeContext<OrderCreated> context)
         {
             await _sender.Send(new CreateShipmentCommand(
+                context.Message.PaymentMethod,
                 context.Message.DeliveryType,
                 context.Message.ToCityCode,
                 context.Message.DeliveryPointId,
@@ -40,7 +41,8 @@ namespace InternetMarket.ShipmentService.Application.Consumers
                     i.Width,
                     i.Height,
                     i.IsLargeSizeProduct
-                ))
+                )),
+                context.Message.TotalPrice
             ));
         }
     }
