@@ -37,7 +37,9 @@ namespace InternetMarket.ShipmentService.Application.Shipments.Create
                 _ when request.DeliveryType == DeliveryType.CourierDelivery.Value => DeliveryType.CourierDelivery,
                 _ => throw new ArgumentException($"Неизветсный тип доставки: {request.DeliveryType}")
             };
+            PaymentMethod paymentMethod = PaymentMethod.FromName(request.PaymentMethod);
             var orderInfo = await _shipmentClient.CreateOrderAsync(
+                paymentMethod,
                 request.ToCityCode,
                 request.DeliveryPointId,
                 deliveryType,
@@ -46,6 +48,7 @@ namespace InternetMarket.ShipmentService.Application.Shipments.Create
                 request.FullName,
                 request.NumberPhone,
                 request.OrderItems);
+
             var shipmentAmount = await _shipmentClient.CalculateTariffAsync(request.ToCityCode, deliveryType, request.OrderItems);
             var fullName = request.FullName.Split(" ");
             var shipment = new Shipment(
@@ -55,11 +58,11 @@ namespace InternetMarket.ShipmentService.Application.Shipments.Create
                 new FullName(fullName[0], fullName[1]),
                 NumberPhone.Create(request.NumberPhone),
                 deliveryType,
+                paymentMethod,
                 shipmentAmount!.TotalSum);
             await _shipmentRepository.CreateAsync(shipment);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-
             await _publishEndpoint.Publish(new ShipmentCreated(shipment.OrderId));
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             return orderInfo;
         }
     }
