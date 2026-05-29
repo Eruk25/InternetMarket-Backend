@@ -6,6 +6,6 @@ using InternetMarket.Contracts.Events.Order.DTOs;
 
 namespace InternetMarket.Contracts.Events.Order
 {
-    public record OrderCreated(int DeliveryType, int ToCityCode, string? DeliveryPointId, string City, string Address,
+    public record OrderCreated(string PaymentMethod, int DeliveryType, int ToCityCode, string? DeliveryPointId, string City, string Address,
      string FullName, string NumberPhone, Guid OrderId, string Email, IEnumerable<OrderItem> Items, decimal TotalPrice);
 }
