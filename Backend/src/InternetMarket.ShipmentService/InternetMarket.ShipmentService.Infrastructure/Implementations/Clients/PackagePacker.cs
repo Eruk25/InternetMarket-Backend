@@ -10,7 +10,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
 {
     public class PackagePacker
     {
-        public List<CdekPackage> FormPackage(IEnumerable<OrderItemDto> orderItems)
+        public List<CdekPackage> FormPackage(IEnumerable<OrderItemDto> orderItems, bool isCashPayment)
         {
             List<CdekPackage> packages = new List<CdekPackage>();
             CdekPackage? currentPackage = null;
@@ -31,7 +31,8 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
                             item.UnitPrice,
                             item.Height,
                             item.Width,
-                            item.Length);
+                            item.Length,
+                            isCashPayment);
                         packages.Add(heavyPackage);
                     }
                     continue;
@@ -57,8 +58,8 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
                             item.UnitPrice,
                             item.Height,
                             item.Width,
-                            item.Length
-                        );
+                            item.Length,
+                            isCashPayment);
                     }
                     else
                     {
@@ -74,8 +75,8 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
                             item.UnitPrice,
                             item.Height,
                             item.Width,
-                            item.Length
-                        );
+                            item.Length,
+                            isCashPayment);
                     }
                 }
 

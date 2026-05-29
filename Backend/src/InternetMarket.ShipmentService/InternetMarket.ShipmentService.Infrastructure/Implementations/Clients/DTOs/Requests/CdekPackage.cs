@@ -46,7 +46,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients.
 
             return true;
         }
-        public void AddItem(string productName, string wareKey, int itemWeight, int amount, decimal cost, int height, int width, int length)
+        public void AddItem(string productName, string wareKey, int itemWeight, int amount, decimal cost, int height, int width, int length, bool isCashPayment)
         {
             if (amount <= 0)
                 throw new ArgumentException("Количество товара не может быть меньше 0.", nameof(amount));
@@ -68,7 +68,8 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients.
                     wareKey,
                     itemWeight,
                     amount,
-                    cost));
+                    cost,
+                    new Payment(isCashPayment ? (float)cost : 0)));
             }
 
             Weight += itemWeight * amount;

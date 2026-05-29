@@ -22,11 +22,11 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients.
         [JsonPropertyName("cost")]
         public decimal Cost { get; set; }
 
-        public PackageItem(string name, string wareKey, int weight, int amount, decimal cost)
+        public PackageItem(string name, string wareKey, int weight, int amount, decimal cost, Payment payment)
         {
             Name = name;
             WareKey = wareKey;
-            Payment = new Payment(0);
+            Payment = payment;
             Weight = weight;
             Amount = amount;
             Cost = cost;
