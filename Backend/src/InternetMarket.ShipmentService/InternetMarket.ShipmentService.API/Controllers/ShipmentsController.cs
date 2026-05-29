@@ -34,6 +34,7 @@ namespace InternetMarket.ShipmentService.API.Controllers
         public async Task<IActionResult> CreateOrderDeliveryAsync([FromBody] CreateOrderDeliveryRequest request, [FromRoute] Guid orderId)
         {
             var result = await _mediator.Send(new CreateShipmentCommand(
+                request.PaymentMethod,
                 request.DeliveryType,
                 request.ToCityCode,
                 request.DeliveryPointId,
@@ -52,7 +53,8 @@ namespace InternetMarket.ShipmentService.API.Controllers
                     oi.Length,
                     oi.Width,
                     oi.Height,
-                    oi.IsLargeSizeProduct))));
+                    oi.IsLargeSizeProduct)),
+                request.TotalPrice));
             return Ok(result);
         }
 
