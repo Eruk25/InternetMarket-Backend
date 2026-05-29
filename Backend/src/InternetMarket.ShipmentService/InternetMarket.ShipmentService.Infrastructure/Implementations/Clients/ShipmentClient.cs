@@ -53,7 +53,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
                 {
                     Code = toCityCode
                 },
-                Packages = _packagePacker.FormPackage(orderItems)
+                Packages = _packagePacker.FormPackage(orderItems, false)
             };
             var token = await GetTokenAsync();
             var httpRequest = new HttpRequestMessage(HttpMethod.Post, "calculator/tariff");
@@ -90,7 +90,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
             return null;
         }
 
-        public async Task<CreateOrderDeliveryResponse> CreateOrderAsync(int? toCityCode, string? deliveryPointId, DeliveryType deliveryType, string? City, string? address, string fullName, string numberPhone, IEnumerable<OrderItemDto> orderItems, CancellationToken cancellationToken = default)
+        public async Task<CreateOrderDeliveryResponse> CreateOrderAsync(PaymentMethod paymentMethod, int? toCityCode, string? deliveryPointId, DeliveryType deliveryType, string? City, string? address, string fullName, string numberPhone, IEnumerable<OrderItemDto> orderItems, CancellationToken cancellationToken = default)
         {
             int tariffCode = deliveryType == DeliveryType.OrderPickupPoint ? 483 : 482;
             var request = new CreateOrderRequest
@@ -111,7 +111,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
                         new Phone { Number = numberPhone}
                     }
                 },
-                Packages = _packagePacker.FormPackage(orderItems)
+                Packages = _packagePacker.FormPackage(orderItems, paymentMethod == PaymentMethod.Cash ? true : false)
             };
 
             if (deliveryType == DeliveryType.OrderPickupPoint)
