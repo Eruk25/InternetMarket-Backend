@@ -19,7 +19,7 @@ namespace InternetMarket.ShipmentService.Application.Abstractions.Clients
         Task<string> RefreshTokenAsync();
         Task<IEnumerable<ShipmentCityResponse>?> GetCitiesAsync(string name, CancellationToken cancellationToken = default);
         Task<IEnumerable<DeliveryPointResponse>?> GetDeliveryPointsAsync(int cityCode, CancellationToken cancellationToken = default);
-        Task<CreateOrderDeliveryResponse> CreateOrderAsync(int? toCityCode, string? deliveryPointId, DeliveryType deliveryType, string? City, string? address, string fullName, string numberPhone, IEnumerable<OrderItemDto> orderItems, CancellationToken cancellationToken = default);
+        Task<CreateOrderDeliveryResponse> CreateOrderAsync(PaymentMethod paymentMethod, int? toCityCode, string? deliveryPointId, DeliveryType deliveryType, string? City, string? address, string fullName, string numberPhone, IEnumerable<OrderItemDto> orderItems, CancellationToken cancellationToken = default);
         Task<CalculateDeliveryPriceResponse?> CalculateTariffAsync(int toCityCode, DeliveryType deliveryType, IEnumerable<OrderItemDto> orderItems, CancellationToken cancellationToken = default);
     }
 }
