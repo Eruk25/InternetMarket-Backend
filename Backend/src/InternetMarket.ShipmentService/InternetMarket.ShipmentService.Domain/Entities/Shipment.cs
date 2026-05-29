@@ -15,10 +15,11 @@ namespace InternetMarket.ShipmentService.Domain.Entities
         public FullName FullName { get; private set; }
         public NumberPhone NumberPhone { get; private set; }
         public DeliveryType DeliveryType { get; private set; }
+        public PaymentMethod PaymentMethod { get; private set; }
         public decimal ShipmentAmount { get; private set; }
         public Status Status { get; private set; }
         private Shipment() { }
-        public Shipment(Guid id, Guid orderId, Location location, FullName fullName, NumberPhone numberPhone, DeliveryType deliveryType, decimal shipmentAmount)
+        public Shipment(Guid id, Guid orderId, Location location, FullName fullName, NumberPhone numberPhone, DeliveryType deliveryType, PaymentMethod paymentMethod, decimal shipmentAmount)
         {
             Id = id;
             OrderId = orderId;
@@ -26,6 +27,7 @@ namespace InternetMarket.ShipmentService.Domain.Entities
             FullName = fullName;
             NumberPhone = numberPhone;
             DeliveryType = deliveryType;
+            PaymentMethod = paymentMethod;
             ShipmentAmount = shipmentAmount;
             Status = Status.Shipped;
         }
