@@ -9,9 +9,9 @@ namespace InternetMarket.PaymentService.Application.PaymentMethods.Get
 {
     public class GetPaymentMethodsQueryHandler : IRequestHandler<GetPaymentMethodsQuery, IEnumerable<PaymentMethodDto>>
     {
-        private readonly IPaymentMehtodRepository _paymentMehtodRepository;
+        private readonly IPaymentMethodRepository _paymentMehtodRepository;
 
-        public GetPaymentMethodsQueryHandler(IPaymentMehtodRepository paymentMehtodRepository)
+        public GetPaymentMethodsQueryHandler(IPaymentMethodRepository paymentMehtodRepository)
         {
             _paymentMehtodRepository = paymentMehtodRepository;
         }
