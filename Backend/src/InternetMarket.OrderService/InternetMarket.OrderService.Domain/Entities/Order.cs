@@ -17,16 +17,21 @@ namespace InternetMarket.OrderService.Domain.Entities
         public FullName CustomerName { get; private set; }
         public NumberPhone CustomerPhone { get; private set; }
         public decimal TotalPrice { get; private set; }
+        public PaymentMethod PaymentMethod { get; private set; }
+        public DeliveryInfo DeliveryInfo { get; private set; }
         public DateTime? PaymentDate { get; private set; }
         public OrderStatus Status { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
-        public Order(Guid userId, FullName customerName, NumberPhone customerNumber)
+        public Order() { }
+        public Order(Guid userId, FullName customerName, NumberPhone customerNumber, PaymentMethod paymentMethod, DeliveryInfo deliveryInfo)
         {
             UserId = userId;
             CustomerName = customerName;
             CustomerPhone = customerNumber;
-            Status = OrderStatus.Created;
+            PaymentMethod = paymentMethod;
+            DeliveryInfo = deliveryInfo;
+            Status = OrderStatus.WaitingPayment;
             CreatedAt = DateTime.UtcNow;
         }
 
@@ -42,7 +47,7 @@ namespace InternetMarket.OrderService.Domain.Entities
         {
             if (Status == OrderStatus.Paid) return;
             if (Status == OrderStatus.Cancelled)
-                throw new InvalidOperationException("Cannot paid cancelled order");
+                throw new InvalidOperationException("Нельзя сделать статус Оплачен, если заказ отменен.");
             Status = OrderStatus.Paid;
             PaymentDate = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
@@ -61,7 +66,7 @@ namespace InternetMarket.OrderService.Domain.Entities
         {
             if (Status == OrderStatus.Received) return;
             if (Status == OrderStatus.Cancelled)
-                throw new InvalidOperationException("Нельзя сделать стату Получе, если заказ отменен.");
+                throw new InvalidOperationException("Нельзя сделать статус Получен, если заказ отменен.");
             Status = OrderStatus.Received;
             UpdatedAt = DateTime.UtcNow;
         }
