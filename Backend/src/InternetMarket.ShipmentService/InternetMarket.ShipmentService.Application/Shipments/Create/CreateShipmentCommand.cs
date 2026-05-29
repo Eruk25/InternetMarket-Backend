@@ -7,6 +7,6 @@ using MediatR;
 
 namespace InternetMarket.ShipmentService.Application.Shipments.Create
 {
-    public record CreateShipmentCommand(int DeliveryType, int ToCityCode, string? DeliveryPointId, string City, string Address,
-     string FullName, string NumberPhone, Guid OrderId, IEnumerable<OrderItemDto> OrderItems) : IRequest<CreateOrderDeliveryResponse>;
+    public record CreateShipmentCommand(string PaymentMethod, int DeliveryType, int ToCityCode, string? DeliveryPointId, string City, string Address,
+     string FullName, string NumberPhone, Guid OrderId, IEnumerable<OrderItemDto> OrderItems, decimal TotalPrice) : IRequest<CreateOrderDeliveryResponse>;
 }
