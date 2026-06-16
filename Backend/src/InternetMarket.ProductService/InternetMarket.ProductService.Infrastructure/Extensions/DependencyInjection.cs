@@ -19,7 +19,7 @@ namespace InternetMarket.ProductService.Infrastructure.Extensions
 
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = "127.0.0.1:6379";
+                options.Configuration = configuration.GetSection("Redis")["Configuration"] ?? "127.0.0.1:6379";
                 options.InstanceName = "local";
             });
 

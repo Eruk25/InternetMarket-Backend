@@ -5,7 +5,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "productservice",
                     "Port": 5206
                 }
             ],
@@ -20,7 +20,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "productservice",
                     "Port": 5206
                 }
             ],
@@ -35,7 +35,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "productservice",
                     "Port": 5206
                 }
             ],
@@ -50,7 +50,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "productservice",
                     "Port": 5206
                 }
             ],
@@ -65,7 +65,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "productservice",
                     "Port": 5206
                 }
             ],
@@ -80,7 +80,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "productservice",
                     "Port": 5206
                 }
             ],
@@ -95,7 +95,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "productservice",
                     "Port": 5206
                 }
             ],
@@ -110,7 +110,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "productservice",
                     "Port": 5206
                 }
             ],
@@ -125,7 +125,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "productservice",
                     "Port": 5206
                 }
             ],
@@ -142,7 +142,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "userservice",
                     "Port": 5287
                 }
             ],
@@ -157,7 +157,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "userservice",
                     "Port": 5287
                 }
             ],
@@ -175,7 +175,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "paymentservice",
                     "Port": 5235
                 }
             ],
@@ -190,7 +190,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "orderservice",
                     "Port": 5207
                 }
             ],
@@ -206,7 +206,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "orderservice",
                     "Port": 5207
                 }
             ],
@@ -220,7 +220,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "cartservice",
                     "Port": 5203
                 }
             ],
@@ -240,7 +240,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "shipmentservice",
                     "Port": 5260
                 }
             ]
@@ -254,7 +254,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "shipmentservice",
                     "Port": 5260
                 }
             ]
@@ -268,7 +268,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "shipmentservice",
                     "Port": 5260
                 }
             ]
@@ -282,7 +282,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "shipmentservice",
                     "Port": 5260
                 }
             ]
@@ -296,7 +296,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "shipmentservice",
                     "Port": 5260
                 }
             ]

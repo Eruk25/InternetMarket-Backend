@@ -37,7 +37,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Extensions
             });
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = "127.0.0.1:6379";
+                options.Configuration = configuration.GetSection("Redis")["Configuration"] ?? "127.0.0.1:6379";
                 options.InstanceName = "local";
             });
             services.AddMassTransit(x =>
@@ -59,10 +59,11 @@ namespace InternetMarket.ShipmentService.Infrastructure.Extensions
                     {
                         e.ConfigureConsumer<OrderCreatedConsumer>(context);
                     });
-                    cfg.Host("localhost", "/", h =>
+                    var rabbitSection = configuration.GetSection("RabbitMq");
+                    cfg.Host(rabbitSection["Host"] ?? "localhost", "/", h =>
                     {
-                        h.Username("guest");
-                        h.Password("guest");
+                        h.Username(rabbitSection["Username"] ?? "guest");
+                        h.Password(rabbitSection["Password"] ?? "guest");
                     });
                 });
             });

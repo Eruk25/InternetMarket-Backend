@@ -73,10 +73,11 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
                     {
                         e.ConfigureConsumer<ShipmentReceivedConsumer>(context);
                     });
-                    cfg.Host("localhost", "/", h =>
+                    var rabbitSection = configuration.GetSection("RabbitMq");
+                    cfg.Host(rabbitSection["Host"] ?? "localhost", "/", h =>
                     {
-                        h.Username("guest");
-                        h.Password("guest");
+                        h.Username(rabbitSection["Username"] ?? "guest");
+                        h.Password(rabbitSection["Password"] ?? "guest");
                     });
                     cfg.ConfigureEndpoints(context);
                 });
