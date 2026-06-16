@@ -1,8 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 COPY . .
-RUN dotnet restore "src/InternetMarket.OrderService/InternetMarket.OrderService.API/InternetMarket.OrderService.API.csproj"
-RUN dotnet publish "src/InternetMarket.OrderService/InternetMarket.OrderService.API/InternetMarket.OrderService.API.csproj" -c Release -o /app/publish
+RUN dotnet restore "Backend/src/InternetMarket.OrderService/InternetMarket.OrderService.API/InternetMarket.OrderService.API.csproj"
+RUN dotnet publish "Backend/src/InternetMarket.OrderService/InternetMarket.OrderService.API/InternetMarket.OrderService.API.csproj" -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
