@@ -8,6 +8,7 @@ using InternetMarket.PaymentService.Application.Abstractions.Repositories;
 using InternetMarket.PaymentService.Application.Abstractions.UnitOfWork;
 using InternetMarket.PaymentService.Infrastructure.Implementations.Clients;
 using InternetMarket.PaymentService.Infrastructure.Implementations.ExternalServices.BePaid;
+using InternetMarket.PaymentService.Infrastructure.Implementations.ExternalServices.BePaid.DTOs;
 using InternetMarket.PaymentService.Infrastructure.Implementations.Repositories;
 using InternetMarket.PaymentService.Infrastructure.Implementations.UnitOfWork;
 using InternetMarket.PaymentService.Infrastructure.Persistence.DB;
@@ -33,6 +34,8 @@ namespace InternetMarket.PaymentService.Infrastructure.Extensions
                 var orderSection = configuration.GetSection("OrderService");
                 client.BaseAddress = new Uri(orderSection["BaseUrl"]!);
             });
+            services.Configure<BePaidOptions>(configuration.GetSection("BepaidService"));
+            services.Configure<FrontendOptions>(configuration.GetSection("Frontend"));
             services.AddHttpClient<IPaymentGateway, BePaidClient>(client =>
             {
                 var bepaidSection = configuration.GetSection("BepaidService");

@@ -25,7 +25,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
     public class ShipmentClient : IShipmentClient
     {
         private readonly IDistributedCache _cache;
-        private readonly string TokenCacheKey = "cdek_access_token";
+        private const string TokenCacheKey = "cdek_access_token";
         private readonly CdekOptions _options;
         private readonly HttpClient _httpClient;
         private readonly PackagePacker _packagePacker;
@@ -43,11 +43,11 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
             var request = new CalculateDeliveryPriceRequest
             {
                 Type = 1,
-                Currency = 7,
+                Currency = _options.DefaultCurrency,
                 TariffCode = deliveryType == DeliveryType.OrderPickupPoint ? 483 : 482,
                 FromLocation = new ShipmentLocation
                 {
-                    Code = 9220
+                    Code = _options.OriginCityCode
                 },
                 ToLocation = new ShipmentLocation
                 {
@@ -80,10 +80,10 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
             {
                 return new CalculateDeliveryPriceResponse
                 {
-                    TotalSum = 14.5m,
-                    PeriodMin = 3,
-                    PeriodMax = 5,
-                    FormattedDate = $"{DateTime.Today.AddDays(3):d}-{DateTime.Today.AddDays(5):d}"
+                    TotalSum = _options.FallbackTotalSum,
+                    PeriodMin = _options.FallbackPeriodMin,
+                    PeriodMax = _options.FallbackPeriodMax,
+                    FormattedDate = $"{DateTime.Today.AddDays(_options.FallbackPeriodMin):d}-{DateTime.Today.AddDays(_options.FallbackPeriodMax):d}"
                 };
             }
 
@@ -99,9 +99,9 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
                 TariffCode = tariffCode,
                 FromLocation = new ShipmentLocation
                 {
-                    Code = 9220,
-                    City = "Минск",
-                    Address = "улица Немига, 46"
+                    Code = _options.OriginCityCode,
+                    City = _options.OriginCityName,
+                    Address = _options.OriginAddress
                 },
                 Recipient = new Recipient
                 {
@@ -157,7 +157,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
         public async Task<IEnumerable<ShipmentCityResponse>?> GetCitiesAsync(string name, CancellationToken cancellationToken = default)
         {
             var token = await GetTokenAsync();
-            var request = new HttpRequestMessage(HttpMethod.Get, $"location/suggest/cities?name={name}&country_code=BY");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"location/suggest/cities?name={name}&country_code={_options.CountryCodeFilter}");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await _httpClient.SendAsync(request, cancellationToken);
             response.EnsureSuccessStatusCode();

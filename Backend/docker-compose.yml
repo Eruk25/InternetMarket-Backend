@@ -88,9 +88,19 @@ services:
       dockerfile: Backend/src/InternetMarket.PaymentService/InternetMarket.PaymentService.API/Dockerfile
     environment:
       - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=PaymentService;TrustServerCertificate=True;User Id=SA;Password=${SA_PASSWORD:MSSQLDanilaMatush23}
-      - RabbitMq__Host=rabbitmqMSSQLDanilaMatush23- RabbitMq__Password=guest
+      - RabbitMq__Host=rabbitmq
+      - RabbitMq__Username=guest
+      - RabbitMq__Password=guest
       - OrderService__BaseUrl=http://orderservice:5207
-      - BepaidService__BaseUrl=${BEPAID_BASE_URL:-https://api.bepaid.com}
+      - BepaidService__BaseUrl=https://checkout.bepaid.by/ctp/api/
+      - BepaidService__ShopId=4225
+      - BepaidService__SecretKey=3834fbef1fe6ea024ef77f5c79ec7ff1ba710ea6241c08c2f341afda8af4c1c4
+      - BepaidService__CheckoutWidgetUrl=https://checkout.bepaid.by/widget/hpp.html
+      - BepaidService__NotificationBaseUrl=http://paymentservice:5235
+      - BepaidService__Currency=BYN
+      - BepaidService__Test=true
+      - BepaidService__PaymentTypes=credit_card
+      - Frontend__BaseUrl=http://localhost:3000
     ports:
       - "5235:5235"
     depends_on:
@@ -109,6 +119,10 @@ services:
       - RabbitMq__Username=guest
       - RabbitMq__Password=guest
       - Redis__Configuration=redis:6379
+      - ShipmentService__OriginCityCode=9220
+      - ShipmentService__OriginCityName=Минск
+      - ShipmentService__OriginAddress=улица Немига, 46
+      - ShipmentService__DefaultCurrency=7
     ports:
       - "5260:5260"
     depends_on:
