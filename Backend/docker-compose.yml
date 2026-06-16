@@ -100,7 +100,7 @@ services:
       - BepaidService__Currency=BYN
       - BepaidService__Test=true
       - BepaidService__PaymentTypes=credit_card
-      - Frontend__BaseUrl=http://localhost:3000
+      - Frontend__BaseUrl=https://internet-market-frontend-eight.vercel.app/
     ports:
       - "5235:5235"
     depends_on:
