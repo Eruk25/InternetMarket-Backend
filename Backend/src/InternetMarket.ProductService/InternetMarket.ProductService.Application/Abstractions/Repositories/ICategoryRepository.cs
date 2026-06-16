@@ -9,6 +9,7 @@ namespace InternetMarket.ProductService.Application.Abstractions.Repositories
     public interface ICategoryRepository
     {
         public Task<IEnumerable<Category>> GetAllAsync();
+        public Task<Category?> GetByIdAsync(Guid id);
         public Task CreateAsync(Category category);
         public Task UpdateAsync(Category category);
         public Task DeleteAsync(Category category);

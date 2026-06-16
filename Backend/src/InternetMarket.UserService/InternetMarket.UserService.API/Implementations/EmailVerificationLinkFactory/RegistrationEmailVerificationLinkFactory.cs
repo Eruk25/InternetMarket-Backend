@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using InternetMarket.UserService.Application.Abstractions.EmailVerificationLinkFactory;
 using InternetMarket.UserService.Domain.Entities;
 
@@ -10,23 +6,19 @@ namespace InternetMarket.UserService.API.Implementations.EmailVerificationLinkFa
     public class RegistrationEmailVerificationLinkFactory : IRegistrationEmailVerificationLinkFactory
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly LinkGenerator _linkGenerator;
 
-        public RegistrationEmailVerificationLinkFactory(IHttpContextAccessor httpContextAccessor, LinkGenerator linkGenerator)
+        public RegistrationEmailVerificationLinkFactory(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
-            _linkGenerator = linkGenerator;
         }
 
         public string GenerateLink(EmailVerificationToken emailVerificationToken)
         {
-            string? verificationLink = _linkGenerator.GetUriByAction(
-                action: "VerifyEmail",
-                controller: "Auth",
-                values: new { token = emailVerificationToken.Id },
-                scheme: _httpContextAccessor.HttpContext!.Request.Scheme,
-                host: _httpContextAccessor.HttpContext.Request.Host);
-            return verificationLink ?? throw new Exception("Could not generate link");
+            var request = _httpContextAccessor.HttpContext!.Request;
+            var frontendUrl = request.Headers["X-Frontend-Url"].FirstOrDefault()
+                ?? $"{request.Scheme}://{request.Host}".Replace("5287", "3000");
+
+            return $"{frontendUrl}/verify-email?token={emailVerificationToken.Id}";
         }
     }
 }

@@ -33,7 +33,9 @@ namespace InternetMarket.OrderService.Application.Orders.Get.GetAll
                 )),
                 o.CreatedAt,
                 o.TotalPrice,
-                o.Status.Name
+                o.Status.Name,
+                o.DeliveryInfo.City,
+                o.DeliveryInfo.Address
             ));
         }
     }

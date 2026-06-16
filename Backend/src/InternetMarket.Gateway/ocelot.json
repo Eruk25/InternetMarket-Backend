@@ -31,6 +31,96 @@
             "Priority": 1
         },
         {
+            "DownstreamPathTemplate": "/api/products/categories",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5206
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/products/categories",
+            "UpstreamHttpMethod": [
+                "Get"
+            ],
+            "Priority": 2
+        },
+        {
+            "DownstreamPathTemplate": "/api/products/providers",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5206
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/products/providers",
+            "UpstreamHttpMethod": [
+                "Get"
+            ],
+            "Priority": 2
+        },
+        {
+            "DownstreamPathTemplate": "/api/products/import",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5206
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/products/import",
+            "UpstreamHttpMethod": [
+                "Post"
+            ],
+            "Priority": 2
+        },
+        {
+            "DownstreamPathTemplate": "/api/products",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5206
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/products",
+            "UpstreamHttpMethod": [
+                "Post"
+            ],
+            "Priority": 2
+        },
+        {
+            "DownstreamPathTemplate": "/api/products/paged",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5206
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/products/paged",
+            "UpstreamHttpMethod": [
+                "Get"
+            ],
+            "Priority": 2
+        },
+        {
+            "DownstreamPathTemplate": "/api/products/upload-image",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5206
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/products/upload-image",
+            "UpstreamHttpMethod": [
+                "Post"
+            ],
+            "Priority": 2
+        },
+        {
             "DownstreamPathTemplate": "/api/products/{id}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
@@ -41,7 +131,9 @@
             ],
             "UpstreamPathTemplate": "/gateway/products/{id}",
             "UpstreamHttpMethod": [
-                "Get"
+                "Get",
+                "Put",
+                "Delete"
             ],
             "Priority": 0
         },
@@ -56,6 +148,7 @@
             ],
             "UpstreamPathTemplate": "/gateway/auth/{everything}",
             "UpstreamHttpMethod": [
+                "Get",
                 "Post"
             ]
         },
@@ -88,6 +181,7 @@
             ],
             "UpstreamPathTemplate": "/gateway/payments/{everything}",
             "UpstreamHttpMethod": [
+                "Get",
                 "Post"
             ]
         },

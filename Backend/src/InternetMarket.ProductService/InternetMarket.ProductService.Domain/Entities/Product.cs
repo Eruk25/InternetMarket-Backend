@@ -29,9 +29,11 @@ namespace InternetMarket.ProductService.Domain.Entities
         public Category? Category { get; private set; }
         public Guid ProviderId { get; private set; }
         public Provider? Provider { get; private set; }
+        public string? ImageUrl { get; private set; }
 
         public Product(ProductName productName, Description description, Price price, Quantity physicalQuantity,
-         Weight weight, Length length, Width width, Height height, Guid categoryId, Guid providerId)
+         Weight weight, Length length, Width width, Height height, Guid categoryId, Guid providerId,
+         string? imageUrl = null)
         {
             ProductName = productName;
             Description = description;
@@ -46,6 +48,7 @@ namespace InternetMarket.ProductService.Domain.Entities
             ReservedQuantity = Quantity.Create(0);
             CategoryId = categoryId;
             ProviderId = providerId;
+            ImageUrl = imageUrl;
         }
 
         public void Reserve(int quantity)
@@ -64,6 +67,25 @@ namespace InternetMarket.ProductService.Domain.Entities
         {
             PhysicalQuantity = PhysicalQuantity.Subtract(quantity);
             ReservedQuantity = ReservedQuantity.Subtract(quantity);
+        }
+
+        public void Update(ProductName productName, Description description, Price price, Quantity quantity,
+            Weight weight, Length length, Width width, Height height, Guid categoryId, Guid providerId,
+            string? imageUrl = null)
+        {
+            ProductName = productName;
+            Description = description;
+            Price = price;
+            Weight = weight;
+            Length = length;
+            Width = width;
+            Height = height;
+            IsLargeSizeProduct = height.Value + width.Value + length.Value >= 150;
+            PhysicalQuantity = quantity;
+            AvailableQuantity = quantity;
+            CategoryId = categoryId;
+            ProviderId = providerId;
+            ImageUrl = imageUrl;
         }
     }
 }

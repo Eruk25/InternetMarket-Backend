@@ -14,7 +14,7 @@ namespace InternetMarket.ProductService.Domain.ValueObjects.Product
         public static Weight Create(int value)
         {
             if (value <= 0)
-                throw new ArgumentException("Weight can not be equal or less then 0");
+                throw new ArgumentException("Вес должен быть больше 0");
 
             return new Weight(value);
         }

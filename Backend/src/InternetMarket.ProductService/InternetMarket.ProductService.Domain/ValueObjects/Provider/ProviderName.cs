@@ -15,7 +15,7 @@ namespace InternetMarket.ProductService.Domain.ValueObjects
         public static ProviderName Create(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Provider name cannot be empty.");
+                throw new ArgumentException("Название поставщика не может быть пустым");
             return new ProviderName(value);
         }
     }

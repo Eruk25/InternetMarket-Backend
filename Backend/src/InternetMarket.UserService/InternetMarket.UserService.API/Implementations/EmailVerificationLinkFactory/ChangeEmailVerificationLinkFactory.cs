@@ -19,15 +19,13 @@ namespace InternetMarket.UserService.API.Implementations.EmailVerificationLinkFa
 
         public string GenerateLink(Domain.Entities.EmailVerificationToken emailVerificationToken)
         {
-            string? verificationLink = _linkGenerator.GetUriByAction(
-                action: "UpdateEmail",
-                controller: "Users",
-                values: new { id = emailVerificationToken.UserId, token = emailVerificationToken.Id },
-                scheme: _httpContextAccessor.HttpContext!.Request.Scheme,
-                host: _httpContextAccessor.HttpContext.Request.Host
-            );
+            var request = _httpContextAccessor.HttpContext!.Request;
+            var frontendUrl = request.Headers["X-Frontend-Url"].FirstOrDefault()
+                ?? $"{request.Scheme}://{request.Host}".Replace("5287", "3000");
 
-            return verificationLink ?? throw new Exception("Could not generate link");
+            var verificationLink = $"{frontendUrl}/email-change?token={emailVerificationToken.Id}&userId={emailVerificationToken.UserId}";
+
+            return verificationLink;
         }
     }
 }

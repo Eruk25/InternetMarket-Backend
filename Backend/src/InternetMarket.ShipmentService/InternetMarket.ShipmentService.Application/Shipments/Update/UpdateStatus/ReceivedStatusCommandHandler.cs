@@ -27,7 +27,7 @@ namespace InternetMarket.ShipmentService.Application.Shipments.Update.UpdateStat
             var shipment = await _shipmentRepository.GetByIdAsync(request.OrderId);
 
             if (shipment is null)
-                throw new ArgumentNullException("Shipment was not found.");
+                throw new ArgumentNullException("Доставка не найдена");
 
             shipment.Received();
 

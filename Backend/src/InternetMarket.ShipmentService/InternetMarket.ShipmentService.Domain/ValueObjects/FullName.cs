@@ -12,7 +12,7 @@ namespace InternetMarket.ShipmentService.Domain.ValueObjects
         public FullName(string firstName, string lastName)
         {
             if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
-                throw new ArgumentException("Name required");
+                throw new ArgumentException("Имя обязательно");
 
             FirstName = firstName;
             LastName = lastName;

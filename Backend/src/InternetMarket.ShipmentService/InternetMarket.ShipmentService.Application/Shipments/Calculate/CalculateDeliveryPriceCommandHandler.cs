@@ -23,7 +23,7 @@ namespace InternetMarket.ShipmentService.Application.Shipments.Calculate
             {
                 _ when request.DeliveryType == DeliveryType.OrderPickupPoint.Value => DeliveryType.OrderPickupPoint,
                 _ when request.DeliveryType == DeliveryType.CourierDelivery.Value => DeliveryType.CourierDelivery,
-                _ => throw new ArgumentException($"Неизветсный тип доставки: {request.DeliveryType}")
+                _ => throw new ArgumentException($"Неизвестный тип доставки: {request.DeliveryType}")
             };
             return await _shipmentClient.CalculateTariffAsync(request.ToCityCode, deliveryType, request.OrderItems);
         }

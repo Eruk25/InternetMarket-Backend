@@ -6,6 +6,7 @@ using InternetMarket.OrderService.Application.Abstractions.Clients;
 using InternetMarket.OrderService.Application.Abstractions.Repositories;
 using InternetMarket.OrderService.Application.Abstractions.UnitOfWork;
 using InternetMarket.OrderService.Application.Consumers;
+using InternetMarket.OrderService.Infrastructure.Implementations.BackgroundServices;
 using InternetMarket.OrderService.Infrastructure.Implementations.Clients;
 using InternetMarket.OrderService.Infrastructure.Implementations.Repositories;
 using InternetMarket.OrderService.Infrastructure.Implementations.UnitOfWork;
@@ -83,6 +84,7 @@ namespace InternetMarket.OrderService.Infrastructure.Extensions
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddHostedService<OrderExpirationService>();
             return services;
         }
     }

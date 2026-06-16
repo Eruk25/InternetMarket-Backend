@@ -1,10 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using InternetMarket.ProductService.Application.Abstractions.Caching;
 using MediatR;
 
 namespace InternetMarket.ProductService.Application.Products.Get.GetById
 {
-    public record GetProductByIdQuery(Guid Id) : IRequest<ProductDto>;
+    public record GetProductByIdQuery(Guid Id) : IRequest<ProductDto>, ICacheableQuery
+    {
+        public string CacheKey => Abstractions.Caching.ProductCacheKeys.GetById(Id);
+        public TimeSpan AbsoluteExpirationRelativeToNow => TimeSpan.FromMinutes(5);
+    }
 }

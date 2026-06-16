@@ -33,7 +33,7 @@ namespace InternetMarket.UserService.Application.Users.Login
             var user = await _userRepository.GetByEmailAsync(Email.Create(request.Email));
 
             if (user is null || !_passwordHasher.VerifyPassword(request.Password, user.Password.Value))
-                throw new InvalidOperationException("Invalid email or password.");
+                throw new InvalidOperationException("Неверный email или пароль");
 
             return _tokenGenerator.GenerateToken(user);
         }

@@ -35,7 +35,7 @@ namespace InternetMarket.ShipmentService.Application.Shipments.Create
             {
                 _ when request.DeliveryType == DeliveryType.OrderPickupPoint.Value => DeliveryType.OrderPickupPoint,
                 _ when request.DeliveryType == DeliveryType.CourierDelivery.Value => DeliveryType.CourierDelivery,
-                _ => throw new ArgumentException($"Неизветсный тип доставки: {request.DeliveryType}")
+                _ => throw new ArgumentException($"Неизвестный тип доставки: {request.DeliveryType}")
             };
             PaymentMethod paymentMethod = PaymentMethod.FromName(request.PaymentMethod);
             var orderInfo = await _shipmentClient.CreateOrderAsync(

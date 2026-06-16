@@ -64,7 +64,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
             {
                 var deliveryInfo = await response.Content.ReadFromJsonAsync<CdekTariffResponse>(cancellationToken);
                 if (deliveryInfo is null)
-                    throw new ArgumentNullException("DeliveryInfo is empty");
+                    throw new ArgumentNullException("Информация о доставке пуста");
 
                 var formattedDate = $"{DateTime.Parse(deliveryInfo.DeliveryDate.Min):d} - {DateTime.Parse(deliveryInfo.DeliveryDate.Max):d}";
                 return new CalculateDeliveryPriceResponse
@@ -117,7 +117,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
             if (deliveryType == DeliveryType.OrderPickupPoint)
             {
                 if (string.IsNullOrWhiteSpace(deliveryPointId))
-                    throw new ArgumentException("Для доставки на ПВЗ необзодим ID пункта выдачи", nameof(deliveryPointId));
+                    throw new ArgumentException("Для доставки на ПВЗ необходим ID пункта выдачи", nameof(deliveryPointId));
                 request.DeliveryPoint = deliveryPointId;
                 request.ToLocation = null;
             }
@@ -222,7 +222,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
 
             var authData = await response.Content.ReadFromJsonAsync<CdekAuthResponse>();
             if (authData is null)
-                throw new ArgumentNullException("AuthData is null");
+                throw new ArgumentNullException("Данные авторизации отсутствуют");
 
             var cacheOptions = new DistributedCacheEntryOptions
             {

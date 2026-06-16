@@ -30,8 +30,13 @@ namespace InternetMarket.CartService.Domain.Entities
             if (existing is not null)
             {
                 existing.Increase(quantity);
+                if (existing.Quantity <= 0)
+                    Items.Remove(existing);
                 return;
             }
+
+            if (quantity <= 0)
+                return;
 
             var item = new CartItem(productId, productName, price, quantity, weight, length, width, height, isLargeSizeProduct);
 

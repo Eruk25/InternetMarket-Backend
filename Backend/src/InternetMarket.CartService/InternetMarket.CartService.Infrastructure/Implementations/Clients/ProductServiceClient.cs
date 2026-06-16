@@ -29,7 +29,7 @@ namespace InternetMarket.CartService.Infrastructure.Implementations.Clients
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
-                throw new Exception($"ProductService error: {response.StatusCode}. Details: {error}");
+                throw new Exception($"Ошибка сервиса товаров: {response.StatusCode}. {error}");
             }
 
             var products = await response.Content.ReadFromJsonAsync<List<ProductDto>>();

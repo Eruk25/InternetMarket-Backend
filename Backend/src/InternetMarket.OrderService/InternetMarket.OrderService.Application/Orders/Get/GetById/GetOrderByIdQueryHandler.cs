@@ -21,7 +21,7 @@ namespace InternetMarket.OrderService.Application.Orders.Get.GetById
             var order = await _orderRepository.GetByIdAsync(request.OrderId);
 
             if (order is null)
-                throw new ArgumentNullException("Order was not found");
+                throw new ArgumentNullException("Заказ не найден");
 
             return new OrderDto(
                 order.Id,
@@ -36,7 +36,9 @@ namespace InternetMarket.OrderService.Application.Orders.Get.GetById
                 )),
                 order.CreatedAt,
                 order.TotalPrice,
-                order.Status.Name);
+                order.Status.Name,
+                order.DeliveryInfo.City,
+                order.DeliveryInfo.Address);
         }
     }
 }

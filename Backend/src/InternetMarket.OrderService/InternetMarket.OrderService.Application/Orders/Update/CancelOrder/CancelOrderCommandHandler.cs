@@ -32,12 +32,12 @@ namespace InternetMarket.OrderService.Application.Orders.Delete
             var order = await _orderRepository.GetByIdAsync(request.OrderId);
 
             if (order is null)
-                throw new ArgumentNullException("Order was not found");
+                throw new ArgumentNullException("Заказ не найден");
 
             var user = await _userRepository.GetByIdAsync(order.UserId);
 
             if (user is null)
-                throw new ArgumentNullException("User was not found");
+                throw new ArgumentNullException("Пользователь не найден");
 
             order.Cancel();
             await _orderRepository.UpdateAsync(order);

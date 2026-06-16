@@ -50,5 +50,16 @@ namespace InternetMarket.OrderService.Infrastructure.Implementations.Repositorie
         {
             _context.Orders.Update(order);
         }
+
+        public async Task<IEnumerable<Order>> GetExpiredCardOrdersAsync()
+        {
+            var orders = await _context.Orders
+                .Where(o => o.Status == Domain.ValueObjects.OrderStatus.Created
+                    && o.PaymentMethod == Domain.ValueObjects.PaymentMethod.Card
+                    && o.PaymentDeadline != null
+                    && o.PaymentDeadline < DateTime.UtcNow)
+                .ToListAsync();
+            return orders;
+        }
     }
 }

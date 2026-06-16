@@ -23,6 +23,11 @@ namespace InternetMarket.ProductService.Infrastructure.Implementations.Repositor
             return categories;
         }
 
+        public async Task<Category?> GetByIdAsync(Guid id)
+        {
+            return await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+        }
+
         public async Task CreateAsync(Category category)
         {
             await _context.Categories.AddAsync(category);

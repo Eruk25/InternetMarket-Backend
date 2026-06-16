@@ -14,7 +14,7 @@ namespace InternetMarket.ProductService.Domain.ValueObjects
         public static Description Create(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentNullException("Description cannot be empty");
+                throw new ArgumentNullException("Описание не может быть пустым");
             return new Description(value);
         }
     }

@@ -35,15 +35,16 @@ namespace InternetMarket.UserService.Application.EmailVerificationToken.EmailCha
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
 
-            var user = await _userRepository.GetByEmailAsync(Email.Create(request.Email));
+            var user = await _userRepository.GetByIdAsync(request.UserId);
 
             if (user is null)
-                throw new InvalidOperationException("User was not found.");
+                throw new InvalidOperationException("Пользователь не найден");
 
             var token = new Domain.Entities.EmailVerificationToken
             {
                 Id = Guid.NewGuid(),
                 UserId = user.Id,
+                NewEmail = request.NewEmail,
                 CreatedAt = DateTime.UtcNow,
                 ExpiresAt = DateTime.UtcNow.AddMinutes(30)
             };

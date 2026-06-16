@@ -57,6 +57,8 @@ namespace InternetMarket.OrderService.Infrastructure.Persistence.Configurations
                 .IsRequired(true);
             builder.Property(o => o.PaymentDate)
                 .IsRequired(false);
+            builder.Property(o => o.PaymentDeadline)
+                .IsRequired(false);
             builder.Property(o => o.Status)
                 .HasConversion(
                     status => status.Value,

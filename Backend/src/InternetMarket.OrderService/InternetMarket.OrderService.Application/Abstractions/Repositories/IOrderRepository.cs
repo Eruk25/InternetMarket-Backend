@@ -13,5 +13,6 @@ namespace InternetMarket.OrderService.Application.Abstractions.Repositories
         Task CreateAsync(Order order);
         Task UpdateAsync(Order order);
         Task DeleteAsync(Order order);
+        Task<IEnumerable<Order>> GetExpiredCardOrdersAsync();
     }
 }

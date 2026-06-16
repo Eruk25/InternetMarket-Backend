@@ -25,7 +25,7 @@ namespace InternetMarket.OrderService.Infrastructure.Implementations.Clients
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
-                throw new HttpRequestException($"Error occurred while fetching cart: {error}");
+                throw new HttpRequestException($"Ошибка при получении корзины: {error}");
             }
 
             var cart = await response.Content.ReadFromJsonAsync<CartDto>();
@@ -39,7 +39,7 @@ namespace InternetMarket.OrderService.Infrastructure.Implementations.Clients
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
-                throw new HttpRequestException($"Error occurred while clearing cart: {error}");
+                throw new HttpRequestException($"Ошибка при очистке корзины: {error}");
             }
         }
     }

@@ -32,7 +32,8 @@ namespace InternetMarket.ProductService.Application.Products.Get.GetByIds
                 p.Length.Value,
                 p.Width.Value,
                 p.Height.Value,
-                p.IsLargeSizeProduct
+                p.IsLargeSizeProduct,
+                p.ImageUrl
             ));
         }
     }

@@ -47,7 +47,7 @@ namespace InternetMarket.OrderService.API.Controllers
         public async Task<IActionResult> CreateAsync([FromBody] CreateOrderRequest request)
         {
             var userId = User.GetUserId();
-            await _mediator.Send(new CreateOrderCommand(
+            var orderId = await _mediator.Send(new CreateOrderCommand(
                 userId,
                 request.PaymentMethod,
                 request.DeliveryType,
@@ -57,7 +57,7 @@ namespace InternetMarket.OrderService.API.Controllers
                 request.Address,
                 request.FullName,
                 request.NumberPhone));
-            return Ok();
+            return Ok(new { orderId });
         }
 
         [HttpDelete]

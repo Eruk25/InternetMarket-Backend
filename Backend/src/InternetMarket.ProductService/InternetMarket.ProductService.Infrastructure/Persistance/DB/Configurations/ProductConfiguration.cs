@@ -72,6 +72,9 @@ namespace InternetMarket.ProductService.Infrastructure.Persistance.DB.Configurat
                     price => price.Value,
                     value => Price.Create(value))
                 .IsRequired();
+            builder.Property(p => p.ImageUrl)
+                .HasMaxLength(500)
+                .IsRequired(false);
             builder.HasOne(p => p.Provider)
                 .WithMany()
                 .HasForeignKey(p => p.ProviderId);

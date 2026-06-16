@@ -25,7 +25,7 @@ namespace InternetMarket.CartService.Application.CartItems.Create
             var product = await _productServiceClient.GetProductByIdAsync(request.ProductId);
 
             if (product is null)
-                throw new Exception("Product was not found");
+                throw new Exception("Товар не найден");
 
             var cart = await _cartRepository.GetByUserIdAsync(request.UserId);
 

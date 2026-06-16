@@ -13,7 +13,7 @@ using MediatR;
 
 namespace InternetMarket.OrderService.Application.Orders.Create
 {
-    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand>
+    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Guid>
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IUserRepository _userRepository;
@@ -32,7 +32,7 @@ namespace InternetMarket.OrderService.Application.Orders.Create
             _productClient = productClient;
         }
 
-        public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             var cart = await _cartClient.GetCartByUserIdAsync(request.UserId);
             if (cart is null || !cart.CartItems.Any())
@@ -101,6 +101,7 @@ namespace InternetMarket.OrderService.Application.Orders.Create
             await _productClient.ReserveAsync(itemsToReserve);
             await _cartClient.ClearCartAsync(request.UserId);
 
+            return order.Id;
         }
     }
 }

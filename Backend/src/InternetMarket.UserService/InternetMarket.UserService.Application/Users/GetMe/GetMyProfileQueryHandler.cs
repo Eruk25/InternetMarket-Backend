@@ -25,9 +25,9 @@ namespace InternetMarket.UserService.Application.Users.GetMe
             var user = await _userRepository.GetByIdAsync(request.UserId);
 
             if (user is null)
-                throw new InvalidOperationException($"User with id {request.UserId} not found");
+                throw new InvalidOperationException($"Пользователь с id {request.UserId} не найден");
 
-            return new GetMyProfileResponse(user.Id, user.FullName.FirstName, user.FullName.LastName, user.Email.Value);
+            return new GetMyProfileResponse(user.Id, user.FullName.FirstName, user.FullName.LastName, user.Email.Value, user.Role.Name);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace InternetMarket.ProductService.Domain.ValueObjects
         public static ProductName Create(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentNullException("Product name cannot be empty");
+                throw new ArgumentNullException("Название товара не может быть пустым");
             return new ProductName(value);
         }
     }

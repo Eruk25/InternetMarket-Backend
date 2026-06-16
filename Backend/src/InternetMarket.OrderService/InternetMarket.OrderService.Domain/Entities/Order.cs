@@ -20,6 +20,7 @@ namespace InternetMarket.OrderService.Domain.Entities
         public PaymentMethod PaymentMethod { get; private set; }
         public DeliveryInfo DeliveryInfo { get; private set; }
         public DateTime? PaymentDate { get; private set; }
+        public DateTime? PaymentDeadline { get; private set; }
         public OrderStatus Status { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
@@ -31,8 +32,10 @@ namespace InternetMarket.OrderService.Domain.Entities
             CustomerPhone = customerNumber;
             PaymentMethod = paymentMethod;
             DeliveryInfo = deliveryInfo;
-            Status = OrderStatus.WaitingPayment;
+            Status = OrderStatus.Created;
             CreatedAt = DateTime.UtcNow;
+            if (paymentMethod == PaymentMethod.Card)
+                PaymentDeadline = DateTime.UtcNow.AddMinutes(20);
         }
 
         public void AddItems(IEnumerable<OrderItem> items)
@@ -50,6 +53,7 @@ namespace InternetMarket.OrderService.Domain.Entities
                 throw new InvalidOperationException("Нельзя сделать статус Оплачен, если заказ отменен.");
             Status = OrderStatus.Paid;
             PaymentDate = DateTime.UtcNow;
+            PaymentDeadline = null;
             UpdatedAt = DateTime.UtcNow;
         }
 
@@ -74,7 +78,7 @@ namespace InternetMarket.OrderService.Domain.Entities
         public void Cancel()
         {
             if (Status == OrderStatus.Paid)
-                throw new InvalidOperationException("Cannot cancel Paid order");
+                throw new InvalidOperationException("Нельзя отменить оплаченный заказ");
             Status = OrderStatus.Cancelled;
             UpdatedAt = DateTime.UtcNow;
         }

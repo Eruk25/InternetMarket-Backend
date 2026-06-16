@@ -12,5 +12,6 @@ namespace InternetMarket.UserService.Domain.Entities
         public User? User { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ExpiresAt { get; set; }
+        public string NewEmail { get; set; } = string.Empty;
     }
 }

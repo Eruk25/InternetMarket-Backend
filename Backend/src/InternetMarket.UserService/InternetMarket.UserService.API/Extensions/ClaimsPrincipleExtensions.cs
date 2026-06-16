@@ -14,7 +14,7 @@ namespace InternetMarket.UserService.API.Extensions
             var userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (userId is null)
-                throw new KeyNotFoundException($"User with id {userId} was not found");
+                throw new KeyNotFoundException("Пользователь не найден");
 
             return Guid.Parse(userId);
         }

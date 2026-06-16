@@ -26,7 +26,7 @@ namespace InternetMarket.UserService.Application.Users.Get
             var user = await _userRepository.GetByIdAsync(request.Id);
 
             if (user is null)
-                throw new KeyNotFoundException($"User with id {request.Id} was not found");
+                throw new KeyNotFoundException($"Пользователь с id {request.Id} не найден");
 
             return new UserDto(user.Id, user.FullName.FirstName, user.FullName.LastName, user.Email.Value, user.Role.Name);
         }

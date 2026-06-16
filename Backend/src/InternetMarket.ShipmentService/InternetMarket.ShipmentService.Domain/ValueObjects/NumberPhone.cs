@@ -17,7 +17,7 @@ namespace InternetMarket.ShipmentService.Domain.ValueObjects
         public static NumberPhone Create(string value)
         {
             if (string.IsNullOrWhiteSpace(value) || !Regex.IsMatch(value, _numberPattern))
-                throw new ArgumentException("Invalid number phone format");
+                throw new ArgumentException("Неверный формат номера телефона");
             return new NumberPhone(value);
         }
     }

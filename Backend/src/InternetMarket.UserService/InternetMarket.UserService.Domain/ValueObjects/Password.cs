@@ -20,7 +20,7 @@ namespace InternetMarket.UserService.Domain.ValueObjects
         public static Password Create(string password)
         {
             if (!IsValid(password))
-                throw new Exception("Password cannot be empty and must be more then 8 symbols");
+                throw new Exception("Пароль должен содержать минимум 8 символов");
             return new Password(password);
         }
     }

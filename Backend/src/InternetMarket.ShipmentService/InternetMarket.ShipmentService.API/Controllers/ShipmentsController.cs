@@ -21,12 +21,10 @@ namespace InternetMarket.ShipmentService.API.Controllers
     public class ShipmentsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IWebHostEnvironment _environment;
 
-        public ShipmentsController(IMediator mediator, IWebHostEnvironment environment)
+        public ShipmentsController(IMediator mediator)
         {
             _mediator = mediator;
-            _environment = environment;
         }
 
         [HttpPost]
@@ -62,9 +60,6 @@ namespace InternetMarket.ShipmentService.API.Controllers
         [Route("test/orders/{orderId}/complete")]
         public async Task<IActionResult> SimulateOrderDeliveryAsync([FromRoute] Guid orderId)
         {
-            if (_environment.IsDevelopment())
-                return NotFound();
-
             await _mediator.Send(new ReceivedStatusCommand(orderId));
             return NoContent();
         }

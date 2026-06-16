@@ -96,7 +96,7 @@ namespace InternetMarket.PaymentService.Infrastructure.Implementations.ExternalS
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
-                throw new HttpRequestException($"Error occurred: {error}");
+                throw new HttpRequestException($"Ошибка при обработке платежа: {error}");
             }
 
             var data = await response.Content.ReadFromJsonAsync<BePaidResponse>();

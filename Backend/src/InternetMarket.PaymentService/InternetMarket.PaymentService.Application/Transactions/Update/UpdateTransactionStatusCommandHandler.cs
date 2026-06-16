@@ -28,12 +28,12 @@ namespace InternetMarket.PaymentService.Application.Transactions.Update
             var notification = JsonSerializer.Deserialize<BePaidWebhookDto>(request.Json);
 
             if (notification is null)
-                throw new ArgumentNullException("BePaid notification is null");
+                throw new ArgumentNullException("Уведомление от BePaid отсутствует");
 
             var transaction = await _unitOfWork.Transactions.GetByOrderIdAsync(Guid.Parse(notification.Transaction.TrakingId));
 
             if (transaction is null)
-                throw new ArgumentNullException("Transaction was not found");
+                throw new ArgumentNullException("Транзакция не найдена");
             transaction.ConfirmSuccess();
 
             await _publishEndpoint.Publish(new TransactionSuccessful(transaction.OrderId));

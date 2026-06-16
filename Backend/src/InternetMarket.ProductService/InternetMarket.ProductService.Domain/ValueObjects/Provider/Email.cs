@@ -16,7 +16,7 @@ namespace InternetMarket.ProductService.Domain.ValueObjects
         public static Email Create(string value)
         {
             if (string.IsNullOrWhiteSpace(value) || !Regex.IsMatch(value, _emailPattern))
-                throw new ArgumentException("Invalid Email format");
+                throw new ArgumentException("Неверный формат email");
             return new Email(value);
         }
     }

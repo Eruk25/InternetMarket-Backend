@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using InternetMarket.UserService.Application.Abstractions.ResetPasswordLinkFactory;
 
 namespace InternetMarket.UserService.API.Implementations.ResetPasswordLinkFactory
@@ -9,23 +5,19 @@ namespace InternetMarket.UserService.API.Implementations.ResetPasswordLinkFactor
     public class ResetPasswordLinkFactory : IResetPasswordLinkFactory
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly LinkGenerator _linkGenerator;
 
-        public ResetPasswordLinkFactory(IHttpContextAccessor httpContextAccessor, LinkGenerator linkGenerator)
+        public ResetPasswordLinkFactory(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
-            _linkGenerator = linkGenerator;
         }
 
         public string GenerateLink(Domain.Entities.ResetPasswordToken resetPasswordToken)
         {
-            string? verificationLink = _linkGenerator.GetUriByAction(
-                action: "ResetPassword",
-                controller: "Users",
-                values: new { token = resetPasswordToken.Id },
-                scheme: _httpContextAccessor.HttpContext!.Request.Scheme,
-                host: _httpContextAccessor.HttpContext.Request.Host);
-            return verificationLink ?? throw new Exception("Could not generate link");
+            var request = _httpContextAccessor.HttpContext!.Request;
+            var frontendUrl = request.Headers["X-Frontend-Url"].FirstOrDefault()
+                ?? $"{request.Scheme}://{request.Host}".Replace("5287", "3000");
+
+            return $"{frontendUrl}/reset-password?token={resetPasswordToken.Id}";
         }
     }
 }

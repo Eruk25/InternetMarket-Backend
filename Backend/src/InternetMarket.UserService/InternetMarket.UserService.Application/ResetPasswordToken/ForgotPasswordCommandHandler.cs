@@ -38,7 +38,7 @@ namespace InternetMarket.UserService.Application.ResetPasswordToken
             var user = await _userRepository.GetByEmailAsync(Email.Create(request.Email));
 
             if (user is null)
-                throw new KeyNotFoundException($"User was not found.");
+                throw new KeyNotFoundException("Пользователь не найден");
 
             var token = new Domain.Entities.ResetPasswordToken
             {

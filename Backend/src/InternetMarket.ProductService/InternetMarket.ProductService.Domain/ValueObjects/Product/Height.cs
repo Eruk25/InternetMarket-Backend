@@ -14,7 +14,7 @@ namespace InternetMarket.ProductService.Domain.ValueObjects.Product
         public static Height Create(int value)
         {
             if (value <= 0)
-                throw new ArgumentException("Height can not be equal or less then 0");
+                throw new ArgumentException("Высота должна быть больше 0");
 
             return new Height(value);
         }

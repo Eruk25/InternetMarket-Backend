@@ -1,0 +1,78 @@
+using InternetMarket.ProductService.Application.Abstractions.Caching;
+using InternetMarket.ProductService.Application.Abstractions.Repositories;
+using InternetMarket.ProductService.Domain.Entities;
+using InternetMarket.ProductService.Domain.ValueObjects;
+using InternetMarket.ProductService.Domain.ValueObjects.Product;
+using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
+
+namespace InternetMarket.ProductService.Application.Products.Update
+{
+    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, ProductDto>
+    {
+        private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IProviderRepository _providerRepository;
+        private readonly IDistributedCache _cache;
+
+        public UpdateProductCommandHandler(
+            IProductRepository productRepository,
+            ICategoryRepository categoryRepository,
+            IProviderRepository providerRepository,
+            IDistributedCache cache)
+        {
+            _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
+            _providerRepository = providerRepository;
+            _cache = cache;
+        }
+
+        public async Task<ProductDto> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        {
+            var product = await _productRepository.GetByIdAsync(request.Id);
+            if (product == null)
+                throw new ArgumentException($"Товар с id {request.Id} не найден");
+
+            var category = await _categoryRepository.GetByIdAsync(request.CategoryId);
+            if (category == null)
+                throw new ArgumentException($"Категория с id {request.CategoryId} не найдена");
+
+            var provider = await _providerRepository.GetByIdAsync(request.ProviderId);
+            if (provider == null)
+                throw new ArgumentException($"Поставщик с id {request.ProviderId} не найден");
+
+            product.Update(
+                ProductName.Create(request.ProductName),
+                Description.Create(request.Description),
+                Price.Create(request.Price),
+                Quantity.Create(request.Quantity),
+                Weight.Create(request.Weight),
+                Length.Create(request.Length),
+                Width.Create(request.Width),
+                Height.Create(request.Height),
+                request.CategoryId,
+                request.ProviderId,
+                request.ImageUrl);
+
+            await _productRepository.UpdateAsync(product);
+
+            await _cache.RemoveAsync(ProductCacheKeys.GetById(request.Id), cancellationToken);
+            await _cache.RemoveAsync(ProductCacheKeys.GetAll, cancellationToken);
+
+            return new ProductDto(
+                product.Id,
+                product.ProductName.Value,
+                product.Description.Value,
+                product.Price.Value,
+                product.AvailableQuantity.Value,
+                category.CategoryName.Value,
+                provider.Name.Value,
+                product.Weight.Value,
+                product.Length.Value,
+                product.Width.Value,
+                product.Height.Value,
+                product.IsLargeSizeProduct,
+                product.ImageUrl);
+        }
+    }
+}

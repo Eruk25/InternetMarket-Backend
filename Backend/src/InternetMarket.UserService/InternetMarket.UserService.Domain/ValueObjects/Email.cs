@@ -22,7 +22,7 @@ namespace InternetMarket.UserService.Domain.ValueObjects
         public static Email Create(string value)
         {
             if (!IsValid(value))
-                throw new Exception("Invalid email format");
+                throw new Exception("Неверный формат email");
             return new Email(value);
         }
     }

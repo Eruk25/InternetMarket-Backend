@@ -59,6 +59,10 @@ namespace InternetMarket.ProductService.Infrastructure.Migrations
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<bool>("IsLargeSizeProduct")
                         .HasColumnType("bit");
 
@@ -127,10 +131,6 @@ namespace InternetMarket.ProductService.Infrastructure.Migrations
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Street")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("ZipCode")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
                         });

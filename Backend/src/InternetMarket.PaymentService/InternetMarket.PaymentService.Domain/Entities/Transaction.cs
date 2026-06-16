@@ -33,7 +33,7 @@ namespace InternetMarket.PaymentService.Domain.Entities
             if (Status == Status.Success) return;
 
             if (Status == Status.Failed)
-                throw new InvalidOperationException($"Cannot change status if it Success");
+                throw new InvalidOperationException("Нельзя изменить статус успешной транзакции");
             Status = Status.Success;
             PaymentDate = DateTime.UtcNow;
         }

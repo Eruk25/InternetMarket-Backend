@@ -33,7 +33,8 @@ namespace InternetMarket.ProductService.Application.Products.Get
                 p.Length.Value,
                 p.Width.Value,
                 p.Height.Value,
-                p.IsLargeSizeProduct))
+                p.IsLargeSizeProduct,
+                p.ImageUrl))
                 .ToList();
         }
     }

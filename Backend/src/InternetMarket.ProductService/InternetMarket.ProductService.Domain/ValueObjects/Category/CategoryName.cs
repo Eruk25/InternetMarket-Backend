@@ -15,7 +15,7 @@ namespace InternetMarket.ProductService.Domain.ValueObjects.Category
         public static CategoryName Create(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("CategoryName cannot be empty");
+                throw new ArgumentException("Название категории не может быть пустым");
             return new CategoryName(value);
         }
     }

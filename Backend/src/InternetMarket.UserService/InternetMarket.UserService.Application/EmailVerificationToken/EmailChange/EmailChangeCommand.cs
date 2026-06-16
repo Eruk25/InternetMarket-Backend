@@ -6,5 +6,5 @@ using MediatR;
 
 namespace InternetMarket.UserService.Application.EmailVerificationToken.EmailChange
 {
-    public record EmailChangeCommand(string Email) : IRequest;
+    public record EmailChangeCommand(Guid UserId, string NewEmail) : IRequest;
 }

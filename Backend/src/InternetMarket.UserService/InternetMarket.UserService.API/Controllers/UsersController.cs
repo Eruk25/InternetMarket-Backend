@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
+using InternetMarket.UserService.API.DTOs.Requests.ChangePassword;
 using InternetMarket.UserService.API.DTOs.Requests.UpdateEmail;
 using InternetMarket.UserService.API.DTOs.Requests.UpdateProfile;
 using InternetMarket.UserService.API.Extensions;
@@ -10,6 +11,7 @@ using InternetMarket.UserService.Application.EmailVerificationToken.EmailChange;
 using InternetMarket.UserService.Application.ResetPasswordToken;
 using InternetMarket.UserService.Application.Users.Get;
 using InternetMarket.UserService.Application.Users.GetMe;
+using InternetMarket.UserService.Application.Users.Update.ChangePassword;
 using InternetMarket.UserService.Application.Users.Update.UpdateUserEmail;
 using InternetMarket.UserService.Application.Users.Update.UpdateUserPassword;
 using InternetMarket.UserService.Application.Users.Update.UpdateUserProfile;
@@ -53,19 +55,32 @@ namespace InternetMarket.UserService.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("{id}/email-change")]
         public async Task<IActionResult> InitialEmailChangeAsync([FromBody] ChangeEmailRequest request)
         {
-            await _mediator.Send(new EmailChangeCommand(request.Email));
+            var userId = User.GetUserId();
+            await _mediator.Send(new EmailChangeCommand(userId, request.Email));
             return Ok();
         }
 
         [HttpPost]
+        [Authorize]
         [Route("{token}/email-change-confirm")]
-        public async Task<IActionResult> UpdateEmailAsync([FromRoute] Guid token, [FromBody] UpdateEmailRequest request)
+        public async Task<IActionResult> UpdateEmailAsync([FromRoute] Guid token)
         {
             var userId = User.GetUserId();
-            await _mediator.Send(new UpdateUserEmailCommand(userId, request.Email, token));
+            var newToken = await _mediator.Send(new UpdateUserEmailCommand(userId, token));
+            return Ok(newToken);
+        }
+
+        [HttpPatch]
+        [Authorize]
+        [Route("password")]
+        public async Task<ActionResult> ChangePasswordAsync([FromBody] ChangePasswordRequest request)
+        {
+            var userId = User.GetUserId();
+            await _mediator.Send(new ChangePasswordCommand(userId, request.OldPassword, request.NewPassword));
             return Ok();
         }
 

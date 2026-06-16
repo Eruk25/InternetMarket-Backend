@@ -14,7 +14,7 @@ namespace InternetMarket.ProductService.Domain.ValueObjects.Product
         public static Length Create(int value)
         {
             if (value <= 0)
-                throw new ArgumentException("Lenght can not be equal or less then 0");
+                throw new ArgumentException("Длина должна быть больше 0");
 
             return new Length(value);
         }

@@ -6,5 +6,5 @@ using MediatR;
 
 namespace InternetMarket.UserService.Application.Users.Update.UpdateUserEmail
 {
-    public record UpdateUserEmailCommand(Guid UserId, string Email, Guid Token) : IRequest;
+    public record UpdateUserEmailCommand(Guid UserId, Guid Token) : IRequest<string>;
 }

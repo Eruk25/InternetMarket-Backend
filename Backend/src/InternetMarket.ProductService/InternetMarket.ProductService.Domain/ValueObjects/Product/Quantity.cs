@@ -15,7 +15,7 @@ namespace InternetMarket.ProductService.Domain.ValueObjects
         public static Quantity Create(int value)
         {
             if (value < 0)
-                throw new ArgumentException($"Quantity cannot be equal or less then 0 or more {int.MaxValue}");
+                throw new ArgumentException($"Количество должно быть от 0 до {int.MaxValue}");
             return new Quantity(value);
         }
 

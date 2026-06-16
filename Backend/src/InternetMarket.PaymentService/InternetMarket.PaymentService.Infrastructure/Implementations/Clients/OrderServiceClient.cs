@@ -24,13 +24,13 @@ namespace InternetMarket.PaymentService.Infrastructure.Implementations.Clients
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
-                throw new Exception($"OrderService error: {response.StatusCode}. Details: {error}");
+                throw new Exception($"Ошибка сервиса заказов: {response.StatusCode}. {error}");
             }
 
             var order = await response.Content.ReadFromJsonAsync<OrderDto>();
 
             if (order is null)
-                throw new ArgumentNullException("Order was not found.");
+                throw new ArgumentNullException("Заказ не найден");
 
             return order;
         }
