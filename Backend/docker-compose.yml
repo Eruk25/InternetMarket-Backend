@@ -169,7 +169,7 @@ services:
       context: ..
       dockerfile: Backend/src/InternetMarket.Gateway/Dockerfile
     environment:
-      - Cors__AllowedOrigins=http://localhost:3000,https://internet-market-frontend-eight.vercel.app
+      - Cors__AllowedOrigins=*
     ports:
       - "5146:5146"
     depends_on:
