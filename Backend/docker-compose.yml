@@ -170,6 +170,8 @@ services:
       dockerfile: Backend/src/InternetMarket.Gateway/Dockerfile
     environment:
       - Cors__AllowedOrigins=*
+    volumes:
+      - ./src/InternetMarket.Gateway/ocelot.Docker.json:/app/ocelot.json
     ports:
       - "5146:5146"
     depends_on:
