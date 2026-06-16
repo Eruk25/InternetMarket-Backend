@@ -18,13 +18,18 @@ namespace InternetMarket.UserService.API.Extensions
         public static IServiceCollection AddPresentation(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
+            var allowedOrigins = configuration["Cors:AllowedOrigins"];
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(policy =>
                 {
-                    policy.AllowAnyOrigin()
-                          .AllowAnyMethod()
+                    policy.AllowAnyMethod()
                           .AllowAnyHeader();
+
+                    if (!string.IsNullOrWhiteSpace(allowedOrigins) && allowedOrigins != "*")
+                        policy.WithOrigins(allowedOrigins.Split(',', StringSplitOptions.TrimEntries));
+                    else
+                        policy.AllowAnyOrigin();
                 });
             });
 

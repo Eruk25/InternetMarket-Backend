@@ -13,13 +13,18 @@ builder.Services
     .AddPresentation(builder.Configuration)
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
+var allowedOrigins = builder.Configuration["Cors:AllowedOrigins"];
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
+        policy.AllowAnyMethod()
               .AllowAnyHeader();
+
+        if (!string.IsNullOrWhiteSpace(allowedOrigins) && allowedOrigins != "*")
+            policy.WithOrigins(allowedOrigins.Split(',', StringSplitOptions.TrimEntries));
+        else
+            policy.AllowAnyOrigin();
     });
 });
 builder.Services.AddOpenApi();

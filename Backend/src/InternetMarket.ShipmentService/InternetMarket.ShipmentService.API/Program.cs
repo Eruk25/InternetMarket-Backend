@@ -14,6 +14,21 @@ builder.Services
     .AddInfrastructure(builder.Configuration);
 builder.Services.AddProblemDetails();
 
+var allowedOrigins = builder.Configuration["Cors:AllowedOrigins"];
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyMethod()
+              .AllowAnyHeader();
+
+        if (!string.IsNullOrWhiteSpace(allowedOrigins) && allowedOrigins != "*")
+            policy.WithOrigins(allowedOrigins.Split(',', StringSplitOptions.TrimEntries));
+        else
+            policy.AllowAnyOrigin();
+    });
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -67,6 +82,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
