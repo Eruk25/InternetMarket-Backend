@@ -1,8 +1,10 @@
 using InternetMarket.OrderService.API.Extensions;
 using InternetMarket.OrderService.Application.Extensions;
 using InternetMarket.OrderService.Infrastructure.Extensions;
+using InternetMarket.OrderService.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services
@@ -13,6 +15,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddProblemDetails();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<OrderContext>();
+    context.Database.Migrate();
+}
 
 app.UseExceptionHandler(exceptionHandlerApp =>
 {

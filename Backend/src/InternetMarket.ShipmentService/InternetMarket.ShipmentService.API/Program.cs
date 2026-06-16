@@ -1,7 +1,9 @@
 using InternetMarket.ShipmentService.Application.Extensions;
 using InternetMarket.ShipmentService.Infrastructure.Extensions;
+using InternetMarket.ShipmentService.Infrastructure.Persistence.DB;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,12 @@ builder.Services
 builder.Services.AddProblemDetails();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ShipmentContext>();
+    context.Database.Migrate();
+}
 
 app.UseExceptionHandler(exceptionHandlerApp =>
 {

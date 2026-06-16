@@ -1,8 +1,10 @@
 using InternetMarket.CartService.API.Extensions;
 using InternetMarket.CartService.Application.Extensions;
+using InternetMarket.CartService.Infrastructure;
 using InternetMarket.CartService.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,12 @@ builder.Services
 builder.Services.AddProblemDetails();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<CartContext>();
+    context.Database.Migrate();
+}
 
 app.UseExceptionHandler(exceptionHandlerApp =>
 {

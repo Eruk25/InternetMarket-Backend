@@ -1,8 +1,10 @@
 using InternetMarket.UserService.API.Extensions;
 using InternetMarket.UserService.Application.Extensions;
 using InternetMarket.UserService.Infrastructure.Extensions;
+using InternetMarket.UserService.Infrastructure.Persistence.DB;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,12 @@ builder.Services
 builder.Services.AddProblemDetails();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<UserContext>();
+    context.Database.Migrate();
+}
 
 app.UseExceptionHandler(exceptionHandlerApp =>
 {

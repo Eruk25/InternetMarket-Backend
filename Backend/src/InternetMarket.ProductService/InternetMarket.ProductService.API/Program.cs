@@ -2,8 +2,10 @@ using FluentValidation;
 using InternetMarket.ProductService.API.Extensions;
 using InternetMarket.ProductService.Application.Extensions;
 using InternetMarket.ProductService.Infrastructure.Extensions;
+using InternetMarket.ProductService.Infrastructure.Persistance.DB;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,12 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddProblemDetails();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ProductContext>();
+    context.Database.Migrate();
+}
 
 app.UseExceptionHandler(exceptionHandlerApp =>
 {
