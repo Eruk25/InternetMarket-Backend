@@ -66,6 +66,19 @@ app.UseExceptionHandler(exceptionHandlerApp =>
 });
 app.UseStatusCodePages();
 
+app.Use(async (context, next) =>
+{
+    if (HttpMethods.IsOptions(context.Request.Method))
+    {
+        context.Response.StatusCode = 204;
+        context.Response.Headers["Access-Control-Allow-Origin"] = "*";
+        context.Response.Headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH";
+        context.Response.Headers["Access-Control-Allow-Headers"] = "*";
+        return;
+    }
+    await next();
+});
+
 app.UseCors();
 if (app.Environment.IsDevelopment())
 {

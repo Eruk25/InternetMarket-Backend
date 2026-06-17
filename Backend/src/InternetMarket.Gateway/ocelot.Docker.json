@@ -149,7 +149,8 @@
             "UpstreamPathTemplate": "/gateway/auth/{everything}",
             "UpstreamHttpMethod": [
                 "Get",
-                "Post"
+                "Post",
+                "Options"
             ]
         },
         {
