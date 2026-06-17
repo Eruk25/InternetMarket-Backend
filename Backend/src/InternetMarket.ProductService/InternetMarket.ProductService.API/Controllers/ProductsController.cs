@@ -210,12 +210,23 @@ namespace InternetMarket.ProductService.API.Controllers
         public async Task<ActionResult<string>> UploadImageAsync(IFormFile file)
         {
             if (file == null || file.Length == 0)
-                return BadRequest("File is required");
+                return BadRequest("Файл не выбран");
+
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp", ".gif" };
+            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+            if (!allowedExtensions.Contains(ext))
+                return BadRequest("Недопустимый формат файла. Разрешены: JPG, PNG, WebP, GIF");
+
+            var allowedMimeTypes = new[] { "image/jpeg", "image/png", "image/webp", "image/gif" };
+            if (!allowedMimeTypes.Contains(file.ContentType.ToLowerInvariant()))
+                return BadRequest("Недопустимый тип файла. Разрешены: JPG, PNG, WebP, GIF");
+
+            if (file.Length > 5 * 1024 * 1024)
+                return BadRequest("Размер файла не должен превышать 5 MB");
 
             var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "products");
             Directory.CreateDirectory(uploadsDir);
 
-            var ext = Path.GetExtension(file.FileName);
             var fileName = $"{Guid.NewGuid()}{ext}";
             var filePath = Path.Combine(uploadsDir, fileName);
 
