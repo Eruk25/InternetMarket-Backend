@@ -150,7 +150,7 @@
             "UpstreamHttpMethod": [
                 "Get",
                 "Post"
-            ]
+            ],
         },
         {
             "DownstreamPathTemplate": "/api/users/{everything}",

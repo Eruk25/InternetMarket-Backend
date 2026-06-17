@@ -157,7 +157,7 @@ namespace InternetMarket.ShipmentService.Infrastructure.Implementations.Clients
         public async Task<IEnumerable<ShipmentCityResponse>?> GetCitiesAsync(string name, CancellationToken cancellationToken = default)
         {
             var token = await GetTokenAsync();
-            var request = new HttpRequestMessage(HttpMethod.Get, $"location/suggest/cities?name={name}&country_code={_options.CountryCodeFilter}");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"location/suggest/cities?name={Uri.EscapeDataString(name)}&country_code={_options.CountryCodeFilter}");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await _httpClient.SendAsync(request, cancellationToken);
             response.EnsureSuccessStatusCode();

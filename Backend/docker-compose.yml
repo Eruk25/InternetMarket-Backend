@@ -54,7 +54,10 @@ services:
       - RabbitMq__Host=rabbitmq
       - RabbitMq__Username=guest
       - RabbitMq__Password=guest
-      - ProductService__BaseUrl=http://productservice:5206
+      - ProductService__BaseUrl=http://productservice:5206/api/products/
+      - AuthOptions__Issuer=InternetMarket.UserService
+      - AuthOptions__Audience=InternetMarket.UserService.Client
+      - AuthOptions__SecretKey=mysecretKeysadjaksjdkjdaskdjakldjkasdkajkldsjksakdlakdslalddsadadsdas
     ports:
       - "5203:5203"
     depends_on:
@@ -72,8 +75,11 @@ services:
       - RabbitMq__Host=rabbitmq
       - RabbitMq__Username=guest
       - RabbitMq__Password=guest
-      - CartService__BaseUrl=http://cartservice:5203
-      - ProductService__BaseUrl=http://productservice:5206
+      - CartService__BaseUrl=http://cartservice:5203/api/carts/
+      - ProductService__BaseUrl=http://productservice:5206/api/products/
+      - AuthOptions__Issuer=InternetMarket.UserService
+      - AuthOptions__Audience=InternetMarket.UserService.Client
+      - AuthOptions__SecretKey=mysecretKeysadjaksjdkjdaskdjakldjkasdkajkldsjksakdlakdslalddsadadsdas
     ports:
       - "5207:5207"
     depends_on:
@@ -91,12 +97,12 @@ services:
       - RabbitMq__Host=rabbitmq
       - RabbitMq__Username=guest
       - RabbitMq__Password=guest
-      - OrderService__BaseUrl=http://orderservice:5207
+      - OrderService__BaseUrl=http://orderservice:5207/api/orders/
       - BepaidService__BaseUrl=https://checkout.bepaid.by/ctp/api/
       - BepaidService__ShopId=4225
       - BepaidService__SecretKey=3834fbef1fe6ea024ef77f5c79ec7ff1ba710ea6241c08c2f341afda8af4c1c4
       - BepaidService__CheckoutWidgetUrl=https://checkout.bepaid.by/widget/hpp.html
-      - BepaidService__NotificationBaseUrl=https://cold-clowns-sink.loca.lt
+      - BepaidService__NotificationBaseUrl=https://plenty-books-walk.loca.lt
       - BepaidService__Currency=BYN
       - BepaidService__Test=true
       - BepaidService__PaymentTypes=credit_card
@@ -119,10 +125,15 @@ services:
       - RabbitMq__Username=guest
       - RabbitMq__Password=guest
       - Redis__Configuration=redis:6379
+      - ShipmentService__BaseUrl=https://api.edu.cdek.ru/v2/
+      - ShipmentService__GrantType=client_credentials
+      - ShipmentService__ClientId=wqGwiQx0gg8mLtiEKsUinjVSICCjtTEP
+      - ShipmentService__ClientSecret=RmAmgvSgSl1yirlz9QupbzOJVqhCxcP5
       - ShipmentService__OriginCityCode=9220
       - ShipmentService__OriginCityName=Минск
       - ShipmentService__OriginAddress=улица Немига, 46
       - ShipmentService__DefaultCurrency=7
+      - ShipmentService__CountryCodeFilter=BY
     ports:
       - "5260:5260"
     depends_on:
@@ -141,6 +152,11 @@ services:
       - RabbitMq__Host=rabbitmq
       - RabbitMq__Username=guest
       - RabbitMq__Password=guest
+      - EmailSettings__DefaultFromEmail=danilamatus121@gmail.com
+      - EmailSettings__SMTPSetting__Host=smtp.gmail.com
+      - EmailSettings__Port=587
+      - EmailSettings__UserName=danilamatus121@gmail.com
+      - EmailSettings__Password=peek tvvz crfi rrbf
     ports:
       - "5192:5192"
     depends_on:
@@ -156,6 +172,7 @@ services:
       - RabbitMq__Host=rabbitmq
       - RabbitMq__Username=guest
       - RabbitMq__Password=guest
+      - Frontend__BaseUrl=https://internet-market-frontend-eight.vercel.app
     ports:
       - "5287:5287"
     depends_on:

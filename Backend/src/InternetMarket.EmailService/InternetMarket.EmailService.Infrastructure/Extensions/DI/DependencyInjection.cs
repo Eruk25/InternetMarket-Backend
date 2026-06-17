@@ -28,21 +28,13 @@ namespace InternetMarket.EmailService.Infrastructure.Extensions.DI
                 x.AddConsumer<OrderPaidConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.ReceiveEndpoint("email-service-user-registered", e =>
-                    {
-                        e.ConfigureConsumer<UserRegisteredConsumer>(context);
-                    });
-                    cfg.ReceiveEndpoint("email-service-order-created", e =>
-                    {
-                        e.ConfigureConsumer<OrderCreatedConsumer>(context);
-                    });
-
                     var rabbitSection = configuration.GetSection("RabbitMq");
                     cfg.Host(rabbitSection["Host"] ?? "localhost", "/", h =>
                     {
                         h.Username(rabbitSection["Username"] ?? "guest");
                         h.Password(rabbitSection["Password"] ?? "guest");
                     });
+
                     cfg.ConfigureEndpoints(context);
                 });
             });

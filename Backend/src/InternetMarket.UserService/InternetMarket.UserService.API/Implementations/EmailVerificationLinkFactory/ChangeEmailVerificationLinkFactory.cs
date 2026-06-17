@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using InternetMarket.UserService.Application.Abstractions.EmailVerificationLinkFactory;
 
 namespace InternetMarket.UserService.API.Implementations.EmailVerificationLinkFactory
@@ -9,18 +5,19 @@ namespace InternetMarket.UserService.API.Implementations.EmailVerificationLinkFa
     public class ChangeEmailVerificationLinkFactory : IChangeEmailVerificationLinkFactory
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly LinkGenerator _linkGenerator;
+        private readonly IConfiguration _configuration;
 
-        public ChangeEmailVerificationLinkFactory(IHttpContextAccessor httpContextAccessor, LinkGenerator linkGenerator)
+        public ChangeEmailVerificationLinkFactory(IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
         {
             _httpContextAccessor = httpContextAccessor;
-            _linkGenerator = linkGenerator;
+            _configuration = configuration;
         }
 
         public string GenerateLink(Domain.Entities.EmailVerificationToken emailVerificationToken)
         {
             var request = _httpContextAccessor.HttpContext!.Request;
-            var frontendUrl = request.Headers["X-Frontend-Url"].FirstOrDefault()
+            var frontendUrl = _configuration["Frontend:BaseUrl"]
+                ?? request.Headers["X-Frontend-Url"].FirstOrDefault()
                 ?? $"{request.Scheme}://{request.Host}".Replace("5287", "3000");
 
             var verificationLink = $"{frontendUrl}/email-change?token={emailVerificationToken.Id}&userId={emailVerificationToken.UserId}";
