@@ -33,6 +33,7 @@ namespace InternetMarket.ProductService.Application.Products.Import
             var existingCategories = (await _categoryRepository.GetAllAsync()).ToList();
             var existingProviders = (await _providerRepository.GetAllAsync()).ToList();
 
+            var existingProducts = (await _productRepository.GetAllAsync()).ToList();
             var importedCount = 0;
 
             foreach (var row in request.Products)
@@ -61,20 +62,33 @@ namespace InternetMarket.ProductService.Application.Products.Import
                     existingProviders.Add(provider);
                 }
 
-                var product = new Product(
-                    ProductName.Create(row.ProductName),
-                    Description.Create(string.IsNullOrWhiteSpace(row.Description) ? row.ProductName : row.Description),
-                    Price.Create(row.Price),
-                    Quantity.Create(row.Quantity),
-                    Weight.Create(row.Weight),
-                    Length.Create(row.Length),
-                    Width.Create(row.Width),
-                    Height.Create(row.Height),
-                    category.Id,
-                    provider.Id,
-                    row.ImageUrl);
+                var existingProduct = existingProducts.FirstOrDefault(p =>
+                    p.ProductName.Value.Equals(row.ProductName, StringComparison.OrdinalIgnoreCase));
 
-                await _productRepository.CreateAsync(product);
+                if (existingProduct is not null)
+                {
+                    existingProduct.AddQuantity(row.Quantity);
+                    await _productRepository.UpdateAsync(existingProduct);
+                }
+                else
+                {
+                    var product = new Product(
+                        ProductName.Create(row.ProductName),
+                        Description.Create(string.IsNullOrWhiteSpace(row.Description) ? row.ProductName : row.Description),
+                        Price.Create(row.Price),
+                        Quantity.Create(row.Quantity),
+                        Weight.Create(row.Weight),
+                        Length.Create(row.Length),
+                        Width.Create(row.Width),
+                        Height.Create(row.Height),
+                        category.Id,
+                        provider.Id,
+                        row.ImageUrl);
+
+                    await _productRepository.CreateAsync(product);
+                    existingProducts.Add(product);
+                }
+
                 importedCount++;
             }
 

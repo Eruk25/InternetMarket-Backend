@@ -165,7 +165,7 @@
                 "Get",
                 "Post",
                 "Options"
-            ],
+            ]
         },
         {
             "DownstreamPathTemplate": "/api/users/{everything}",

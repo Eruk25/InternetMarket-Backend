@@ -18,6 +18,14 @@ namespace InternetMarket.ProductService.Infrastructure.Implementations.Repositor
             _context = context;
         }
 
+        public async Task<Product?> GetByNameAsync(string name)
+        {
+            return await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Provider)
+                .FirstOrDefaultAsync(p => p.ProductName.Value == name);
+        }
+
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
             var products = await _context.Products

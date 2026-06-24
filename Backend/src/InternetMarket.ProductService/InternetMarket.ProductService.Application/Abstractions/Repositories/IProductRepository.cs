@@ -8,6 +8,7 @@ namespace InternetMarket.ProductService.Application.Abstractions.Repositories
 {
     public interface IProductRepository
     {
+        public Task<Product?> GetByNameAsync(string name);
         public Task<IEnumerable<Product>> GetAllAsync();
         public Task<Product?> GetByIdAsync(Guid id);
         public Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<Guid> ids);

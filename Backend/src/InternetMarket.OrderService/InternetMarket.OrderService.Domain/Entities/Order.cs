@@ -17,6 +17,7 @@ namespace InternetMarket.OrderService.Domain.Entities
         public FullName CustomerName { get; private set; }
         public NumberPhone CustomerPhone { get; private set; }
         public decimal TotalPrice { get; private set; }
+        public decimal DeliveryCost { get; private set; }
         public PaymentMethod PaymentMethod { get; private set; }
         public DeliveryInfo DeliveryInfo { get; private set; }
         public DateTime? PaymentDate { get; private set; }
@@ -25,13 +26,14 @@ namespace InternetMarket.OrderService.Domain.Entities
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
         public Order() { }
-        public Order(Guid userId, FullName customerName, NumberPhone customerNumber, PaymentMethod paymentMethod, DeliveryInfo deliveryInfo)
+        public Order(Guid userId, FullName customerName, NumberPhone customerNumber, PaymentMethod paymentMethod, DeliveryInfo deliveryInfo, decimal deliveryCost)
         {
             UserId = userId;
             CustomerName = customerName;
             CustomerPhone = customerNumber;
             PaymentMethod = paymentMethod;
             DeliveryInfo = deliveryInfo;
+            DeliveryCost = deliveryCost;
             Status = OrderStatus.Created;
             CreatedAt = DateTime.UtcNow;
             if (paymentMethod == PaymentMethod.Card)
@@ -44,7 +46,7 @@ namespace InternetMarket.OrderService.Domain.Entities
             {
                 _orderItems.Add(item);
             }
-            TotalPrice = _orderItems.Sum(oi => oi.TotalPrice);
+            TotalPrice = _orderItems.Sum(oi => oi.TotalPrice) + DeliveryCost;
         }
         public void Paid()
         {

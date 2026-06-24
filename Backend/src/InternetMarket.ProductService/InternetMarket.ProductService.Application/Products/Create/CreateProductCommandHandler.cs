@@ -37,6 +37,29 @@ namespace InternetMarket.ProductService.Application.Products.Create
             if (provider == null)
                 throw new ArgumentException($"Поставщик с id {request.ProviderId} не найден");
 
+            var existing = await _productRepository.GetByNameAsync(request.ProductName);
+
+            if (existing is not null)
+            {
+                existing.AddQuantity(request.Quantity);
+                await _productRepository.UpdateAsync(existing);
+                await _cache.RemoveAsync(ProductCacheKeys.GetAll, cancellationToken);
+                return new ProductDto(
+                    existing.Id,
+                    existing.ProductName.Value,
+                    existing.Description.Value,
+                    existing.Price.Value,
+                    existing.AvailableQuantity.Value,
+                    category.CategoryName.Value,
+                    provider.Name.Value,
+                    existing.Weight.Value,
+                    existing.Length.Value,
+                    existing.Width.Value,
+                    existing.Height.Value,
+                    existing.IsLargeSizeProduct,
+                    existing.ImageUrl);
+            }
+
             var product = new Product(
                 ProductName.Create(request.ProductName),
                 Description.Create(request.Description),

@@ -56,7 +56,8 @@ namespace InternetMarket.OrderService.API.Controllers
                 request.City,
                 request.Address,
                 request.FullName,
-                request.NumberPhone));
+                request.NumberPhone,
+                request.DeliveryCost));
             return Ok(new { orderId });
         }
 

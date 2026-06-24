@@ -62,7 +62,8 @@ namespace InternetMarket.OrderService.Application.Orders.Create
                 user.FullName,
                 NumberPhone.Create(request.NumberPhone),
                 paymentMethod,
-                new DeliveryInfo(request.DeliveryType, request.ToCityCode, request.DeliveryPointId, request.City, request.Address));
+                new DeliveryInfo(request.DeliveryType, request.ToCityCode, request.DeliveryPointId, request.City, request.Address),
+                request.DeliveryCost);
             order.AddItems(orderItems);
 
             await _orderRepository.CreateAsync(order);

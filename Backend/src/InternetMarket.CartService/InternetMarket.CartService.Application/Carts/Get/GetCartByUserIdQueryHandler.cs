@@ -33,7 +33,12 @@ namespace InternetMarket.CartService.Application.Carts.Get
                     ci.ProductId,
                     ci.ProductName,
                     ci.Price,
-                    ci.Quantity))
+                    ci.Quantity,
+                    ci.Weight,
+                    ci.Length,
+                    ci.Width,
+                    ci.Height,
+                    ci.IsLargeSizeProduct))
                 .ToList();
             return new CartDto(cartItems);
         }

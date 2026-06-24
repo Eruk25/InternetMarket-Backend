@@ -29,7 +29,7 @@ namespace InternetMarket.PaymentService.Application.Transactions.Create
         {
             var existingTransaction = await _unitOfWork.Transactions.GetByOrderIdAsync(request.OrderId);
 
-            if (existingTransaction is not null && existingTransaction.CreatedAt > DateTime.UtcNow.AddMinutes(30))
+            if (existingTransaction is not null && existingTransaction.CreatedAt > DateTime.UtcNow.AddMinutes(20))
                 return _paymentGateway.BuildUrl(existingTransaction.ExternalToken);
 
             var order = await _orderClient.GetOrderByIdAsync(request.OrderId);

@@ -38,6 +38,11 @@ namespace InternetMarket.CartService.Application.CartItems.Create
                 await _cartRepository.CreateAsync(cart);
             }
 
+            var existingItem = cart.Items.FirstOrDefault(ci => ci.ProductId == request.ProductId);
+            var existingQty = existingItem?.Quantity ?? 0;
+            if (existingQty + request.Quantity > product.Quantity)
+                throw new Exception("Недостаточно товара в наличии");
+
             cart.AddItem(product.Id, product.ProductName, product.Price, request.Quantity, product.Weight,
             product.Length, product.Width, product.Height, product.IsLargeSizeProduct);
             await _cartRepository.UpdateAsync(cart);

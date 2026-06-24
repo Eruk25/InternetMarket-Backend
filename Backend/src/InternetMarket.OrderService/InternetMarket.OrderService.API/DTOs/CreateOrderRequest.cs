@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 namespace InternetMarket.OrderService.API.DTOs
 {
     public record CreateOrderRequest(string PaymentMethod, int DeliveryType, int ToCityCode, string? DeliveryPointId, string City, string Address,
-     string FullName, string NumberPhone);
+     string FullName, string NumberPhone, decimal DeliveryCost);
 }

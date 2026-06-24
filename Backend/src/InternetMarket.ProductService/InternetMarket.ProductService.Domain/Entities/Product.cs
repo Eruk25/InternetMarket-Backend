@@ -51,6 +51,12 @@ namespace InternetMarket.ProductService.Domain.Entities
             ImageUrl = imageUrl;
         }
 
+        public void AddQuantity(int quantity)
+        {
+            PhysicalQuantity = PhysicalQuantity.Add(quantity);
+            AvailableQuantity = AvailableQuantity.Add(quantity);
+        }
+
         public void Reserve(int quantity)
         {
             ReservedQuantity = ReservedQuantity.Add(quantity);
