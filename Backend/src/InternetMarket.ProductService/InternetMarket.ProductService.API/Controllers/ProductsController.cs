@@ -106,7 +106,7 @@ namespace InternetMarket.ProductService.API.Controllers
                 request.ImageUrl);
 
             var product = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = product.Id }, product);
+            return Ok(product);
         }
 
         [HttpPut]
