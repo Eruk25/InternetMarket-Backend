@@ -14,7 +14,7 @@ namespace InternetMarket.ProductService.Application.Products.Get
 
         public async Task<PagedResult<ProductDto>> Handle(GetProductsPagedQuery request, CancellationToken cancellationToken)
         {
-            var (products, totalCount) = await _productRepository.GetPagedAsync(request.Page, request.PageSize);
+            var (products, totalCount) = await _productRepository.GetPagedAsync(request.Page, request.PageSize, request.SearchTerm);
 
             var items = products.Select(p => new ProductDto(
                 p.Id,

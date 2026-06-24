@@ -15,6 +15,6 @@ namespace InternetMarket.ProductService.Application.Abstractions.Repositories
         public Task UpdateAsync(Product product);
         public Task UpdateRangeAsync(IEnumerable<Product> products);
         public Task DeleteAsync(Product product);
-        public Task<(IEnumerable<Product> Items, int TotalCount)> GetPagedAsync(int page, int pageSize);
+        public Task<(IEnumerable<Product> Items, int TotalCount)> GetPagedAsync(int page, int pageSize, string? searchTerm = null);
     }
 }

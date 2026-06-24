@@ -42,9 +42,9 @@ namespace InternetMarket.ProductService.API.Controllers
 
         [HttpGet]
         [Route("paged")]
-        public async Task<ActionResult<PagedResult<ProductDto>>> GetPagedAsync([FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+        public async Task<ActionResult<PagedResult<ProductDto>>> GetPagedAsync([FromQuery] int page = 1, [FromQuery] int pageSize = 20, [FromQuery] string? searchTerm = null)
         {
-            var result = await _mediator.Send(new GetProductsPagedQuery(page, pageSize));
+            var result = await _mediator.Send(new GetProductsPagedQuery(page, pageSize, searchTerm));
             return Ok(result);
         }
 

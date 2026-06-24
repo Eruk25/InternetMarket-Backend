@@ -69,11 +69,16 @@ namespace InternetMarket.ProductService.Infrastructure.Implementations.Repositor
             await _context.SaveChangesAsync();
         }
 
-        public async Task<(IEnumerable<Product> Items, int TotalCount)> GetPagedAsync(int page, int pageSize)
+        public async Task<(IEnumerable<Product> Items, int TotalCount)> GetPagedAsync(int page, int pageSize, string? searchTerm = null)
         {
-            var query = _context.Products
+            IQueryable<Product> query = _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Provider);
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                query = query.Where(p => p.ProductName.Value.Contains(searchTerm));
+            }
 
             var totalCount = await query.CountAsync();
 
