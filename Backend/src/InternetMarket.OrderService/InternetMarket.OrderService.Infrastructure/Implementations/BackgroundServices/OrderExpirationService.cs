@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using InternetMarket.OrderService.Application.Abstractions.Clients;
 using InternetMarket.OrderService.Application.Abstractions.Repositories;
 using InternetMarket.OrderService.Application.Abstractions.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,10 +35,19 @@ namespace InternetMarket.OrderService.Infrastructure.Implementations.BackgroundS
 
                     var expiredOrders = await orderRepository.GetExpiredCardOrdersAsync();
 
+                    var productClient = scope.ServiceProvider.GetRequiredService<IProductServiceClient>();
+
                     foreach (var order in expiredOrders)
                     {
                         order.Cancel();
                         _logger.LogInformation("Order {OrderId} cancelled due to payment deadline expiration", order.Id);
+
+                        var itemsToCancel = new Dictionary<Guid, int>();
+                        foreach (var item in order.OrderItems)
+                        {
+                            itemsToCancel.Add(item.ProductId, item.Quantity);
+                        }
+                        await productClient.CancelReservationAsync(itemsToCancel);
                     }
 
                     await unitOfWork.SaveChangesAsync(stoppingToken);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InternetMarket.Contracts.Events.Order;
+using InternetMarket.OrderService.Application.Abstractions.Clients;
 using InternetMarket.OrderService.Application.Abstractions.Repositories;
 using InternetMarket.OrderService.Application.Abstractions.UnitOfWork;
 using InternetMarket.OrderService.Domain.Entities;
@@ -17,14 +18,16 @@ namespace InternetMarket.OrderService.Application.Orders.Delete
         private readonly IUserRepository _userRepository;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IProductServiceClient _productClient;
 
         public CancelOrderCommandHandler(IOrderRepository orderRepository, IPublishEndpoint publishEndpoint, IUnitOfWork unitOfWork,
-         IUserRepository userRepository)
+         IUserRepository userRepository, IProductServiceClient productClient)
         {
             _orderRepository = orderRepository;
             _userRepository = userRepository;
             _publishEndpoint = publishEndpoint;
             _unitOfWork = unitOfWork;
+            _productClient = productClient;
         }
 
         public async Task Handle(CancelOrderCommand request, CancellationToken cancellationToken)
@@ -48,6 +51,13 @@ namespace InternetMarket.OrderService.Application.Orders.Delete
             ));
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            var itemsToCancel = new Dictionary<Guid, int>();
+            foreach (var item in order.OrderItems)
+            {
+                itemsToCancel.Add(item.ProductId, item.Quantity);
+            }
+            await _productClient.CancelReservationAsync(itemsToCancel);
         }
     }
 }
