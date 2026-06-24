@@ -235,7 +235,7 @@ namespace InternetMarket.ProductService.API.Controllers
                 await file.CopyToAsync(stream);
             }
 
-            var url = $"/images/products/{fileName}";
+            var url = $"/gateway/images/products/{fileName}";
             return Ok(url);
         }
     }

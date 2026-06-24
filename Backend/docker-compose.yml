@@ -102,7 +102,7 @@ services:
       - BepaidService__ShopId=4225
       - BepaidService__SecretKey=3834fbef1fe6ea024ef77f5c79ec7ff1ba710ea6241c08c2f341afda8af4c1c4
       - BepaidService__CheckoutWidgetUrl=https://checkout.bepaid.by/widget/hpp.html
-      - BepaidService__NotificationBaseUrl=https://plenty-books-walk.loca.lt
+      - BepaidService__NotificationBaseUrl=https://salty-foxes-hunt.loca.lt
       - BepaidService__Currency=BYN
       - BepaidService__Test=true
       - BepaidService__PaymentTypes=credit_card

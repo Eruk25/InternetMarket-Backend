@@ -27,6 +27,9 @@ namespace InternetMarket.CartService.Application.CartItems.Create
             if (product is null)
                 throw new Exception("Товар не найден");
 
+            if (product.Quantity <= 0)
+                throw new Exception("Товара нет в наличии");
+
             var cart = await _cartRepository.GetByUserIdAsync(request.UserId);
 
             if (cart is null)

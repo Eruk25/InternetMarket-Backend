@@ -19,7 +19,7 @@ namespace InternetMarket.ProductService.API.Validators
                 .GreaterThan(0.9m).WithMessage("Цена должна быть больше 0.9 BYN");
 
             RuleFor(x => x.Quantity)
-                .GreaterThanOrEqualTo(0).WithMessage("Количество не может быть отрицательным");
+                .GreaterThan(0).WithMessage("Количество товара должно быть больше 0");
 
             RuleFor(x => x.Weight)
                 .GreaterThan(0).WithMessage("Вес должен быть больше 0");

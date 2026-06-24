@@ -121,6 +121,20 @@
             "Priority": 2
         },
         {
+            "DownstreamPathTemplate": "/images/products/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5206
+                }
+            ],
+            "UpstreamPathTemplate": "/gateway/images/products/{everything}",
+            "UpstreamHttpMethod": [
+                "Get"
+            ]
+        },
+        {
             "DownstreamPathTemplate": "/api/products/{id}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
