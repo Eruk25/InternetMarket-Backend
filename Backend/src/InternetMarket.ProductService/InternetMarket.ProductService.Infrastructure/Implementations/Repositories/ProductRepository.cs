@@ -77,7 +77,7 @@ namespace InternetMarket.ProductService.Infrastructure.Implementations.Repositor
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                query = query.Where(p => p.ProductName.Value.Contains(searchTerm));
+                query = query.Where(p => EF.Property<string>(p, "ProductName").Contains(searchTerm));
             }
 
             var totalCount = await query.CountAsync();
